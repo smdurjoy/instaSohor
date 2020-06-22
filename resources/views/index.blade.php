@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>eLerning</title>
-        <link rel="stylesheet" href="{{asset('css/main.css')}}">
-        <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+        <title>instaSohor</title>
+        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/style.css')}}">
         <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     </head>
     <body>

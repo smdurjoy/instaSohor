@@ -1,15 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import {Container, Row} from "react-bootstrap";
+import MainLayout from "../components/MainLayout";
 
 class HomePage extends Component {
     render() {
         return (
             <Fragment>
-                <Container>
-                    <Row>
-                        <h1>This is Home page</h1>
-                    </Row>
-                </Container>
+                <MainLayout>
+                    <h1>This is home page</h1>
+                </MainLayout>
             </Fragment>
         );
     }
