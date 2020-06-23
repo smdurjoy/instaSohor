@@ -38,6 +38,7 @@ body {
     margin-top: 5px;
     border-radius: 20px;
     background: var(--componentBackgound);
+    border: 2px solid var(--buttonBackground);
 }
 
 .chatLogo {
@@ -65,21 +66,21 @@ body {
     width: 19vw;
 }
 
-.chatMsg {
-    display: inline-block;
-    overflow: hidden !important;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
 .msg {
     color: var(--fontColor);
     font-weight: 400;
     font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .chatList {
-    margin: 0 10px;
+    margin: 2rem auto;
+}
+
+.chatListRow {
+    margin: 1rem auto 0 auto;
 }
 
 .newChatBtnDiv {
@@ -148,7 +149,6 @@ body {
 .searchBox:focus{
     box-shadow: none !important;
     border-radius: 30px !important;
-    /*background: var(--bodyBackground);*/
 }
 
 .searchBox::-webkit-input-placeholder {
@@ -242,3 +242,123 @@ body {
 .content {
     grid-column-start: 2;
 }
+
+/*profile page*/
+.profileRow {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 30px;
+    padding: 1rem;
+    background: var(--componentBackgound);
+    border: 2px solid var(--buttonBackground);
+    height: auto;
+}
+
+.profileImage {
+    height: 100px !important;
+    width: 100px !important;
+    border-radius: 50% !important;
+}
+
+.profileTopName {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.bio {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.ownerInfo {
+    margin: auto 0 auto 20px;
+    align-items: center;
+}
+
+.ownerOtherInfo {
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    float: right;
+}
+
+.dropdownDiv {
+    margin-left: auto;
+}
+
+.followDiv {
+    float: right;
+    margin-top: 10px;
+}
+
+.followInfo {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px;
+}
+
+.followInfo span{
+    font-weight: 600;
+}
+
+.followSocialDiv {
+    margin-left: auto;
+}
+
+.fIcon{
+    margin: 0 2px;
+    font-size: 18px;
+    color: #646464;
+}
+
+.dropdownBtn {
+    padding: 0 8px !important;
+    background: var(--buttonBackground) !important;
+    border: none !important;
+    color: var(--mainColor) !important;
+    font-size: 14px !important;
+}
+
+.dropdownBtn:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.postBox {
+    border: 2px solid var(--bodyBackground) !important;
+    width: 100%;
+    border-radius: 20px;
+    /*padding: 10px;*/
+}
+
+.postBox:focus{
+    box-shadow: 2px solid var(--mainColor) !important;
+    border-radius: 20px;
+}
+
+.postBottom {
+    align-items: center !important;
+}
+
+.postIcon {
+    margin: 0 10px;
+    font-size: 20px;
+    color: #646464;
+}
+
+.postIcons {
+    margin-top: 1rem;
+}
+
+.postBtn {
+    float: right;
+    margin-top: 10px;
+    background: var(--mainColor) !important;
+    width: 150px !important;
+    color: var(--componentBackgound);
+}
+
+.postBtn {
+    color: var(--componentBackgound);
+}
+

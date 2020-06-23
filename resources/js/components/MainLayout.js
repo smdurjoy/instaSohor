@@ -24,7 +24,7 @@ class MainLayout extends Component {
                             <ul className="navItemList">
                                 <li className="navListItem"> <NavLink className="navItem" exact to="/" activeStyle={{ color: '#0098fe' }}>Home</NavLink> </li>
                                 <li className="navListItem"> <NavLink className="navItem" exact to="/profile" activeStyle={{ color: '#0098fe' }}>My Profile</NavLink> </li>
-                                <li className="navListItem"> <NavLink className="navItem" exact to="/profile" activeStyle={{ color: '#0098fe' }}>My Friends</NavLink> </li>
+                                <li className="navListItem"> <NavLink className="navItem" exact to="/friends" activeStyle={{ color: '#0098fe' }}>My Friends</NavLink> </li>
                                 <li className="navListItem"> <NavLink className="navItem" exact to="/notification" activeStyle={{ color: '#0098fe' }}>Notification</NavLink> </li>
                                 <li className="navListItem"> <NavLink className="navItem" exact to="/setting" activeStyle={{ color: '#0098fe' }}>Setting</NavLink> </li>
                             </ul>
@@ -35,7 +35,7 @@ class MainLayout extends Component {
                                         <img className="bottom-profile-image" src={profileImage}/>
                                     </Col>
                                     <Col md={8} lg={8}>
-                                        <h2 className="profileName mt-1">Tom Benson</h2>
+                                        <h2 className="profileName mt-1">Tom Benton</h2>
                                         <h4 className="online">Online</h4>
                                     </Col>
                                 </Row>
@@ -58,49 +58,49 @@ class MainLayout extends Component {
                                 </div>
 
                                 <div className="chatList">
-                                    <Row className="ml-auto mr-auto mt-5">
+                                    <Row className="chatListRow">
                                         <Col md={3} lg={3}>
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
-                                        <Col md={9} lg={9} className="chatMsg">
-                                            <h2 className="profileName ml-2">Tom Benson</h2>
-                                            <h4 className="msg ml-2">Hey there im using instasohor</h4>
+                                        <Col md={9} lg={9}>
+                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h4 className="msg">Hey there im using instasohor</h4>
                                         </Col>
                                     </Row>
-                                    <Row className="ml-auto mr-auto mt-2">
+                                    <Row className="chatListRow">
                                         <Col md={3} lg={3}>
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
-                                        <Col md={9} lg={9} className="chatMsg">
-                                            <h2 className="profileName ml-2">Tom Benson</h2>
-                                            <h4 className="msg ml-2">Hey there im using instasohor</h4>
+                                        <Col md={9} lg={9}>
+                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h4 className="msg">Hey there im using instasohor</h4>
                                         </Col>
                                     </Row>
-                                    <Row className="ml-auto mr-auto mt-2">
+                                    <Row className="chatListRow">
                                         <Col md={3} lg={3}>
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
-                                        <Col md={9} lg={9} className="chatMsg">
-                                            <h2 className="profileName ml-2">Tom Benson</h2>
-                                            <h4 className="msg ml-2">Hey there im using instasohor</h4>
+                                        <Col md={9} lg={9}>
+                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h4 className="msg">Hey there im using instasohor</h4>
                                         </Col>
                                     </Row>
-                                    <Row className="ml-auto mr-auto mt-2">
+                                    <Row className="chatListRow">
                                         <Col md={3} lg={3}>
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
-                                        <Col md={9} lg={9} className="chatMsg">
-                                            <h2 className="profileName ml-2">Tom Benson</h2>
-                                            <h4 className="msg ml-2">Hey there im using iasohor</h4>
+                                        <Col md={9} lg={9}>
+                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h4 className="msg">Hey there im using iasohor</h4>
                                         </Col>
                                     </Row>
-                                    <Row className="ml-auto mr-auto mt-2">
+                                    <Row className="chatListRow">
                                         <Col md={3} lg={3}>
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
-                                        <Col md={9} lg={9} className="chatMsg">
-                                            <h2 className="profileName ml-2">Tom Benson</h2>
-                                            <h4 className="msg ml-2">Hey there im using instasohsddsfdor</h4>
+                                        <Col md={9} lg={9}>
+                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h4 className="msg">Hey there im using instasohsddsfdor</h4>
                                         </Col>
                                     </Row>
                                 </div>
