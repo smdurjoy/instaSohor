@@ -40,6 +40,65 @@ body {
     background: var(--componentBackgound);
 }
 
+.chatLogo {
+    height: 30px;
+    width: auto;
+    margin-right: 5px;
+}
+
+.chatList-images {
+    display: flex;
+    overflow-x: scroll;
+    margin: 0 10px;
+}
+
+.chatList-images-buttons {
+    height: 50px !important;
+    width: 50px !important;
+    border-radius: 50% !important;
+    margin: 0 5px;
+}
+
+.rightCom {
+    position: relative;
+    height: 98vh;
+    width: 19vw;
+}
+
+.chatMsg {
+    display: inline-block;
+    overflow: hidden !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.msg {
+    color: var(--fontColor);
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.chatList {
+    margin: 0 10px;
+}
+
+.newChatBtnDiv {
+    bottom: 1rem;
+    padding: 0 10px;
+    position: absolute;
+}
+
+.newChatBtn {
+    background: var(--buttonBackground);
+    width: 200px;
+    color: var(--mainColor);
+    margin-left: 15px;
+}
+
+.newChatBtn:hover {
+    color: var(--mainColor);
+}
+
 /* left component */
 .siteLogo {
     height: 25px;

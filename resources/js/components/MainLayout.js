@@ -1,8 +1,11 @@
 import React, {Component, Fragment} from 'react';
-import {Col, FormControl, Row} from "react-bootstrap";
+import {Button, Col, FormControl, Row} from "react-bootstrap";
 import siteLogo from '../../images/siteLogo.svg';
 import profileImage from '../../images/pro.jpeg';
+import chatTopImage from '../../images/chats.svg';
 import {NavLink} from "react-router-dom";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class MainLayout extends Component {
     constructor(props) {
@@ -19,11 +22,11 @@ class MainLayout extends Component {
 
                         <div className="navItemDiv">
                             <ul className="navItemList">
-                                <li className="navListItem"> <NavLink className="navItem" to="/" activeStyle={{ color: '#0098fe' }}>My Profile</NavLink> </li>
-                                <li className="navListItem"> <NavLink className="navItem" to="/profile" activeStyle={{ color: '#0098fe' }}>My Friends</NavLink> </li>
-                                <li className="navListItem"> <NavLink className="navItem" to="/friend-list" activeStyle={{ color: '#0098fe' }}>New Feed</NavLink> </li>
-                                <li className="navListItem"> <NavLink className="navItem" to="/notification" activeStyle={{ color: '#0098fe' }}>Notification</NavLink> </li>
-                                <li className="navListItem"> <NavLink className="navItem" to="/setting" activeStyle={{ color: '#0098fe' }}>Setting</NavLink> </li>
+                                <li className="navListItem"> <NavLink className="navItem" exact to="/" activeStyle={{ color: '#0098fe' }}>Home</NavLink> </li>
+                                <li className="navListItem"> <NavLink className="navItem" exact to="/profile" activeStyle={{ color: '#0098fe' }}>My Profile</NavLink> </li>
+                                <li className="navListItem"> <NavLink className="navItem" exact to="/profile" activeStyle={{ color: '#0098fe' }}>My Friends</NavLink> </li>
+                                <li className="navListItem"> <NavLink className="navItem" exact to="/notification" activeStyle={{ color: '#0098fe' }}>Notification</NavLink> </li>
+                                <li className="navListItem"> <NavLink className="navItem" exact to="/setting" activeStyle={{ color: '#0098fe' }}>Setting</NavLink> </li>
                             </ul>
                             <div className="bottom-content">
                                 <hr className="hLine ml-auto mr-auto"/>
@@ -43,7 +46,68 @@ class MainLayout extends Component {
                 <div className="right-wrapper">
                     <div className="right-wrapper-content">
                         <div className="right-component">
-                            hello im right sidebar content
+                            <div className="rightCom">
+                                <h2 className="brandName"><img className="chatLogo mb-1" src={chatTopImage}/>Chat List</h2>
+                                <hr className="hLine ml-auto mr-auto"/>
+                                <div className="chatList-images">
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                </div>
+
+                                <div className="chatList">
+                                    <Row className="ml-auto mr-auto mt-5">
+                                        <Col md={3} lg={3}>
+                                            <img className="bottom-profile-image" src={profileImage}/>
+                                        </Col>
+                                        <Col md={9} lg={9} className="chatMsg">
+                                            <h2 className="profileName ml-2">Tom Benson</h2>
+                                            <h4 className="msg ml-2">Hey there im using instasohor</h4>
+                                        </Col>
+                                    </Row>
+                                    <Row className="ml-auto mr-auto mt-2">
+                                        <Col md={3} lg={3}>
+                                            <img className="bottom-profile-image" src={profileImage}/>
+                                        </Col>
+                                        <Col md={9} lg={9} className="chatMsg">
+                                            <h2 className="profileName ml-2">Tom Benson</h2>
+                                            <h4 className="msg ml-2">Hey there im using instasohor</h4>
+                                        </Col>
+                                    </Row>
+                                    <Row className="ml-auto mr-auto mt-2">
+                                        <Col md={3} lg={3}>
+                                            <img className="bottom-profile-image" src={profileImage}/>
+                                        </Col>
+                                        <Col md={9} lg={9} className="chatMsg">
+                                            <h2 className="profileName ml-2">Tom Benson</h2>
+                                            <h4 className="msg ml-2">Hey there im using instasohor</h4>
+                                        </Col>
+                                    </Row>
+                                    <Row className="ml-auto mr-auto mt-2">
+                                        <Col md={3} lg={3}>
+                                            <img className="bottom-profile-image" src={profileImage}/>
+                                        </Col>
+                                        <Col md={9} lg={9} className="chatMsg">
+                                            <h2 className="profileName ml-2">Tom Benson</h2>
+                                            <h4 className="msg ml-2">Hey there im using iasohor</h4>
+                                        </Col>
+                                    </Row>
+                                    <Row className="ml-auto mr-auto mt-2">
+                                        <Col md={3} lg={3}>
+                                            <img className="bottom-profile-image" src={profileImage}/>
+                                        </Col>
+                                        <Col md={9} lg={9} className="chatMsg">
+                                            <h2 className="profileName ml-2">Tom Benson</h2>
+                                            <h4 className="msg ml-2">Hey there im using instasohsddsfdor</h4>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <div className="newChatBtnDiv">
+                                    <p className="btn newChatBtn"><FontAwesomeIcon icon={faPlus} />  New Chat</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
