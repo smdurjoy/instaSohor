@@ -556,3 +556,46 @@ body {
     color: var(--componentBackgound) !important;
     box-shadow: none !important;
 }
+
+/*loading component*/
+.loadingImage {
+    width: 100px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.noPostMessage {
+    font-size: 16px;
+    color: var(--fontColorOther);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.noPostMessage span{
+    color: red;
+}
+
+/*wentWrong component*/
+.wentWrongImage {
+    height: 200px;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wentWrongMsg{
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.wentWrongMsg span{
+    color: red;
+    font-family: 'Jost', sans-serif;
+}
+
+.errorRow {
+    display: flex;
+    flex-direction: column;
+}
