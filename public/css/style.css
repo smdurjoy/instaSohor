@@ -204,6 +204,7 @@ body {
     color: var(--fontColor);
     font-size: 20px;
     text-decoration: none;
+    transition: .2s;
 }
 
 .navItem:hover {
@@ -362,3 +363,104 @@ body {
     color: var(--componentBackgound);
 }
 
+.post {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.postProfileName {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--mainColor);
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.postProfileName:hover {
+    color: var(--mainColor);
+    text-decoration: none;
+}
+
+.postTime {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: auto;
+    align-items: center;
+    margin-top: 15px;
+    color: #646464;
+}
+
+.postActionCount {
+    float: right;
+    font-size: 14px;
+}
+
+.postActions {
+    font-size: 18px;
+    margin-left: 10px;
+    color: var(--mainColor);
+}
+
+.postActions:hover {
+    color: var(--mainColor);
+    text-decoration: none;
+}
+
+/*home page*/
+.homePostBox {
+    border: 2px solid var(--bodyBackground) !important;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--componentBackgound);
+}
+
+.homePost {
+    padding: 0 1rem;
+}
+
+.HomePostBottom {
+    padding: 0 1rem;
+}
+
+.newsFeed {
+    margin-top: 1rem;
+    padding: 15px;
+}
+
+.newsFeedTitle {
+    color: #646464;
+    margin-left: 10px;
+}
+
+.homePostBox:focus{
+    box-shadow: 2px solid var(--mainColor) !important;
+    border-radius: 5px;
+}
+
+.homePostBottom {
+    align-items: center !important;
+}
+
+.homePostIcon {
+    margin: 0 5px;
+    font-size: 16px;
+    color: #646464;
+}
+
+.homePostIcons {
+    margin-top: .5rem;
+}
+
+.homePostBtn {
+    float: right;
+    margin-top: 5px;
+    background: var(--mainColor) !important;
+    width: 100px !important;
+    color: var(--componentBackgound);
+}
+
+.homePostBtn {
+    color: var(--componentBackgound);
+}

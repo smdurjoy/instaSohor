@@ -4,19 +4,27 @@ import {Button, Col, Container, Dropdown, DropdownButton, FormControl, Row} from
 import profileImg from '../../images/pro.jpeg';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faComment,
     faComments,
     faHeart,
     faImage,
     faLaugh,
-    faThumbsDown,
-    faThumbsUp
 } from "@fortawesome/free-regular-svg-icons";
-import {faCaretDown, faFile, faPaperclip} from "@fortawesome/free-solid-svg-icons";
-import {faFacebook} from "@fortawesome/free-brands-svg-icons";
+import {
+    faBriefcase,
+    faClock,
+    faGraduationCap,
+    faMapMarkerAlt,
+    faPaperclip
+} from "@fortawesome/free-solid-svg-icons";
+import {faFacebook, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {Link} from "react-router-dom";
+import profileImage from "../../images/pro.jpeg";
 
 class ProfilePage extends Component {
+    componentDidMount() {
+        window.scroll(0,0)
+    }
+
     render() {
         return (
             <Fragment>
@@ -49,9 +57,22 @@ class ProfilePage extends Component {
                                         </div>
                                         <div className="followSocialDiv">
                                             <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
-                                            <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
-                                            <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
+                                            <FontAwesomeIcon icon={faInstagram} className="fIcon"/>
+                                            <FontAwesomeIcon icon={faTwitter} className="fIcon"/>
                                         </div>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            <Row className="profileRow">
+                                <Col md={6} lg={6} sm={6} xs={6}>
+                                    <p> <FontAwesomeIcon icon={faMapMarkerAlt} className="fIcon mt-3"/> From Rangpur City </p>
+                                    <p> <FontAwesomeIcon icon={faBriefcase} className="fIcon"/> Works at WeDevs </p>
+                                </Col>
+                                <Col md={6} lg={6} sm={6} xs={6}>
+                                    <div className="float-right">
+                                    <p> <FontAwesomeIcon icon={faGraduationCap} className="fIcon mt-3"/> Daffodil International University </p>
+                                    <p> <FontAwesomeIcon icon={faClock} className="fIcon"/> Joined June 2020 </p>
                                     </div>
                                 </Col>
                             </Row>
@@ -73,6 +94,63 @@ class ProfilePage extends Component {
                                             <Button className="btn btn-primary postBtn">Add Post</Button>
                                         </Col>
                                     </Row>
+                                </Col>
+                            </Row>
+                            <h5 className="newsFeedTitle mt-5">Posts</h5>
+                            <Row className="profileRow">
+                                <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <a href="#" className="postProfileName">Tom Benton</a>
+                                    <p className="postTime">24 June at 11.13am</p>
+                                </Col>
+                                <Col md={12} sm={12} lg={12} xs={12}>
+                                    <div className="post">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!</p>
+                                    </div>
+                                </Col>
+                                <Col md={12} sm={12} lg={12} xs={12}>
+                                    <div>
+                                        <h5 className="postActionCount"> 19 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">5</span> <FontAwesomeIcon icon={faComments}/> </h5>
+                                        <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            <Row className="profileRow">
+                                <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <a href="#" className="postProfileName">Tom Benton</a>
+                                    <p className="postTime">24 June at 11.13am</p>
+                                </Col>
+                                <Col md={12} sm={12} lg={12} xs={12}>
+                                    <div className="post">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!</p>
+                                    </div>
+                                </Col>
+                                <Col md={12} sm={12} lg={12} xs={12}>
+                                    <div>
+                                        <h5 className="postActionCount"> 19 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">5</span> <FontAwesomeIcon icon={faComments}/> </h5>
+                                        <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            <Row className="profileRow">
+                                <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
+                                    <img className="chatList-images-buttons" src={profileImage}/>
+                                    <a href="#" className="postProfileName">Tom Benton</a>
+                                    <p className="postTime">24 June at 11.13am</p>
+                                </Col>
+                                <Col md={12} sm={12} lg={12} xs={12}>
+                                    <div className="post">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!</p>
+                                    </div>
+                                </Col>
+                                <Col md={12} sm={12} lg={12} xs={12}>
+                                    <div>
+                                        <h5 className="postActionCount"> 19 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">5</span> <FontAwesomeIcon icon={faComments}/> </h5>
+                                        <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
+                                    </div>
                                 </Col>
                             </Row>
                         </div>
