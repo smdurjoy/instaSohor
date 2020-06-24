@@ -49,7 +49,7 @@ class FriendsPage extends Component {
                                         <h4 className="msg">Hey there im using instasohor</h4>
                                     </Col>
                                     <Col md={3} lg={3}>
-                                        <Button className="viewProfileBtn">View Profile</Button>
+                                        <Button className="viewProfileBtn">Follow</Button>
                                     </Col>
                                 </Row>
                            </Col>

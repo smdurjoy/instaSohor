@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/getPosts', 'PostController@getPosts');
 Route::post('/createPost', 'PostController@createPost');
 
+// user route
+Route::get('/getUserData', 'UserController@getUserData');
+
 Route::get('/', function () {
     return view('index');
 });
