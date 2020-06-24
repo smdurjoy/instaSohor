@@ -17,6 +17,7 @@ body {
     --fontColor: #1b1e21;
     --buttonBackground: #ecf6fd;
     --mainColor: #0098fe;
+    --fontColorOther: #646464;
 }
 
 /* right component */
@@ -213,10 +214,9 @@ body {
 }
 
 .bottom-content {
-    bottom: 1rem;
+    bottom: 2rem;
     position: absolute;
     width: 100%;
-    padding: 1rem;
 }
 
 .bottom-profile-image {
@@ -227,11 +227,21 @@ body {
 
 .profileName {
     font-size: 16px;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .online {
     font-size: 12px;
     color: green;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bottomAIcon {
+    font-size: 14px;
+    margin-top: 9px;
 }
 
 /* children's */
@@ -245,7 +255,7 @@ body {
 }
 
 /*profile page*/
-.profileRow {
+.contentRow {
     width: 100%;
     margin: 20px auto;
     border-radius: 30px;
@@ -283,23 +293,26 @@ body {
     float: right;
 }
 
-.dropdownDiv {
-    margin-left: auto;
+.profileActionBtn {
+    color: var(--fontColorOther);
+    margin-bottom: 10px;
+}
+
+.profileAIcon {
+    font-size: 13px;
 }
 
 .followDiv {
     float: right;
-    margin-top: 10px;
 }
 
 .followInfo {
     font-size: 14px;
     font-weight: 400;
     padding: 5px;
-}
-
-.followInfo span{
-    font-weight: 600;
+    color: var(--fontColorOther);
+    margin-top: 24px;
+    margin-right: -12px;
 }
 
 .followSocialDiv {
@@ -309,27 +322,13 @@ body {
 .fIcon{
     margin: 0 2px;
     font-size: 18px;
-    color: #646464;
-}
-
-.dropdownBtn {
-    padding: 0 8px !important;
-    background: var(--buttonBackground) !important;
-    border: none !important;
-    color: var(--mainColor) !important;
-    font-size: 14px !important;
-}
-
-.dropdownBtn:focus {
-    border: none !important;
-    box-shadow: none !important;
+    color: var(--fontColorOther);
 }
 
 .postBox {
     border: 2px solid var(--bodyBackground) !important;
     width: 100%;
     border-radius: 20px;
-    /*padding: 10px;*/
 }
 
 .postBox:focus{
@@ -344,7 +343,7 @@ body {
 .postIcon {
     margin: 0 10px;
     font-size: 20px;
-    color: #646464;
+    color: var(--fontColorOther);
 }
 
 .postIcons {
@@ -387,7 +386,7 @@ body {
     margin-left: auto;
     align-items: center;
     margin-top: 15px;
-    color: #646464;
+    color: var(--fontColorOther);
 }
 
 .postActionCount {
@@ -430,7 +429,7 @@ body {
 }
 
 .newsFeedTitle {
-    color: #646464;
+    color: var(--fontColorOther);
     margin-left: 10px;
 }
 
@@ -446,7 +445,7 @@ body {
 .homePostIcon {
     margin: 0 5px;
     font-size: 16px;
-    color: #646464;
+    color: var(--fontColorOther);
 }
 
 .homePostIcons {
@@ -463,4 +462,73 @@ body {
 
 .homePostBtn {
     color: var(--componentBackgound);
+}
+
+/*friends page*/
+.topDiv {
+    padding: 1rem;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.infoTitle {
+    background: var(--buttonBackground);
+    font-size: 14px;
+    padding: 7px;
+    color: var(--mainColor);
+    border-radius: 30px;
+}
+
+.borderCol {
+    border-left: 2px solid var(--buttonBackground);
+}
+
+.viewProfileBtn {
+    background: var(--buttonBackground) !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--fontColorOther) !important;
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+.viewProfileBtn:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/*notification page*/
+.notificationMsg {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.profileLinks {
+    color: var(--mainColor);
+}
+
+.profileLinks:hover {
+    color: var(--mainColor);
+    text-decoration: none;
+}
+
+.notificationBox {
+    background: var(--buttonBackground);
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 20px;
+    height: auto;
+    padding: 10px;
+}
+
+.notificationTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--fontColorOther);
 }

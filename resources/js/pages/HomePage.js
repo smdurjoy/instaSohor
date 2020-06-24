@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Button, Col, Container, FormControl, Row} from "react-bootstrap";
+import {Button, Col, FormControl, Row} from "react-bootstrap";
 import MainLayout from "../components/MainLayout";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
@@ -37,10 +37,10 @@ class HomePage extends Component {
 
                     <div className="newsFeed">
                         <h5 className="newsFeedTitle">News Feed</h5>
-                        <Row className="profileRow">
+                        <Row className="contentRow">
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">DurJoy RudDro</a>
+                                <a href="#" className="postProfileName">Hanna Bekar</a>
                                 <p className="postTime">12 June at 2.13 am</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
@@ -56,10 +56,10 @@ class HomePage extends Component {
                             </Col>
                         </Row>
 
-                        <Row className="profileRow">
+                        <Row className="contentRow">
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Jaime Alex</a>
+                                <a href="#" className="postProfileName">Clay Jenson</a>
                                 <p className="postTime">29 May at 10.23 pm</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
@@ -75,10 +75,10 @@ class HomePage extends Component {
                             </Col>
                         </Row>
 
-                        <Row className="profileRow">
+                        <Row className="contentRow">
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Fahim Rahman</a>
+                                <a href="#" className="postProfileName">Justin Foley</a>
                                 <p className="postTime">29 May at 10.23 pm</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
@@ -94,10 +94,10 @@ class HomePage extends Component {
                             </Col>
                         </Row>
 
-                        <Row className="profileRow">
+                        <Row className="contentRow">
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Clay Jenson</a>
+                                <a href="#" className="postProfileName">Jessica Devis</a>
                                 <p className="postTime">05 July at 05.18 pm</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>

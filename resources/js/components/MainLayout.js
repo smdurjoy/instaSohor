@@ -4,7 +4,7 @@ import siteLogo from '../../images/siteLogo.svg';
 import profileImage from '../../images/pro.jpeg';
 import chatTopImage from '../../images/chats.svg';
 import {NavLink} from "react-router-dom";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faSortUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class MainLayout extends Component {
@@ -31,12 +31,15 @@ class MainLayout extends Component {
                             <div className="bottom-content">
                                 <hr className="hLine ml-auto mr-auto"/>
                                 <Row className="ml-auto mr-auto">
-                                    <Col md={4} lg={4}>
+                                    <Col md={3} lg={3}>
                                         <img className="bottom-profile-image" src={profileImage}/>
                                     </Col>
-                                    <Col md={8} lg={8}>
-                                        <h2 className="profileName mt-1">Tom Benton</h2>
+                                    <Col md={7} lg={7}>
+                                        <h2 className="profileName mt-1">DurJoy RudDro</h2>
                                         <h4 className="online">Online</h4>
+                                    </Col>
+                                    <Col md={1} lg={1}>
+                                        <FontAwesomeIcon icon={faSortUp} className="bottomAIcon"/>
                                     </Col>
                                 </Row>
                             </div>
@@ -63,7 +66,7 @@ class MainLayout extends Component {
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
                                         <Col md={9} lg={9}>
-                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h2 className="profileName">DurJoy RudDro</h2>
                                             <h4 className="msg">Hey there im using instasohor</h4>
                                         </Col>
                                     </Row>
@@ -72,7 +75,7 @@ class MainLayout extends Component {
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
                                         <Col md={9} lg={9}>
-                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h2 className="profileName">DurJoy RudDro</h2>
                                             <h4 className="msg">Hey there im using instasohor</h4>
                                         </Col>
                                     </Row>
@@ -81,7 +84,7 @@ class MainLayout extends Component {
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
                                         <Col md={9} lg={9}>
-                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h2 className="profileName">DurJoy RudDro</h2>
                                             <h4 className="msg">Hey there im using instasohor</h4>
                                         </Col>
                                     </Row>
@@ -90,7 +93,7 @@ class MainLayout extends Component {
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
                                         <Col md={9} lg={9}>
-                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h2 className="profileName">DurJoy RudDro</h2>
                                             <h4 className="msg">Hey there im using iasohor</h4>
                                         </Col>
                                     </Row>
@@ -99,7 +102,7 @@ class MainLayout extends Component {
                                             <img className="bottom-profile-image" src={profileImage}/>
                                         </Col>
                                         <Col md={9} lg={9}>
-                                            <h2 className="profileName">Tom Benton</h2>
+                                            <h2 className="profileName">DurJoy RudDro</h2>
                                             <h4 className="msg">Hey there im using instasohsddsfdor</h4>
                                         </Col>
                                     </Row>

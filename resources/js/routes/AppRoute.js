@@ -3,7 +3,8 @@ import {Route, Switch} from "react-router";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 import NotificationPage from "../pages/NotificationPage";
-import MessagePage from "../pages/MessagePage";
+import SettingPage from "../pages/SettingPage";
+import FriendsPage from "../pages/FriendsPage";
 
 class AppRoute extends Component {
     render() {
@@ -12,8 +13,9 @@ class AppRoute extends Component {
                 <Switch>
                     <Route exact path="/" component={HomePage}/>
                     <Route exact path="/profile" component={ProfilePage}/>
-                    <Route exact path="/message" component={MessagePage}/>
+                    <Route exact path="/setting" component={SettingPage}/>
                     <Route exact path="/notification" component={NotificationPage}/>
+                    <Route exact path="/friends" component={FriendsPage}/>
                 </Switch>
             </Fragment>
         );

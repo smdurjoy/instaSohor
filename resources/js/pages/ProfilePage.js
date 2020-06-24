@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import {
     faBriefcase,
-    faClock,
+    faClock, faEllipsisV,
     faGraduationCap,
     faMapMarkerAlt,
     faPaperclip
@@ -31,29 +31,23 @@ class ProfilePage extends Component {
                 <MainLayout>
                     <Container>
                         <div className="profile">
-                            <Row className="profileRow">
+                            <Row className="contentRow">
                                 <Col md={7} lg={7} sm={7} className="d-flex">
                                     <img className="profileImage" src={profileImg}/>
                                     <div className="ownerInfo">
-                                        <h1 className="profileTopName mt-1">Tom Benton</h1>
+                                        <h1 className="profileTopName mt-1">DurJoy RudDro</h1>
                                         <h5 className="bio">this is bio</h5>
                                     </div>
                                 </Col>
                                 <Col md={5} lg={5} sm={5}>
                                     <div className="ownerOtherInfo">
-                                        {/*<div className="dropdownDiv">*/}
-                                        {/*    <Dropdown>*/}
-                                        {/*        <Dropdown.Toggle id="dropdown-basic" className="dropdownBtn" alignLeft>*/}
-                                        {/*        </Dropdown.Toggle>*/}
-                                        {/*        <Dropdown.Menu className="drop-menu">*/}
-                                        {/*            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>*/}
-                                        {/*            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>*/}
-                                        {/*            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>*/}
-                                        {/*        </Dropdown.Menu>*/}
-                                        {/*    </Dropdown>*/}
-                                        {/*</div>*/}
-                                        <div className="followDiv">
-                                            <h5 className="followInfo"><span>20</span> Followers <br/> <span>30</span> Following</h5>
+                                        <div className="d-flex">
+                                            <div className="followDiv">
+                                                <h5 className="followInfo">0 Followers <br/>0 Following</h5>
+                                            </div>
+                                            <div className="profileActionBtn">
+                                                <FontAwesomeIcon icon={faEllipsisV} className="profileAIcon"/>
+                                            </div>
                                         </div>
                                         <div className="followSocialDiv">
                                             <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
@@ -64,20 +58,20 @@ class ProfilePage extends Component {
                                 </Col>
                             </Row>
 
-                            <Row className="profileRow">
+                            <Row className="contentRow">
                                 <Col md={6} lg={6} sm={6} xs={6}>
                                     <p> <FontAwesomeIcon icon={faMapMarkerAlt} className="fIcon mt-3"/> From Rangpur City </p>
                                     <p> <FontAwesomeIcon icon={faBriefcase} className="fIcon"/> Works at WeDevs </p>
                                 </Col>
                                 <Col md={6} lg={6} sm={6} xs={6}>
                                     <div className="float-right">
-                                    <p> <FontAwesomeIcon icon={faGraduationCap} className="fIcon mt-3"/> Daffodil International University </p>
+                                    <p> <FontAwesomeIcon icon={faGraduationCap} className="fIcon mt-3"/> Studies at Daffodil International University </p>
                                     <p> <FontAwesomeIcon icon={faClock} className="fIcon"/> Joined June 2020 </p>
                                     </div>
                                 </Col>
                             </Row>
 
-                            <Row className="profileRow">
+                            <Row className="contentRow">
                                 <Col md={12} sm={12} lg={12} xs={12}>
                                     <Row>
                                         <Col>
@@ -96,12 +90,12 @@ class ProfilePage extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                            <h5 className="newsFeedTitle mt-5">Posts</h5>
-                            <Row className="profileRow">
+                            <h5 className="newsFeedTitle mt-4">Posts</h5>
+                            <Row className="contentRow">
                                 <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                     <img className="chatList-images-buttons" src={profileImage}/>
-                                    <a href="#" className="postProfileName">Tom Benton</a>
-                                    <p className="postTime">24 June at 11.13am</p>
+                                    <a href="#" className="postProfileName">DurJoy RudDro</a>
+                                    <p className="postTime">24 June at 11.13 am</p>
                                 </Col>
                                 <Col md={12} sm={12} lg={12} xs={12}>
                                     <div className="post">
@@ -116,11 +110,11 @@ class ProfilePage extends Component {
                                 </Col>
                             </Row>
 
-                            <Row className="profileRow">
+                            <Row className="contentRow">
                                 <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                     <img className="chatList-images-buttons" src={profileImage}/>
-                                    <a href="#" className="postProfileName">Tom Benton</a>
-                                    <p className="postTime">24 June at 11.13am</p>
+                                    <a href="#" className="postProfileName">DurJoy RudDro</a>
+                                    <p className="postTime">24 June at 11.13 am</p>
                                 </Col>
                                 <Col md={12} sm={12} lg={12} xs={12}>
                                     <div className="post">
@@ -135,11 +129,11 @@ class ProfilePage extends Component {
                                 </Col>
                             </Row>
 
-                            <Row className="profileRow">
+                            <Row className="contentRow">
                                 <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                     <img className="chatList-images-buttons" src={profileImage}/>
-                                    <a href="#" className="postProfileName">Tom Benton</a>
-                                    <p className="postTime">24 June at 11.13am</p>
+                                    <a href="#" className="postProfileName">DurJoy RudDro</a>
+                                    <p className="postTime">24 June at 11.13 am</p>
                                 </Col>
                                 <Col md={12} sm={12} lg={12} xs={12}>
                                     <div className="post">
