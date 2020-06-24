@@ -460,8 +460,9 @@ body {
     color: var(--componentBackgound);
 }
 
-.homePostBtn {
-    color: var(--componentBackgound);
+.homePostBtn:focus {
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /*friends page*/
@@ -477,7 +478,7 @@ body {
     background: var(--buttonBackground);
     font-size: 14px;
     padding: 7px;
-    color: var(--mainColor);
+    color: var(--fontColorOther);
     border-radius: 30px;
 }
 
@@ -531,4 +532,27 @@ body {
     font-size: 16px;
     font-weight: 500;
     color: var(--fontColorOther);
+}
+
+/*setting page*/
+.formInput {
+    border: none !important;
+    border-bottom: 2px solid var(--buttonBackground) !important;
+}
+
+.formInput:focus {
+    border: none !important;
+    border-bottom: 2px solid var(--buttonBackground) !important;
+    box-shadow: none !important;
+}
+
+.formBtn {
+    background: var(--mainColor) !important;
+    padding: 3px 6px !important;
+    color: var(--componentBackgound) !important;
+}
+
+.formBtn:focus {
+    color: var(--componentBackgound) !important;
+    box-shadow: none !important;
 }
