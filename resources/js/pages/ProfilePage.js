@@ -37,7 +37,8 @@ class ProfilePage extends Component {
             work: "",
             bio: "",
             image: "",
-            id: ""
+            id: "",
+            postButtonText: "Add Post"
         }
     }
     componentDidMount() {
@@ -74,7 +75,9 @@ class ProfilePage extends Component {
                 image: "---"
             })
         })
+    }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
         Axios.get('/getPosts').then(response => {
             if(response.status == 200) {
                 this.setState({posts: response.data, isLoading:'d-none'})
@@ -91,7 +94,26 @@ class ProfilePage extends Component {
 
     postFunction() {
         let postData = document.getElementById('postArea').value;
-        let userId = document.getElementById('postId');
+        let userId = document.getElementById('postBtn').getAttribute('data-id');
+
+        document.getElementById('postBtn').innerHTML = "Posting ...";
+        Axios.post('/createPost', {
+            user_id: userId,
+            post_data: postData
+        }).then((response) => {
+            if(response.status == 200 && response.data == 1) {
+                document.getElementById('postBtn').innerHTML = "Posted";
+                setTimeout(function () {
+                    document.getElementById('postBtn').innerHTML = "Add Post";
+                }, 3000);
+                document.getElementById('postArea').value='';
+                this.componentDidUpdate();
+            } else {
+                document.getElementById('postBtn').innerHTML = "Failed";
+            }
+        }).catch(error => {
+            document.getElementById('postBtn').innerHTML = "Failed";
+        })
     }
 
     render() {
@@ -177,7 +199,7 @@ class ProfilePage extends Component {
                                             <a href="#"><FontAwesomeIcon icon={faLaugh} className="postIcon"/></a>
                                         </Col>
                                         <Col xs={6} sm={6} lg={6} md={6}>
-                                            <Button className="btn btn-primary postBtn" id="postId" data-id={this.state.id} onClick={this.postFunction}>Add Post</Button>
+                                            <Button className="btn btn-primary postButton" id="postBtn" data-id={this.state.id} onClick={this.postFunction}>Add Post</Button>
                                         </Col>
                                     </Row>
                                 </Col>

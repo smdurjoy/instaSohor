@@ -65069,7 +65069,8 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       work: "",
       bio: "",
       image: "",
-      id: ""
+      id: "",
+      postButtonText: "Add Post"
     };
     return _this;
   }
@@ -65111,25 +65112,31 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           image: "---"
         });
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this3 = this;
+
       axios__WEBPACK_IMPORTED_MODULE_9___default.a.get('/getPosts').then(function (response) {
         if (response.status == 200) {
-          _this2.setState({
+          _this3.setState({
             posts: response.data,
             isLoading: 'd-none'
           });
         } else if (response.data == null) {
-          _this2.setState({
+          _this3.setState({
             isLoading: 'd-none',
             isNull: 'contentRow text-center'
           });
         } else {
-          _this2.setState({
+          _this3.setState({
             isLoading: 'd-none',
             isError: 'contentRow text-center errorRow'
           });
         }
       })["catch"](function (error) {
-        _this2.setState({
+        _this3.setState({
           isLoading: 'd-none',
           isError: 'contentRow text-center errorRow'
         });
@@ -65138,8 +65145,29 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
   }, {
     key: "postFunction",
     value: function postFunction() {
+      var _this4 = this;
+
       var postData = document.getElementById('postArea').value;
-      var userId = document.getElementById('postId');
+      var userId = document.getElementById('postBtn').getAttribute('data-id');
+      document.getElementById('postBtn').innerHTML = "Posting ...";
+      axios__WEBPACK_IMPORTED_MODULE_9___default.a.post('/createPost', {
+        user_id: userId,
+        post_data: postData
+      }).then(function (response) {
+        if (response.status == 200 && response.data == 1) {
+          document.getElementById('postBtn').innerHTML = "Posted";
+          setTimeout(function () {
+            document.getElementById('postBtn').innerHTML = "Add Post";
+          }, 3000);
+          document.getElementById('postArea').value = '';
+
+          _this4.componentDidUpdate();
+        } else {
+          document.getElementById('postBtn').innerHTML = "Failed";
+        }
+      })["catch"](function (error) {
+        document.getElementById('postBtn').innerHTML = "Failed";
+      });
     }
   }, {
     key: "render",
@@ -65308,8 +65336,8 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         lg: 6,
         md: 6
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-        className: "btn btn-primary postBtn",
-        id: "postId",
+        className: "btn btn-primary postButton",
+        id: "postBtn",
         "data-id": this.state.id,
         onClick: this.postFunction
       }, "Add Post"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
@@ -65354,6 +65382,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
 /* harmony import */ var _components_MainLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/MainLayout */ "./resources/js/components/MainLayout.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65380,18 +65410,79 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var SettingPage = /*#__PURE__*/function (_Component) {
   _inherits(SettingPage, _Component);
 
   var _super = _createSuper(SettingPage);
 
   function SettingPage() {
+    var _this;
+
     _classCallCheck(this, SettingPage);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.state = {
+      id: "",
+      user_name: "",
+      full_name: "",
+      email: "",
+      bio: "",
+      address: "",
+      education: "",
+      work: ""
+    };
+    return _this;
   }
 
   _createClass(SettingPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/getUserData').then(function (response) {
+        if (response.status == 200) {
+          document.getElementById('fullName').onchange(response.data[0]['full_name']);
+
+          _this2.setState({
+            id: response.data[0]['id'],
+            user_name: response.data[0]['user_name'],
+            full_name: response.data[0]['full_name'],
+            email: response.data[0]['email'],
+            bio: response.data[0]['bio'],
+            address: response.data[0]['address'],
+            education: response.data[0]['education'],
+            work: response.data[0]['work']
+          });
+        } else {
+          _this2.setState({
+            id: "",
+            user_name: "",
+            full_name: "",
+            email: "",
+            bio: "",
+            address: "",
+            education: "",
+            work: ""
+          });
+        }
+      })["catch"](function (error) {
+        _this2.setState({
+          id: "",
+          user_name: "",
+          full_name: "",
+          email: "",
+          bio: "",
+          address: "",
+          education: "",
+          work: ""
+        });
+      });
+    }
+  }, {
+    key: "setInputValue",
+    value: function setInputValue() {}
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -65403,40 +65494,42 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "text-center infoTitle mb-3"
       }, "Update Profile Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "formBasicEmail"
+        controlId: "fullName"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "email",
-        placeholder: "Enter email",
-        className: "formInput",
-        value: "DurJoy RudDro"
+        placeholder: "Enter name",
+        className: "formInputName"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "formBasicEmail"
+        controlId: "userName"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your UserName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
         placeholder: "Password",
         className: "formInput",
-        value: "smdurjoy"
+        value: this.state.user_name
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "formBasicEmail"
+        controlId: "email"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        type: "text",
+        placeholder: "Password",
+        className: "formInput"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
+        controlId: "address"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Address"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
         placeholder: "Password",
-        className: "formInput",
-        value: "Rangpur City"
+        className: "formInput"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "formBasicEmail"
+        controlId: "education"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Education"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
         placeholder: "Password",
-        className: "formInput",
-        value: "Daffodil International University"
+        className: "formInput"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "formBasicEmail"
+        controlId: "work"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Work"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
         placeholder: "Password",
-        className: "formInput",
-        value: "WeDevs"
+        className: "formInput"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: "primary",
         className: "formBtn"

@@ -350,7 +350,7 @@ body {
     margin-top: 1rem;
 }
 
-.postBtn {
+.postButton {
     float: right;
     margin-top: 10px;
     background: var(--mainColor) !important;
@@ -358,7 +358,7 @@ body {
     color: var(--componentBackgound);
 }
 
-.postBtn {
+.postButton {
     color: var(--componentBackgound);
 }
 

@@ -18,6 +18,11 @@ class PostController extends Controller
         $user = $request->input('user_id');
         $post = $request->input('post_data');
         $result = Post::where('user_id', $user)->insert(['user_id' => $user, 'post_data' => $post]);
-        return $result;
+
+        if($result == true) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
