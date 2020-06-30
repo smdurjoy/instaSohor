@@ -75,9 +75,10 @@ class ProfilePage extends Component {
                 image: "---"
             })
         })
+        this.getPosts()
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    getPosts() {
         Axios.get('/getPosts').then(response => {
             if(response.status == 200) {
                 this.setState({posts: response.data, isLoading:'d-none'})
@@ -107,7 +108,7 @@ class ProfilePage extends Component {
                     document.getElementById('postBtn').innerHTML = "Add Post";
                 }, 3000);
                 document.getElementById('postArea').value='';
-                this.componentDidUpdate();
+                this.componentDidMount();
             } else {
                 document.getElementById('postBtn').innerHTML = "Failed";
             }
@@ -125,6 +126,7 @@ class ProfilePage extends Component {
                         <img className="chatList-images-buttons" src={profileImage}/>
                         <a href="#" className="postProfileName">{data.user.full_name}</a>
                         <p className="postTime">24 June at 11.13 am</p>
+                        <FontAwesomeIcon icon={faEllipsisV} className="postABtn"/>
                     </Col>
                     <Col md={12} sm={12} lg={12} xs={12}>
                         <div className="post">
