@@ -1,6 +1,17 @@
 import React, {Component, Fragment} from 'react';
 import MainLayout from "../components/MainLayout";
-import {Button, Col, Container, Dropdown, DropdownButton, FormControl, Row} from "react-bootstrap";
+import {
+    Accordion,
+    Button,
+    Card,
+    Col,
+    Container,
+    Dropdown,
+    DropdownButton,
+    Form,
+    FormControl,
+    Row
+} from "react-bootstrap";
 import profileImg from '../../images/pro.jpeg';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -38,8 +49,16 @@ class ProfilePage extends Component {
             bio: "",
             image: "",
             id: "",
-            postButtonText: "Add Post"
+            postButtonText: "Add Post",
+            updateRow: "d-none",
+            showUpdateRow: false
         }
+
+        this.getPosts = this.getPosts.bind(this);
+        this.postFunction = this.postFunction.bind(this);
+        this.bioUpdateRow = this.bioUpdateRow.bind(this);
+        this.onCancel = this.onCancel.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
     componentDidMount() {
         window.scroll(0,0);
@@ -117,6 +136,38 @@ class ProfilePage extends Component {
         })
     }
 
+    bioUpdateRow() {
+        if(this.state.showUpdateRow == false) {
+            this.setState({updateRow: "contentRow", showUpdateRow:true})
+        } else {
+            this.setState({updateRow: "d-none", showUpdateRow:false})
+        }
+    }
+
+    onCancel() {
+        this.setState({updateRow: "d-none", showUpdateRow:false});
+        this.componentDidMount();
+    }
+
+    updateBio() {
+        let id = document.getElementById('postBtn').getAttribute('data-id');
+        let bio = document.getElementById('bio').value;
+
+        Axios.post('/updateBio', {
+            id: id,
+            bio: bio
+        }).then((response) => {
+            if(response.status == 200) {
+                this.setState({updateRow: "d-none", showUpdateRow:false});
+                this.componentDidMount();
+            } else {
+                alert('hoy nai bhai')
+            }
+        }).catch((error) => {
+            alert('hoy nai bhai')
+        })
+    }
+
     render() {
         const posts = this.state.posts;
         const myView = posts.map(data => {
@@ -161,9 +212,14 @@ class ProfilePage extends Component {
                                             <div className="followDiv">
                                                 <h5 className="followInfo">0 Followers <br/>0 Following</h5>
                                             </div>
-                                            <div className="profileActionBtn">
-                                                <FontAwesomeIcon icon={faEllipsisV} className="profileAIcon"/>
-                                            </div>
+                                            <Dropdown>
+                                                <Dropdown.Toggle className="proAction">
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item onClick={this.bioUpdateRow}>Update Bio</Dropdown.Item>
+                                                    <Dropdown.Item>Add Social Media</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
                                         </div>
                                         <div className="followSocialDiv">
                                             <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
@@ -171,6 +227,19 @@ class ProfilePage extends Component {
                                             <FontAwesomeIcon icon={faTwitter} className="fIcon"/>
                                         </div>
                                     </div>
+                                </Col>
+                            </Row>
+                            <Row className={this.state.updateRow}>
+                                <Col md={6}>
+                                    <Form.Control type="text" placeholder="Enter Bio .." className="formInput" id="bio" value={this.state.bio} onChange={e => this.setState({ bio: e.target.value })}/>
+                                </Col>
+                                <Col md={6}>
+                                    <Button variant="primary" className="formBtn mt-1" onClick={this.updateBio}>
+                                        Update
+                                    </Button>
+                                    <Button variant="primary" className="formBtn mt-1 ml-1" onClick={this.onCancel}>
+                                        Cancel
+                                    </Button>
                                 </Col>
                             </Row>
 

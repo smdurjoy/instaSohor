@@ -302,6 +302,20 @@ body {
     font-size: 13px;
 }
 
+.proAction {
+    background: transparent !important;
+    color: var(--fontColor) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.proAction:hover {
+    background: transparent !important;
+    color: var(--fontColor) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
 .followDiv {
     float: right;
 }
@@ -312,7 +326,7 @@ body {
     padding: 5px;
     color: var(--fontColorOther);
     margin-top: 24px;
-    margin-right: -12px;
+    margin-right: -30px;
 }
 
 .followSocialDiv {

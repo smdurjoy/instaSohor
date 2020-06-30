@@ -29,4 +29,10 @@ class UserController extends Controller
             return 0;
         }
     }
+
+    function updateBio(Request $request) {
+        $id = $request->input('id');
+        $bio = $request->input('bio');
+        User::where('id', $id)->update(['bio' => $bio]);
+    }
 }

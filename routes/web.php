@@ -9,6 +9,7 @@ Route::post('/createPost', 'PostController@createPost');
 // user route
 Route::get('/getUserData', 'UserController@getUserData');
 Route::post('/updateUserData', 'UserController@updateUserData');
+Route::post('/updateBio', 'UserController@updateBio');
 
 Route::get('/', function () {
     return view('index');

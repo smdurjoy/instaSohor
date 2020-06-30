@@ -65070,8 +65070,15 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       bio: "",
       image: "",
       id: "",
-      postButtonText: "Add Post"
+      postButtonText: "Add Post",
+      updateRow: "d-none",
+      showUpdateRow: false
     };
+    _this.getPosts = _this.getPosts.bind(_assertThisInitialized(_this));
+    _this.postFunction = _this.postFunction.bind(_assertThisInitialized(_this));
+    _this.bioUpdateRow = _this.bioUpdateRow.bind(_assertThisInitialized(_this));
+    _this.onCancel = _this.onCancel.bind(_assertThisInitialized(_this));
+    _this.updateBio = _this.updateBio.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -65171,8 +65178,59 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "bioUpdateRow",
+    value: function bioUpdateRow() {
+      if (this.state.showUpdateRow == false) {
+        this.setState({
+          updateRow: "contentRow",
+          showUpdateRow: true
+        });
+      } else {
+        this.setState({
+          updateRow: "d-none",
+          showUpdateRow: false
+        });
+      }
+    }
+  }, {
+    key: "onCancel",
+    value: function onCancel() {
+      this.setState({
+        updateRow: "d-none",
+        showUpdateRow: false
+      });
+      this.componentDidMount();
+    }
+  }, {
+    key: "updateBio",
+    value: function updateBio() {
+      var _this5 = this;
+
+      var id = document.getElementById('postBtn').getAttribute('data-id');
+      var bio = document.getElementById('bio').value;
+      axios__WEBPACK_IMPORTED_MODULE_9___default.a.post('/updateBio', {
+        id: id,
+        bio: bio
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this5.setState({
+            updateRow: "d-none",
+            showUpdateRow: false
+          });
+
+          _this5.componentDidMount();
+        } else {
+          alert('hoy nai bhai');
+        }
+      })["catch"](function (error) {
+        alert('hoy nai bhai');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this6 = this;
+
       var posts = this.state.posts;
       var myView = posts.map(function (data) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
@@ -65256,12 +65314,11 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         className: "followDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "followInfo"
-      }, "0 Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "0 Following")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "profileActionBtn"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEllipsisV"],
-        className: "profileAIcon"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "0 Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "0 Following")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Dropdown"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Dropdown"].Toggle, {
+        className: "proAction"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Dropdown"].Menu, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Dropdown"].Item, {
+        onClick: this.bioUpdateRow
+      }, "Update Bio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Dropdown"].Item, null, "Add Social Media")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "followSocialDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
         icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faFacebook"],
@@ -65273,6 +65330,31 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTwitter"],
         className: "fIcon"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
+        className: this.state.updateRow
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+        md: 6
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Form"].Control, {
+        type: "text",
+        placeholder: "Enter Bio ..",
+        className: "formInput",
+        id: "bio",
+        value: this.state.bio,
+        onChange: function onChange(e) {
+          return _this6.setState({
+            bio: e.target.value
+          });
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+        md: 6
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+        variant: "primary",
+        className: "formBtn mt-1",
+        onClick: this.updateBio
+      }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+        variant: "primary",
+        className: "formBtn mt-1 ml-1",
+        onClick: this.onCancel
+      }, "Cancel"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
         className: "contentRow"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
         md: 6,
