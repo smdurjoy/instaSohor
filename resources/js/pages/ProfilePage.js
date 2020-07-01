@@ -9,7 +9,7 @@ import {
     Dropdown,
     DropdownButton,
     Form,
-    FormControl,
+    FormControl, Modal,
     Row
 } from "react-bootstrap";
 import profileImg from '../../images/pro.jpeg';
@@ -51,7 +51,10 @@ class ProfilePage extends Component {
             id: "",
             postButtonText: "Add Post",
             updateRow: "d-none",
-            showUpdateRow: false
+            showUpdateRow: false,
+
+            updatePostData: "",
+            modalShow: false,
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -59,6 +62,9 @@ class ProfilePage extends Component {
         this.bioUpdateRow = this.bioUpdateRow.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.updateBio = this.updateBio.bind(this);
+        this.modalHideShow = this.modalHideShow.bind(this);
+        this.updatePost = this.updatePost.bind(this);
+        this.editPost = this.editPost.bind(this);
     }
     componentDidMount() {
         window.scroll(0,0);
@@ -116,26 +122,34 @@ class ProfilePage extends Component {
         let postData = document.getElementById('postArea').value;
         let userId = document.getElementById('postBtn').getAttribute('data-id');
 
-        document.getElementById('postBtn').innerHTML = "Posting ...";
-        Axios.post('/createPost', {
-            user_id: userId,
-            post_data: postData
-        }).then((response) => {
-            if(response.status == 200 && response.data == 1) {
-                document.getElementById('postBtn').innerHTML = "Posted";
-                setTimeout(function () {
-                    document.getElementById('postBtn').innerHTML = "Add Post";
-                }, 3000);
-                document.getElementById('postArea').value='';
-                this.componentDidMount();
-            } else {
+        if(postData == "") {
+            document.getElementById('postBtn').innerHTML = "Write something";
+            setTimeout(function () {
+                document.getElementById('postBtn').innerHTML = "Add Post";
+            }, 3000);
+        } else {
+            document.getElementById('postBtn').innerHTML = "Posting ...";
+            Axios.post('/createPost', {
+                user_id: userId,
+                post_data: postData
+            }).then((response) => {
+                if(response.status == 200 && response.data == 1) {
+                    document.getElementById('postBtn').innerHTML = "Posted";
+                    setTimeout(function () {
+                        document.getElementById('postBtn').innerHTML = "Add Post";
+                    }, 3000);
+                    document.getElementById('postArea').value='';
+                    this.componentDidMount();
+                } else {
+                    document.getElementById('postBtn').innerHTML = "Failed";
+                }
+            }).catch(error => {
                 document.getElementById('postBtn').innerHTML = "Failed";
-            }
-        }).catch(error => {
-            document.getElementById('postBtn').innerHTML = "Failed";
-        })
+            })
+        }
     }
 
+    // show bio update row on click
     bioUpdateRow() {
         if(this.state.showUpdateRow == false) {
             this.setState({updateRow: "contentRow", showUpdateRow:true})
@@ -144,11 +158,13 @@ class ProfilePage extends Component {
         }
     }
 
+    // hide bio update row on cancel button click
     onCancel() {
         this.setState({updateRow: "d-none", showUpdateRow:false});
         this.componentDidMount();
     }
 
+    // update bio method
     updateBio() {
         let id = document.getElementById('postBtn').getAttribute('data-id');
         let bio = document.getElementById('bio').value;
@@ -168,16 +184,73 @@ class ProfilePage extends Component {
         })
     }
 
+    // show post update modal on click && get update post data
+    modalHideShow() {
+        if(this.state.modalShow == false) {
+            this.setState({modalShow: true});
+            const postId = document.getElementById('post').getAttribute('post-id');
+            Axios.post('/getUpdatePostData', {id:postId}).then((response) => {
+                if(response.status == 200) {
+                    this.setState({updatePostData: response.data[0]['post_data']})
+                } else {
+                    alert('error')
+                }
+            }).catch((error) => {
+                alert('error')
+            })
+        } else {
+            this.setState({modalShow: false})
+        }
+    }
+
+    editPost() {
+        const id = document.getElementById('post').getAttribute('post-id');
+        const postData = this.state.updatePostData;
+        this.updatePost(id, postData);
+    }
+
+    // update post
+    updatePost(id, postData) {
+        Axios.post('/updatePost', {
+            id: id,
+            post_data: postData
+        }).then((response) => {
+            if(response.status == 200 && response.data == 1) {
+                this.modalHideShow();
+                this.componentDidMount();
+            } else {
+                alert('error')
+                document.getElementById('editModal').modal('onHide');
+                this.modalHideShow();
+                this.componentDidMount();
+            }
+        }).catch((error) => {
+            alert('error')
+            document.getElementById('editModal').modal('onHide');
+            this.modalHideShow();
+            this.componentDidMount();
+        })
+    }
+
     render() {
         const posts = this.state.posts;
-        const myView = posts.map(data => {
+        const myView = posts.map((data, index) => {
             return(
-                <Row className="contentRow">
-                    <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
+                <Row className="contentRow" key={index}>
+                    <Col md={11} sm={11} lg={11} xs={11} className="d-flex align-items-center">
                         <img className="chatList-images-buttons" src={profileImage}/>
                         <a href="#" className="postProfileName">{data.user.full_name}</a>
                         <p className="postTime">24 June at 11.13 am</p>
-                        <FontAwesomeIcon icon={faEllipsisV} className="postABtn"/>
+                    </Col>
+                    <Col md={1} sm={1} lg={1} xs={1} className="d-flex align-items-center">
+                        <Dropdown className="ml-auto postActionBtn">
+                            <Dropdown.Toggle className="proAction">
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={this.modalHideShow} post-id={data.id} id="post">Edit Post</Dropdown.Item>
+                                <Dropdown.Item>Delete</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Col>
                     <Col md={12} sm={12} lg={12} xs={12}>
                         <div className="post">
@@ -192,7 +265,8 @@ class ProfilePage extends Component {
                     </Col>
                 </Row>
             )
-        })
+        });
+
         return (
             <Fragment>
                 <MainLayout>
@@ -207,19 +281,19 @@ class ProfilePage extends Component {
                                     </div>
                                 </Col>
                                 <Col md={5} lg={5} sm={5}>
+                                    <Dropdown className="topActionBtn">
+                                        <Dropdown.Toggle className="proAction">
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={this.bioUpdateRow}>Update Bio</Dropdown.Item>
+                                            <Dropdown.Item>Add Social Media</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                     <div className="ownerOtherInfo">
                                         <div className="d-flex">
                                             <div className="followDiv">
                                                 <h5 className="followInfo">0 Followers <br/>0 Following</h5>
                                             </div>
-                                            <Dropdown>
-                                                <Dropdown.Toggle className="proAction">
-                                                </Dropdown.Toggle>
-                                                <Dropdown.Menu>
-                                                    <Dropdown.Item onClick={this.bioUpdateRow}>Update Bio</Dropdown.Item>
-                                                    <Dropdown.Item>Add Social Media</Dropdown.Item>
-                                                </Dropdown.Menu>
-                                            </Dropdown>
                                         </div>
                                         <div className="followSocialDiv">
                                             <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
@@ -291,6 +365,30 @@ class ProfilePage extends Component {
                             </div>
                         </div>
                     </Container>
+
+                    <Modal
+                        show={this.state.modalShow}
+                        onHide={this.state.modalShow}
+                        size="md"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        id="editModal"
+                        centered
+                    >
+                        <Modal.Header>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                                Edit Post
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>
+                                <FormControl as="textarea" id="editPost" rows="2" placeholder="Write post" className="postBox" value={this.state.updatePostData} onChange={e => this.setState({ updatePostData: e.target.value })}/>
+                            </p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.editPost}>Update</Button>
+                            <Button onClick={this.modalHideShow}>Cancel</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </MainLayout>
             </Fragment>
         );

@@ -25,4 +25,22 @@ class PostController extends Controller
             return 0;
         }
     }
+
+    function getUpdatePostData(Request $request) {
+        $id = $request->input('id');
+        $result = Post::where('id', $id)->get();
+        return $result;
+    }
+
+    function updatePost(Request $request) {
+        $id = $request->input('id');
+        $postData = $request->input('post_data');
+        $result = Post::where('id', $id)->update(['post_data' => $postData]);
+
+        if($result == true) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

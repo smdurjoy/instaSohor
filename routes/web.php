@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 //post routes
 Route::get('/getPosts', 'PostController@getPosts');
 Route::post('/createPost', 'PostController@createPost');
+Route::post('/getUpdatePostData', 'PostController@getUpdatePostData');
+Route::post('/updatePost', 'PostController@updatePost');
 
 // user route
 Route::get('/getUserData', 'UserController@getUserData');

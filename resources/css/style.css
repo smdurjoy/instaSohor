@@ -302,6 +302,12 @@ body {
     font-size: 13px;
 }
 
+.topActionBtn {
+    float: right;
+    margin-right: -15px;
+    margin-top: -10px;
+}
+
 .proAction {
     background: transparent !important;
     color: var(--fontColor) !important;
@@ -314,6 +320,18 @@ body {
     color: var(--fontColor) !important;
     border: none !important;
     box-shadow: none !important;
+}
+
+.profileDropdown {
+    float: right;
+    margin-right: 20px;
+    margin-bottom: -60px;
+    padding-bottom: 15px;
+}
+
+.postActionBtn {
+    margin-top: -45px;
+    margin-right: -10px;
 }
 
 .followDiv {
@@ -406,6 +424,7 @@ body {
     margin-left: auto;
     align-items: center;
     margin-top: 15px;
+    margin-right: -60px;
     color: var(--fontColorOther);
 }
 
