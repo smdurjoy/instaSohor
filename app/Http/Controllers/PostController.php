@@ -43,4 +43,14 @@ class PostController extends Controller
             return 0;
         }
     }
+
+    function deletePost(Request $request) {
+        $id = $request->input('id');
+        $result = Post::where('id', $id)->delete();
+        if($result == true) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

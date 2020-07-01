@@ -7,6 +7,7 @@ Route::get('/getPosts', 'PostController@getPosts');
 Route::post('/createPost', 'PostController@createPost');
 Route::post('/getUpdatePostData', 'PostController@getUpdatePostData');
 Route::post('/updatePost', 'PostController@updatePost');
+Route::post('/deletePost', 'PostController@deletePost');
 
 // user route
 Route::get('/getUserData', 'UserController@getUserData');

@@ -1,13 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import MainLayout from "../components/MainLayout";
 import {
-    Accordion,
     Button,
-    Card,
     Col,
     Container,
     Dropdown,
-    DropdownButton,
     Form,
     FormControl, Modal,
     Row
@@ -22,17 +19,17 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import {
     faBriefcase,
-    faClock, faEllipsisV,
+    faClock,
     faGraduationCap,
     faMapMarkerAlt,
     faPaperclip
 } from "@fortawesome/free-solid-svg-icons";
 import {faFacebook, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-icons";
-import {Link} from "react-router-dom";
 import profileImage from "../../images/pro.jpeg";
 import Axios from "axios";
 import loadingImage from '../../images/Loader.svg';
 import errorImage from '../../images/wentWrong.png';
+import Swal from 'sweetalert2';
 
 class ProfilePage extends Component {
     constructor() {
@@ -52,7 +49,6 @@ class ProfilePage extends Component {
             postButtonText: "Add Post",
             updateRow: "d-none",
             showUpdateRow: false,
-
             updatePostData: "",
             modalShow: false,
         }
@@ -62,13 +58,13 @@ class ProfilePage extends Component {
         this.bioUpdateRow = this.bioUpdateRow.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.updateBio = this.updateBio.bind(this);
-        this.modalHideShow = this.modalHideShow.bind(this);
+        this.updateModalHideShow = this.updateModalHideShow.bind(this);
         this.updatePost = this.updatePost.bind(this);
         this.editPost = this.editPost.bind(this);
+        this.deleteAlertHideShow = this.deleteAlertHideShow.bind(this);
     }
-    componentDidMount() {
-        window.scroll(0,0);
 
+    componentDidMount() {
         Axios.get('/getUserData').then(response => {
             if(response.status == 200) {
                 this.setState({
@@ -134,17 +130,15 @@ class ProfilePage extends Component {
                 post_data: postData
             }).then((response) => {
                 if(response.status == 200 && response.data == 1) {
-                    document.getElementById('postBtn').innerHTML = "Posted";
-                    setTimeout(function () {
-                        document.getElementById('postBtn').innerHTML = "Add Post";
-                    }, 3000);
+                    document.getElementById('postBtn').innerHTML = "Add Post";
+                    Swal.fire('Posted !')
                     document.getElementById('postArea').value='';
                     this.componentDidMount();
                 } else {
-                    document.getElementById('postBtn').innerHTML = "Failed";
+                    Swal.fire('Something Went Wrong !')
                 }
             }).catch(error => {
-                document.getElementById('postBtn').innerHTML = "Failed";
+                Swal.fire('Something Went Wrong !')
             })
         }
     }
@@ -177,15 +171,15 @@ class ProfilePage extends Component {
                 this.setState({updateRow: "d-none", showUpdateRow:false});
                 this.componentDidMount();
             } else {
-                alert('hoy nai bhai')
+                Swal.fire('Update Failed !')
             }
         }).catch((error) => {
-            alert('hoy nai bhai')
+            Swal.fire('Something Went Wrong !')
         })
     }
 
     // show post update modal on click && get update post data
-    modalHideShow() {
+    updateModalHideShow() {
         if(this.state.modalShow == false) {
             this.setState({modalShow: true});
             const postId = document.getElementById('post').getAttribute('post-id');
@@ -193,10 +187,10 @@ class ProfilePage extends Component {
                 if(response.status == 200) {
                     this.setState({updatePostData: response.data[0]['post_data']})
                 } else {
-                    alert('error')
+                    Swal.fire('Error !')
                 }
             }).catch((error) => {
-                alert('error')
+                Swal.fire('Error !')
             })
         } else {
             this.setState({modalShow: false})
@@ -216,19 +210,47 @@ class ProfilePage extends Component {
             post_data: postData
         }).then((response) => {
             if(response.status == 200 && response.data == 1) {
-                this.modalHideShow();
+                Swal.fire('Update Success !')
+                this.updateModalHideShow();
                 this.componentDidMount();
             } else {
-                alert('error')
-                document.getElementById('editModal').modal('onHide');
-                this.modalHideShow();
+                Swal.fire('Update Failed !')
+                this.updateModalHideShow();
                 this.componentDidMount();
             }
         }).catch((error) => {
-            alert('error')
-            document.getElementById('editModal').modal('onHide');
-            this.modalHideShow();
+            Swal.fire('Something Went Wrong !')
+            this.updateModalHideShow();
             this.componentDidMount();
+        })
+    }
+
+    // delete post
+    deleteAlertHideShow() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                const id = document.getElementById('post').getAttribute('post-id');
+                Axios.post('/deletePost', {
+                    id: id
+                }).then((response) => {
+                    if(response.status == 200 && response.data == 1) {
+                        Swal.fire('Delete Success !')
+                        this.componentDidMount();
+                    } else {
+                        Swal.fire('Delete Failed !')
+                    }
+                }).catch((error) => {
+                    Swal.fire('Delete Failed !')
+                })
+            }
         })
     }
 
@@ -247,8 +269,8 @@ class ProfilePage extends Component {
                             <Dropdown.Toggle className="proAction">
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={this.modalHideShow} post-id={data.id} id="post">Edit Post</Dropdown.Item>
-                                <Dropdown.Item>Delete</Dropdown.Item>
+                                <Dropdown.Item onClick={this.updateModalHideShow} post-id={data.id} id="post">Edit Post</Dropdown.Item>
+                                <Dropdown.Item onClick={this.deleteAlertHideShow}>Delete</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
@@ -386,7 +408,7 @@ class ProfilePage extends Component {
                         </Modal.Body>
                         <Modal.Footer>
                             <Button onClick={this.editPost}>Update</Button>
-                            <Button onClick={this.modalHideShow}>Cancel</Button>
+                            <Button onClick={this.updateModalHideShow}>Cancel</Button>
                         </Modal.Footer>
                     </Modal>
                 </MainLayout>
