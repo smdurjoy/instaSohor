@@ -504,6 +504,14 @@ body {
     box-shadow: none !important;
 }
 
+.homePostTime {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: auto;
+    align-items: center;
+    color: var(--fontColorOther);
+}
+
 /*friends page*/
 .topDiv {
     padding: 1rem;
@@ -638,3 +646,8 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.btn:focus {
+    box-shadow: none !important;
+}
+

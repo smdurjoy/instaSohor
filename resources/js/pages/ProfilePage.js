@@ -30,6 +30,8 @@ import Axios from "axios";
 import loadingImage from '../../images/Loader.svg';
 import errorImage from '../../images/wentWrong.png';
 import Swal from 'sweetalert2';
+import siteLogo from "../../images/siteLogo.svg";
+import ProfileTop from "../components/profileTop";
 
 class ProfilePage extends Component {
     constructor() {
@@ -62,6 +64,7 @@ class ProfilePage extends Component {
         this.updatePost = this.updatePost.bind(this);
         this.editPost = this.editPost.bind(this);
         this.deleteAlertHideShow = this.deleteAlertHideShow.bind(this);
+        this.changeBio = this.changeBio.bind(this);
     }
 
     componentDidMount() {
@@ -205,24 +208,29 @@ class ProfilePage extends Component {
 
     // update post
     updatePost(id, postData) {
-        Axios.post('/updatePost', {
-            id: id,
-            post_data: postData
-        }).then((response) => {
-            if(response.status == 200 && response.data == 1) {
-                Swal.fire('Update Success !')
+        const updatePostData = this.state.updatePostData;
+        if(updatePostData == "") {
+            Swal.fire('Please Write Something !')
+        } else {
+            Axios.post('/updatePost', {
+                id: id,
+                post_data: postData
+            }).then((response) => {
+                if(response.status == 200 && response.data == 1) {
+                    Swal.fire('Update Success !')
+                    this.updateModalHideShow();
+                    this.componentDidMount();
+                } else {
+                    Swal.fire('Update Failed !')
+                    this.updateModalHideShow();
+                    this.componentDidMount();
+                }
+            }).catch((error) => {
+                Swal.fire('Something Went Wrong !')
                 this.updateModalHideShow();
                 this.componentDidMount();
-            } else {
-                Swal.fire('Update Failed !')
-                this.updateModalHideShow();
-                this.componentDidMount();
-            }
-        }).catch((error) => {
-            Swal.fire('Something Went Wrong !')
-            this.updateModalHideShow();
-            this.componentDidMount();
-        })
+            })
+        }
     }
 
     // delete post
@@ -252,6 +260,10 @@ class ProfilePage extends Component {
                 })
             }
         })
+    }
+
+    changeBio(event) {
+        this.setState({ bio: event.target.value })
     }
 
     render() {
@@ -291,86 +303,24 @@ class ProfilePage extends Component {
 
         return (
             <Fragment>
-                <MainLayout>
+                <MainLayout title={this.state.full_name}>
                     <Container>
                         <div className="profile">
-                            <Row className="contentRow">
-                                <Col md={7} lg={7} sm={7} className="d-flex">
-                                    <img className="profileImage" src={profileImg}/>
-                                    <div className="ownerInfo">
-                                        <h1 className="profileTopName mt-1">{this.state.full_name}</h1>
-                                        <h5 className="bio">{this.state.bio}</h5>
-                                    </div>
-                                </Col>
-                                <Col md={5} lg={5} sm={5}>
-                                    <Dropdown className="topActionBtn">
-                                        <Dropdown.Toggle className="proAction">
-                                        </Dropdown.Toggle>
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item onClick={this.bioUpdateRow}>Update Bio</Dropdown.Item>
-                                            <Dropdown.Item>Add Social Media</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                    <div className="ownerOtherInfo">
-                                        <div className="d-flex">
-                                            <div className="followDiv">
-                                                <h5 className="followInfo">0 Followers <br/>0 Following</h5>
-                                            </div>
-                                        </div>
-                                        <div className="followSocialDiv">
-                                            <FontAwesomeIcon icon={faFacebook} className="fIcon"/>
-                                            <FontAwesomeIcon icon={faInstagram} className="fIcon"/>
-                                            <FontAwesomeIcon icon={faTwitter} className="fIcon"/>
-                                        </div>
-                                    </div>
-                                </Col>
-                            </Row>
-                            <Row className={this.state.updateRow}>
-                                <Col md={6}>
-                                    <Form.Control type="text" placeholder="Enter Bio .." className="formInput" id="bio" value={this.state.bio} onChange={e => this.setState({ bio: e.target.value })}/>
-                                </Col>
-                                <Col md={6}>
-                                    <Button variant="primary" className="formBtn mt-1" onClick={this.updateBio}>
-                                        Update
-                                    </Button>
-                                    <Button variant="primary" className="formBtn mt-1 ml-1" onClick={this.onCancel}>
-                                        Cancel
-                                    </Button>
-                                </Col>
-                            </Row>
+                            <ProfileTop
+                                fullName ={ this.state.full_name}
+                                bio = { this.state.bio }
+                                updateBioMethod = { this.bioUpdateRow }
+                                rowClass = { this.state.updateRow }
+                                changeBio = { this.changeBio }
+                                updateBio = { this.updateBio }
+                                onCancel = { this.onCancel }
+                                address = { this.state.address }
+                                work = { this.state.work }
+                                education = { this.state.education }
+                                id = { this.state.id }
+                                postFunction = { this.postFunction }
+                            />
 
-                            <Row className="contentRow">
-                                <Col md={6} lg={6} sm={6} xs={6}>
-                                    <p> <FontAwesomeIcon icon={faMapMarkerAlt} className="fIcon mt-3"/> From {this.state.address}</p>
-                                    <p> <FontAwesomeIcon icon={faBriefcase} className="fIcon"/> Works at {this.state.work}</p>
-                                </Col>
-                                <Col md={6} lg={6} sm={6} xs={6}>
-                                    <div className="float-right">
-                                    <p> <FontAwesomeIcon icon={faGraduationCap} className="fIcon mt-3"/> Studies at {this.state.education}</p>
-                                    <p> <FontAwesomeIcon icon={faClock} className="fIcon"/> Joined June 2020 </p>
-                                    </div>
-                                </Col>
-                            </Row>
-
-                            <Row className="contentRow">
-                                <Col md={12} sm={12} lg={12} xs={12}>
-                                    <Row>
-                                        <Col>
-                                            <FormControl as="textarea" id="postArea" rows="3" placeholder="Write a post ..." className="postBox" />
-                                        </Col>
-                                    </Row>
-                                    <Row className="postBottom">
-                                        <Col xs={6} sm={6} lg={6} md={6} className="postIcons">
-                                            <a href="#"><FontAwesomeIcon icon={faPaperclip} className="postIcon"/></a>
-                                            <a href="#"><FontAwesomeIcon icon={faImage} className="postIcon"/></a>
-                                            <a href="#"><FontAwesomeIcon icon={faLaugh} className="postIcon"/></a>
-                                        </Col>
-                                        <Col xs={6} sm={6} lg={6} md={6}>
-                                            <Button className="btn btn-primary postButton" id="postBtn" data-id={this.state.id} onClick={this.postFunction}>Add Post</Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
                             <h5 className="newsFeedTitle mt-4">Posts</h5>
                             <div>
                                 <Row className={this.state.isLoading}>
@@ -403,12 +353,12 @@ class ProfilePage extends Component {
                         </Modal.Header>
                         <Modal.Body>
                             <p>
-                                <FormControl as="textarea" id="editPost" rows="2" placeholder="Write post" className="postBox" value={this.state.updatePostData} onChange={e => this.setState({ updatePostData: e.target.value })}/>
+                                <FormControl as="textarea"  rows="2" placeholder="Edit post ..." className="postBox" value={this.state.updatePostData} onChange={e => this.setState({ updatePostData: e.target.value })}/>
                             </p>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button onClick={this.editPost}>Update</Button>
-                            <Button onClick={this.updateModalHideShow}>Cancel</Button>
+                            <Button onClick={this.updateModalHideShow} className="btn btn-danger">Cancel</Button>
                         </Modal.Footer>
                     </Modal>
                 </MainLayout>

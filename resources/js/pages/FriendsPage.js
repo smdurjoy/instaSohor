@@ -8,7 +8,7 @@ class FriendsPage extends Component {
     render() {
         return (
             <Fragment>
-                <MainLayout>
+                <MainLayout title="Friends">
                     <div className="topDiv">
                         <Row className="contentRow">
                            <Col md={6}>

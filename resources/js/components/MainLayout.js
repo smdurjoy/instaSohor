@@ -14,6 +14,7 @@ class MainLayout extends Component {
     render() {
         return (
             <Fragment>
+                <title>{this.props.title}</title>
                 <div className="left-component">
                     <div className="left-component-wrapper">
                         <h2 className="brandName"><img className="siteLogo mb-1" src={siteLogo}/>nsTaSohor</h2>

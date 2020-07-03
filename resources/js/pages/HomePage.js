@@ -14,7 +14,7 @@ class HomePage extends Component {
     render() {
         return (
             <Fragment>
-                <MainLayout>
+                <MainLayout title="Home">
                     <Row className="homePostRow">
                         <Col md={12} sm={12} lg={12} xs={12}>
                             <Row className="homePost">
@@ -41,7 +41,7 @@ class HomePage extends Component {
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
                                 <a href="#" className="postProfileName">Hanna Bekar</a>
-                                <p className="postTime">12 June at 2.13 am</p>
+                                <p className="homePostTime">12 June at 2.13 am</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
                                 <div className="post">
@@ -60,7 +60,7 @@ class HomePage extends Component {
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
                                 <a href="#" className="postProfileName">Clay Jenson</a>
-                                <p className="postTime">29 May at 10.23 pm</p>
+                                <p className="homePostTime">29 May at 10.23 pm</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
                                 <div className="post">
@@ -79,7 +79,7 @@ class HomePage extends Component {
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
                                 <a href="#" className="postProfileName">Justin Foley</a>
-                                <p className="postTime">29 May at 10.23 pm</p>
+                                <p className="homePostTime">29 May at 10.23 pm</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
                                 <div className="post">
@@ -98,7 +98,7 @@ class HomePage extends Component {
                             <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
                                 <img className="chatList-images-buttons" src={profileImage}/>
                                 <a href="#" className="postProfileName">Jessica Devis</a>
-                                <p className="postTime">05 July at 05.18 pm</p>
+                                <p className="homePostTime">05 July at 05.18 pm</p>
                             </Col>
                             <Col md={12} sm={12} lg={12} xs={12}>
                                 <div className="post">

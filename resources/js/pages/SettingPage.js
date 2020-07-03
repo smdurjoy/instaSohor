@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {Button, Col, Form, Row} from "react-bootstrap";
 import MainLayout from "../components/MainLayout";
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 class SettingPage extends Component {
     constructor() {
@@ -77,19 +78,19 @@ class SettingPage extends Component {
             work: work,
         }).then((response) => {
             if(response.status == 200 && response.data == 1) {
-                alert('success');
+                Swal.fire('Update Success !')
             } else {
-                alert('hoy nai')
+                Swal.fire('Update Failed !')
             }
         }).catch((error) => {
-            alert('hoy nai')
+            Swal.fire('Update Failed !')
         })
     }
 
     render() {
         return (
             <Fragment>
-                <MainLayout>
+                <MainLayout title="Setting">
                     <div className="topDiv">
                         <Row className="contentRow">
                             <Col md={6}>

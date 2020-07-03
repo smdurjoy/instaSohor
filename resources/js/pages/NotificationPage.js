@@ -8,7 +8,7 @@ class NotificationPage extends Component {
     render() {
         return (
             <Fragment>
-                <MainLayout>
+                <MainLayout title="Notification">
                     <div className="topDiv">
                         <Row className="contentRow">
                             <h5 className="ml-auto mr-auto notificationTitle">Notifications</h5>
