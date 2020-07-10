@@ -18,9 +18,15 @@ class loginRegController extends Controller
         $count = User::where('user_name', $userName)->where('password', $password)->count();
 
         if($count == 1) {
+            $request->session()->put('userNameKey', $userName);
             return "1";
         } else {
             return "0";
         }
+    }
+
+    function onLogout(Request $request) {
+        $request->session()->flush('userNameKey');
+        return redirect('/login-register');
     }
 }

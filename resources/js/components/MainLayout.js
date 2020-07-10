@@ -1,16 +1,38 @@
 import React, {Component, Fragment} from 'react';
-import {Button, Col, FormControl, Row} from "react-bootstrap";
+import {Dropdown, Col, FormControl, Row, DropdownButton} from "react-bootstrap";
 import siteLogo from '../../images/siteLogo.svg';
 import profileImage from '../../images/pro.jpeg';
 import chatTopImage from '../../images/chats.svg';
-import {NavLink} from "react-router-dom";
-import {faPlus, faSortUp} from "@fortawesome/free-solid-svg-icons";
+import {NavLink, Link} from "react-router-dom";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Axios from 'axios';
 
 class MainLayout extends Component {
     constructor(props) {
         super();
+        this.state = {
+            logoutbtnShow: false,
+            logoutbtn: 'd-none'
+        }
+
+        this.logoutBtnShow = this.logoutBtnShow.bind(this);
+        this.logout = this.logout.bind(this);
     }
+
+    logoutBtnShow() {
+        if(this.state.logoutbtnShow == false) {
+            this.setState({logoutbtnShow: true, logoutbtn: 'logoutBtn'})
+        } else {
+            this.setState({logoutbtnShow: false, logoutbtn: 'd-none'})
+        }
+    }
+
+    logout() {
+        Axios.get('/logout')
+        window.location.href = "/login-register"
+    }
+
     render() {
         return (
             <Fragment>
@@ -35,12 +57,25 @@ class MainLayout extends Component {
                                     <Col md={3} lg={3}>
                                         <img className="bottom-profile-image" src={profileImage}/>
                                     </Col>
-                                    <Col md={7} lg={7}>
+                                    <Col md={6} lg={6}>
                                         <h2 className="profileName mt-1">DurJoy RudDro</h2>
                                         <h4 className="online">Online</h4>
                                     </Col>
-                                    <Col md={1} lg={1}>
-                                        <FontAwesomeIcon icon={faSortUp} className="bottomAIcon"/>
+                                    <Col md={2} lg={2}>
+                                        <Dropdown className="logoutBtn"
+                                            key="up"
+                                            id="dropdown-button-drop-up"
+                                            drop="up"
+                                            variant="secondary"
+                                            alignRight
+                                        >
+                                            <Dropdown.Toggle className="proAction">
+                                            </Dropdown.Toggle>
+                                            
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown> 
                                     </Col>
                                 </Row>
                             </div>
@@ -109,7 +144,7 @@ class MainLayout extends Component {
                                     </Row>
                                 </div>
                                 <div className="newChatBtnDiv">
-                                    <p className="btn newChatBtn"><FontAwesomeIcon icon={faPlus} />  New Chat</p>
+                                    <p className="btn newChatBtn"> <FontAwesomeIcon icon={faPlus} />  New Chat</p>
                                 </div>
                             </div>
                         </div>

@@ -241,7 +241,22 @@ body {
 
 .bottomAIcon {
     font-size: 14px;
-    margin-top: 9px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.logoutBtn {
+    margin-top: -5px;
+}
+
+.logout {
+    text-decoration: none;
+    color: var(--fontColor);
+}
+
+.logout:hover {
+    text-decoration: none;
+    color: var(--fontColor);
 }
 
 /* children's */

@@ -21,8 +21,8 @@
                     <div class="loginRegPanel">
                         <form class="loginRegForm">
                             <p id="errorId" class="errorMsg d-none"></p>
-                            <input type="text" class="form-control formInput mb-4" id="userName" placeholder="User Name" required>
-                            <input type="password" class="form-control formInput mb-4" id="password" placeholder="Password" required>
+                            <input type="text" class="form-control formInput mb-4" id="userName" placeholder="User Name">
+                            <input type="password" class="form-control formInput mb-4" id="password" placeholder="Password">
 
                             <div class="row d-flex justify-content-around">
                                 <div class="custom-control custom-checkbox">
@@ -81,8 +81,11 @@
         </div>
 
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
     <script type="text/javascript" >
-        document.getElementById("loginBtn").addEventListener("click", function(event){
+        // login function
+        const loginBtn =  document.getElementById("loginBtn")
+        loginBtn.addEventListener("click", function(event){
             event.preventDefault()
             const userName = document.getElementById('userName').value;
             const password = document.getElementById('password').value;
@@ -98,18 +101,24 @@
                 const xHttp = new XMLHttpRequest;
                 xHttp.onreadystatechange = function() {
                     if(this.readyState == 4 && this.status == 200) {
+                        loginBtn.disabled = true;
+                        loginBtn.innerText = "Login in..."
                         if(this.responseText == "1") {
                             window.location.href = "/";
                         } else {
                             error.classList.remove('d-none');
                             error.innerText = "Incorrect Username or Password";
+                            loginBtn.disabled = false;
+                            loginBtn.innerText = "Sign In"
                         }
                     }
                 }
-            xHttp.open('GET', '/onLogin/'+userName+'/'+password, true)
-            xHttp.send()
+                xHttp.open('GET', '/onLogin/'+userName+'/'+password, true)
+                xHttp.send()
             }
         });
+
+        // login register tabs
         const tabButtons=document.querySelectorAll(".tabContainer .buttonContainer button");
         const tabPanels=document.querySelectorAll(".tabContainer .loginRegPanel");
 
