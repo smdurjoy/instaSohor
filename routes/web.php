@@ -14,6 +14,13 @@ Route::get('/getUserData', 'UserController@getUserData');
 Route::post('/updateUserData', 'UserController@updateUserData');
 Route::post('/updateBio', 'UserController@updateBio');
 
+// like count
+Route::get('/isLike', 'LikeCommentController@isLike');
+Route::get('/likeCount', 'LikeCommentController@likeCount');
+
+// login register 
+Route::get('/login-register', 'loginRegController@loginRegPage');
+
 Route::get('/', function () {
     return view('index');
 });

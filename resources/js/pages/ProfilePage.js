@@ -5,33 +5,21 @@ import {
     Col,
     Container,
     Dropdown,
-    Form,
     FormControl, Modal,
     Row
 } from "react-bootstrap";
-import profileImg from '../../images/pro.jpeg';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faComments,
-    faHeart,
-    faImage,
-    faLaugh,
+    faHeart
 } from "@fortawesome/free-regular-svg-icons";
-import {
-    faBriefcase,
-    faClock,
-    faGraduationCap,
-    faMapMarkerAlt,
-    faPaperclip
-} from "@fortawesome/free-solid-svg-icons";
-import {faFacebook, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import profileImage from "../../images/pro.jpeg";
 import Axios from "axios";
 import loadingImage from '../../images/Loader.svg';
 import errorImage from '../../images/wentWrong.png';
 import Swal from 'sweetalert2';
-import siteLogo from "../../images/siteLogo.svg";
 import ProfileTop from "../components/profileTop";
+import {faHeartbeat} from "@fortawesome/free-solid-svg-icons";
 
 class ProfilePage extends Component {
     constructor() {
@@ -53,6 +41,8 @@ class ProfilePage extends Component {
             showUpdateRow: false,
             updatePostData: "",
             modalShow: false,
+            isLike: false,
+            heartIcon: faHeart
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -65,6 +55,7 @@ class ProfilePage extends Component {
         this.editPost = this.editPost.bind(this);
         this.deleteAlertHideShow = this.deleteAlertHideShow.bind(this);
         this.changeBio = this.changeBio.bind(this);
+        this.likeCount = this.likeCount.bind(this);
     }
 
     componentDidMount() {
@@ -266,6 +257,20 @@ class ProfilePage extends Component {
         this.setState({ bio: event.target.value })
     }
 
+    handleClick(e){
+        console.log(e.target.id);
+    }
+
+    likeCount() {
+        const likeId = document.getElementById('likeCol').getAttribute('like-id')
+        console.log(likeId)
+        if(this.state.isLike == false) {
+            this.setState({isLike: true, heartIcon: faHeartbeat})
+        } else {
+            this.setState({isLike: false, heartIcon: faHeart})
+        }
+    }
+
     render() {
         const posts = this.state.posts;
         const myView = posts.map((data, index) => {
@@ -291,11 +296,11 @@ class ProfilePage extends Component {
                             <p>{data.post_data}</p>
                         </div>
                     </Col>
-                    <Col md={12} sm={12} lg={12} xs={12}>
+                    <Col md={12} sm={12} lg={12} xs={12} like-id={data.id} id="likeCol">
                         <div>
                             <h5 className="postActionCount"> 19 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">5</span> <FontAwesomeIcon icon={faComments}/> </h5>
-                            <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
-                        </div>
+                            <a onClick={this.likeCount} href="#" className="postActions" id={index}> <FontAwesomeIcon icon={this.state.heartIcon}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
+                        </div>  
                     </Col>
                 </Row>
             )
