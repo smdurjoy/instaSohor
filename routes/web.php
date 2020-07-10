@@ -20,6 +20,7 @@ Route::get('/likeCount', 'LikeCommentController@likeCount');
 
 // login register 
 Route::get('/login-register', 'loginRegController@loginRegPage');
+Route::get('/onLogin/{userName}/{password}', 'loginRegController@onLogin');
 
 Route::get('/', function () {
     return view('index');

@@ -659,6 +659,10 @@ body {
     border-radius: 20px !important;
 }
 
+.border {
+    border: 2px solid red;
+}
+
 .tabContainer .buttonContainer{
     height: 10%;
 }
@@ -711,4 +715,11 @@ body {
 
 .signInBtn:hover {
     color: var(--bodyBackground) !important;
+}
+
+.errorMsg {
+    background: red;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 16px;
 }
