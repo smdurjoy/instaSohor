@@ -25,9 +25,9 @@
                             <input type="password" class="form-control formInput mb-4" id="password" placeholder="Password">
 
                             <div class="row d-flex justify-content-around">
-                                <div class="custom-control custom-checkbox">
+                                <div class="d-flex">
                                     <input type="checkbox" class="form-check-input">
-                                    <label class="custom-control-label labels" for="defaultLoginFormRemember">Remember me</label>
+                                    <label class="labels" for="checkBox">Remember me</label>
                                 </div>
                                 <a href="" class="labels">Forgot password?</a>
                             </div>
@@ -44,19 +44,19 @@
                         </form>
                     </div>
                     <div class="loginRegPanel">
-                        <form class="loginRegForm">
-                            <input type="text" id="defaultRegisterFormFirstName" class="form-control formInput mb-3" placeholder="Your Name *">
-                            <input type="text" id="defaultRegisterFormLastName" class="form-control formInput mb-3" placeholder="Username *">
-                            <input type="email" id="defaultRegisterFormEmail" class="form-control mb-3 formInput" placeholder="E-mail">
-                            <input type="password" id="defaultRegisterFormPassword" class="form-control formInput mb-3" placeholder="Password *" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-                            <input type="password" id="defaultRegisterFormPassword" class="form-control formInput mb-3" placeholder="Confirm Password *" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                        <form class="loginRegForm" id="regForm">
+                            <input type="text" id="name" class="form-control formInput mb-3" placeholder="Your Name *">
+                            <input type="text" id="username" class="form-control formInput mb-3" placeholder="Username *">
+                            <input type="email" id="email" class="form-control mb-3 formInput" placeholder="E-mail">
+                            <input type="password" id="pass" class="form-control formInput mb-3" placeholder="Password *">
+                            <input type="password" id="confirmPass" class="form-control formInput mb-3" placeholder="Confirm Password *">
                             <div class="d-flex justify-content-around mt-4">
                                 <p class="labels">Choose Gender:</p>
-                                <label class="labels"><input type="radio" name="optradio"> Male</label>
-                                <label class="labels"><input type="radio" name="optradio"> Female</label>
+                                <label class="labels"><input type="radio" name="gender" value="male"> Male</label>
+                                <label class="labels"><input type="radio" name="gender" value="female"> Female</label>
                             </div>
                             <p class="labels mt-2">* fields are mandatory</p>
-                            <button class="btn my-3 btn-block signInBtn" type="submit">Sign Up</button>
+                            <button class="btn my-3 btn-block signInBtn" id="signUp">Sign Up</button>
                             <p class="labels">
                                 Already a member? <a href="javascript:void(0)" onclick="showPanel(0,'#fefefe')">Login</a>
                             </p>
@@ -81,63 +81,6 @@
         </div>
 
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
-    <script type="text/javascript" >
-        // login function
-        const loginBtn =  document.getElementById("loginBtn")
-        loginBtn.addEventListener("click", function(event){
-            event.preventDefault()
-            const userName = document.getElementById('userName').value;
-            const password = document.getElementById('password').value;
-            let error = document.getElementById('errorId');
-
-            if(userName == "") {
-                error.classList.remove('d-none');
-                error.innerText = "Username is required";
-            } else if(password == "") {
-                error.classList.remove('d-none');
-                error.innerText = "Password is required";
-            } else {
-                const xHttp = new XMLHttpRequest;
-                xHttp.onreadystatechange = function() {
-                    if(this.readyState == 4 && this.status == 200) {
-                        loginBtn.disabled = true;
-                        loginBtn.innerText = "Login in..."
-                        if(this.responseText == "1") {
-                            window.location.href = "/";
-                        } else {
-                            error.classList.remove('d-none');
-                            error.innerText = "Incorrect Username or Password";
-                            loginBtn.disabled = false;
-                            loginBtn.innerText = "Sign In"
-                        }
-                    }
-                }
-                xHttp.open('GET', '/onLogin/'+userName+'/'+password, true)
-                xHttp.send()
-            }
-        });
-
-        // login register tabs
-        const tabButtons=document.querySelectorAll(".tabContainer .buttonContainer button");
-        const tabPanels=document.querySelectorAll(".tabContainer .loginRegPanel");
-
-        function showPanel(panelIndex,colorCode) {
-            tabButtons.forEach(function(node){
-                node.style.backgroundColor = "";
-                node.style.color = "";
-            });
-            tabButtons[panelIndex].style.backgroundColor = colorCode;
-            tabButtons[panelIndex].style.color = "#1b1e21";
-
-            tabPanels.forEach(function(node){
-                node.style.display = "none";
-            });
-            tabPanels[panelIndex].style.display = "block";
-            tabPanels[panelIndex].style.backgroundColor = colorCode;
-        }
-        showPanel(0,'#fefefe');
-    </script>
-
+    <script type="text/javascript" src="{{ asset('js/loginReg.js') }}"></script>
     </body>
 </html>

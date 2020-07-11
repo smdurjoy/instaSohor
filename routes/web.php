@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login-register', 'loginRegController@loginRegPage');
 Route::get('/onLogin/{userName}/{password}', 'loginRegController@onLogin');
 Route::get('/logout', 'loginRegController@onLogout');
+Route::post('/register', 'loginRegController@onRegister');
 
 
 Route::group(['middleware' => 'loginCheck'], function() {

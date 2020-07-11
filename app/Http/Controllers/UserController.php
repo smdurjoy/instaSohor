@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    function getUserData() {
-        $result = User::all();
+    function getUserData(Request $request) {
+        $username = $request->session()->get('userNameKey');
+        $result = User::where('user_name', $username)->get();
         return $result;
     }
 

@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     function getPosts() {
-        $result = Post::with('user')->orderBy('id', 'desc')->get();
+        $result = Post::with('user')->whereHas('user', function($query) {
+            $username = session()->get('userNameKey');
+            $query->where('user_name', $username);
+        })->orderBy('id', 'desc')->get();
+
         $result = json_decode(json_encode($result), true);
 //        echo "<pre>"; print_r($result); die();
         return $result;
