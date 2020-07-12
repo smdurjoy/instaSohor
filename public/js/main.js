@@ -68546,7 +68546,8 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       updatePostData: "",
       modalShow: false,
       isLike: false,
-      heartIcon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faHeart"]
+      heartIcon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faHeart"],
+      msgRow: 'd-none'
     };
     _this.getPosts = _this.getPosts.bind(_assertThisInitialized(_this));
     _this.postFunction = _this.postFunction.bind(_assertThisInitialized(_this));
@@ -68637,6 +68638,7 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       var postData = document.getElementById('postArea').value;
       var userId = document.getElementById('postBtn').getAttribute('data-id');
       var postButton = document.getElementById('postBtn');
+      var msg = document.getElementById('msg');
 
       if (postData == "") {
         postButton.innerHTML = "Write something";
@@ -68653,8 +68655,18 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           if (response.status == 200 && response.data == 1) {
             postButton.innerHTML = "Add Post";
             postButton.disabled = false;
-            sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Posted !');
+
+            _this4.setState({
+              msgRow: "alertMessage"
+            });
+
+            msg.innerText = "Post has been created successfully !";
             document.getElementById('postArea').value = '';
+            setTimeout(function () {
+              this.setState({
+                msgRow: 'd-none'
+              });
+            }.bind(_this4), 4000);
 
             _this4.componentDidMount();
           } else {
@@ -68770,20 +68782,49 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           post_data: postData
         }).then(function (response) {
           if (response.status == 200 && response.data == 1) {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Update Success !');
+            var _msg = document.getElementById('msg');
+
+            _this7.setState({
+              msgRow: "alertMessage"
+            });
+
+            _msg.innerText = "Post has been updated successfully !";
+            setTimeout(function () {
+              this.setState({
+                msgRow: 'd-none'
+              });
+            }.bind(_this7), 4000);
 
             _this7.updateModalHideShow();
 
             _this7.componentDidMount();
           } else {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Update Failed !');
+            _this7.setState({
+              msgRow: "alertMessage"
+            });
+
+            msg.innerText = "Post updated failed !";
+            setTimeout(function () {
+              this.setState({
+                msgRow: 'd-none'
+              });
+            }.bind(_this7), 4000);
 
             _this7.updateModalHideShow();
 
             _this7.componentDidMount();
           }
         })["catch"](function (error) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Something Went Wrong !');
+          _this7.setState({
+            msgRow: "alertMessage"
+          });
+
+          msg.innerText = "Something Went Wrong !";
+          setTimeout(function () {
+            this.setState({
+              msgRow: 'd-none'
+            });
+          }.bind(_this7), 4000);
 
           _this7.updateModalHideShow();
 
@@ -68812,14 +68853,43 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
             id: id
           }).then(function (response) {
             if (response.status == 200 && response.data == 1) {
-              sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Delete Success !');
+              var _msg2 = document.getElementById('msg');
+
+              _this8.setState({
+                msgRow: "alertMessage"
+              });
+
+              _msg2.innerHTML = "Post has been Deleted successfully !";
+              setTimeout(function () {
+                this.setState({
+                  msgRow: 'd-none'
+                });
+              }.bind(_this8), 4000);
 
               _this8.componentDidMount();
             } else {
-              sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Delete Failed !');
+              _this8.setState({
+                msgRow: "alertMessage"
+              });
+
+              msg.innerText = "Delete Failed !";
+              setTimeout(function () {
+                this.setState({
+                  msgRow: 'd-none'
+                });
+              }.bind(_this8), 4000);
             }
           })["catch"](function (error) {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Delete Failed !');
+            _this8.setState({
+              msgRow: "alertMessage"
+            });
+
+            msg.innerText = "Something Went Wrong !";
+            setTimeout(function () {
+              this.setState({
+                msgRow: 'd-none'
+              });
+            }.bind(_this8), 4000);
           });
         }
       });
@@ -68932,7 +69002,10 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
         title: this.state.full_name
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: this.state.msgRow,
+        id: "msg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "profile"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_profileTop__WEBPACK_IMPORTED_MODULE_10__["default"], {
         fullName: this.state.full_name,
@@ -69075,7 +69148,8 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       newPassHidden: true,
       confPassHidden: true,
       validationMsg: 'd-none',
-      updateMsg: 'd-none'
+      updateBtnText: 'Update',
+      msgRow: 'd-none'
     };
     _this.updatePass = _this.updatePass.bind(_assertThisInitialized(_this));
     _this.passHideShow = _this.passHideShow.bind(_assertThisInitialized(_this));
@@ -69167,7 +69241,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       var crntPassHelp = document.getElementById('crntPassHelp');
       var newPassHelp = document.getElementById('newPassHelp');
       var confPassHelp = document.getElementById('confPassHelp');
-      var uMsg = document.getElementById('updateMsg');
+      var passUpdateBtn = document.getElementById('passUpdateBtn');
 
       if (crntPass == "") {
         this.setState({
@@ -69198,35 +69272,91 @@ var SettingPage = /*#__PURE__*/function (_Component) {
           crntPass: crntPass,
           newPass: newPass
         }).then(function (response) {
+          _this3.setState({
+            updateBtnText: "Updating ..."
+          });
+
+          passUpdateBtn.disabled = true;
+
           if (response.status == 200 && response.data == 1) {
+            document.getElementById('crntPass').value = "";
+            document.getElementById('newPass').value = "";
+            document.getElementById('confNewPass').value = "";
+
+            var _msg = document.getElementById('msg');
+
+            passUpdateBtn.disabled = false;
+            _msg.innerText = "Password has been updated successfully !";
+
             _this3.setState({
-              updateMsg: 'text-center infoTitle mb-3 mt-2'
+              updateMsg: 'text-center infoTitle mb-3 mt-2',
+              updateBtnText: 'Update',
+              msgRow: "alertMessage"
             });
 
-            uMsg.innerText = "Password has been updated !";
             setTimeout(function () {
               this.setState({
-                updateMsg: 'd-none'
+                msgRow: 'd-none'
               });
-            }.bind(_this3), 3000);
+            }.bind(_this3), 4000);
           } else if (response.data == 2) {
+            passUpdateBtn.disabled = false;
+
             _this3.setState({
-              updateMsg: 'text-center infoTitle mb-3 mt-2'
+              updateMsg: 'text-center infoTitle mb-3 mt-2',
+              updateBtnText: 'Update',
+              msgRow: "alertMessage"
             });
 
-            uMsg.innerText = "Your current password didn't match !";
-            uMsg.style.background = 'red';
-            uMsg.style.color = 'white';
+            msg.innerText = "Your current password didn't match !";
+            msg.style.background = '#FFD2D2';
+            msg.style.color = '#D8000C';
             setTimeout(function () {
               this.setState({
-                updateMsg: 'd-none'
+                msgRow: 'd-none'
               });
-            }.bind(_this3), 3000);
+              msg.style.background = '#DFF2BF';
+              msg.style.color = '#4F8A10';
+            }.bind(_this3), 4000);
           } else {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Something Went Wrong !');
+            passUpdateBtn.disabled = false;
+
+            _this3.setState({
+              updateMsg: 'text-center infoTitle mb-3 mt-2',
+              updateBtnText: 'Update',
+              msgRow: "alertMessage"
+            });
+
+            msg.innerText = "Something Went Wrong !";
+            msg.style.background = '#FFD2D2';
+            msg.style.color = '#D8000C';
+            setTimeout(function () {
+              this.setState({
+                msgRow: 'd-none'
+              });
+              msg.style.background = '#DFF2BF';
+              msg.style.color = '#4F8A10';
+            }.bind(_this3), 4000);
           }
         })["catch"](function (error) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Something Went Wrong !');
+          passUpdateBtn.disabled = false;
+
+          _this3.setState({
+            updateMsg: 'text-center infoTitle mb-3 mt-2',
+            updateBtnText: 'Update',
+            msgRow: "alertMessage"
+          });
+
+          msg.innerText = "Something Went Wrong !";
+          msg.style.background = '#FFD2D2';
+          msg.style.color = '#D8000C';
+          setTimeout(function () {
+            this.setState({
+              msgRow: 'd-none'
+            });
+            msg.style.background = '#DFF2BF';
+            msg.style.color = '#4F8A10';
+          }.bind(_this3), 4000);
         });
       }
     }
@@ -69258,7 +69388,10 @@ var SettingPage = /*#__PURE__*/function (_Component) {
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
         title: "Setting"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: this.state.msgRow,
+        id: "msg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "topDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
         className: "contentRow"
@@ -69342,10 +69475,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         md: 6
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "text-center infoTitle mb-3"
-      }, "Change Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: this.state.updateMsg,
-        id: "updateMsg"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Change Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "inputDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: this.state.crntPassHidden ? "password" : "text",
@@ -69390,8 +69520,9 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: "primary",
         className: "formBtn",
-        onClick: this.updatePass
-      }, "Update"))))));
+        onClick: this.updatePass,
+        id: "passUpdateBtn"
+      }, this.state.updateBtnText))))));
     }
   }]);
 

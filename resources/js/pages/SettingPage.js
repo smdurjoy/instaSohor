@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Button, Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Row, Fade} from "react-bootstrap";
 import MainLayout from "../components/MainLayout";
 import Axios from "axios";
 import Swal from "sweetalert2";
@@ -23,7 +23,8 @@ class SettingPage extends Component {
             newPassHidden: true,
             confPassHidden: true,
             validationMsg: 'd-none',
-            updateMsg: 'd-none'
+            updateBtnText: 'Update',
+            msgRow: 'd-none'
         }
 
         this.updatePass = this.updatePass.bind(this);
@@ -102,13 +103,13 @@ class SettingPage extends Component {
 
     updatePass() {
         const id = document.getElementById('submitBtn').getAttribute('userid');
-        const crntPass = document.getElementById('crntPass').value;
-        const newPass = document.getElementById('newPass').value;
-        const confNewPass = document.getElementById('confNewPass').value;
+        let crntPass = document.getElementById('crntPass').value;
+        let newPass = document.getElementById('newPass').value;
+        let confNewPass = document.getElementById('confNewPass').value;
         let crntPassHelp = document.getElementById('crntPassHelp');
         let newPassHelp = document.getElementById('newPassHelp');
         let confPassHelp = document.getElementById('confPassHelp');
-        let uMsg = document.getElementById('updateMsg');
+        let passUpdateBtn = document.getElementById('passUpdateBtn');
 
         if(crntPass == "") {
             this.setState({validationMsg: 'validationMsgReact'});
@@ -133,26 +134,54 @@ class SettingPage extends Component {
                 crntPass: crntPass,
                 newPass: newPass
             }).then((response) => {
+                this.setState({updateBtnText: "Updating ..."});
+                passUpdateBtn.disabled = true;
                 if(response.status == 200 && response.data == 1) {
-                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2'})
-                    uMsg.innerText = "Password has been updated !";
+                    document.getElementById('crntPass').value = "";
+                    document.getElementById('newPass').value = "";
+                    document.getElementById('confNewPass').value = "";
+                    let msg = document.getElementById('msg');
+                    passUpdateBtn.disabled = false;
+                    msg.innerText = "Password has been updated successfully !";
+                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
                     setTimeout(function(){ 
-                        this.setState({updateMsg: 'd-none'})
-                    }.bind(this), 3000);
+                        this.setState({msgRow: 'd-none'}); 
+                    }.bind(this), 4000);
 
                 } else if(response.data == 2){
-                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2'})
-                    uMsg.innerText = "Your current password didn't match !";
-                    uMsg.style.background = 'red';
-                    uMsg.style.color = 'white';
+                    passUpdateBtn.disabled = false;
+                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
+                    msg.innerText = "Your current password didn't match !";
+                    msg.style.background = '#FFD2D2';
+                    msg.style.color = '#D8000C';
                     setTimeout(function(){ 
-                        this.setState({updateMsg: 'd-none'});
-                    }.bind(this), 3000);
+                        this.setState({msgRow: 'd-none'});
+                        msg.style.background = '#DFF2BF';
+                        msg.style.color = '#4F8A10';
+                    }.bind(this), 4000);
                 } else {
-                    Swal.fire('Something Went Wrong !')
+                    passUpdateBtn.disabled = false;
+                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
+                    msg.innerText = "Something Went Wrong !";
+                    msg.style.background = '#FFD2D2';
+                    msg.style.color = '#D8000C';
+                    setTimeout(function(){ 
+                        this.setState({msgRow: 'd-none'});
+                        msg.style.background = '#DFF2BF';
+                        msg.style.color = '#4F8A10';
+                    }.bind(this), 4000);
                 }
             }).catch((error) => {
-                Swal.fire('Something Went Wrong !')
+                passUpdateBtn.disabled = false;
+                this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
+                msg.innerText = "Something Went Wrong !";
+                msg.style.background = '#FFD2D2';
+                msg.style.color = '#D8000C';
+                setTimeout(function(){ 
+                    this.setState({msgRow: 'd-none'});
+                    msg.style.background = '#DFF2BF';
+                    msg.style.color = '#4F8A10';
+                }.bind(this), 4000);
             })
         }
     }
@@ -173,6 +202,7 @@ class SettingPage extends Component {
         return (
             <Fragment>
                 <MainLayout title="Setting">
+                    <p className={this.state.msgRow} id="msg"></p>
                     <div className="topDiv">
                         <Row className="contentRow">
                             <Col md={6}>
@@ -208,7 +238,6 @@ class SettingPage extends Component {
 
                             <Col md={6}>
                                 <h5 className="text-center infoTitle mb-3">Change Password</h5>
-                                <h5 className={this.state.updateMsg} id="updateMsg"></h5>
                                 <Form.Group>
                                     <div className="inputDiv">
                                         <Form.Control type={this.state.crntPassHidden ? "password" : "text"} id="crntPass" placeholder="Enter Current Password" className="formInput"/>
@@ -230,8 +259,8 @@ class SettingPage extends Component {
                                     </div>
                                     <Form.Text className={this.state.validationMsg} id="confPassHelp"></Form.Text>
                                 </Form.Group>
-                                <Button variant="primary" className="formBtn" onClick={this.updatePass}>
-                                    Update
+                                <Button variant="primary" className="formBtn" onClick={this.updatePass} id="passUpdateBtn">
+                                    {this.state.updateBtnText}
                                 </Button>
                             </Col>
                         </Row>

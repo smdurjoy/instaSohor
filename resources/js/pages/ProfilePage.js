@@ -19,7 +19,7 @@ import loadingImage from '../../images/Loader.svg';
 import errorImage from '../../images/wentWrong.png';
 import Swal from 'sweetalert2';
 import ProfileTop from "../components/profileTop";
-import {faHeartbeat} from "@fortawesome/free-solid-svg-icons";
+import {faHeartbeat, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 
 class ProfilePage extends Component {
     constructor() {
@@ -42,7 +42,8 @@ class ProfilePage extends Component {
             updatePostData: "",
             modalShow: false,
             isLike: false,
-            heartIcon: faHeart
+            heartIcon: faHeart,
+            msgRow: 'd-none'
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -112,6 +113,7 @@ class ProfilePage extends Component {
         const postData = document.getElementById('postArea').value;
         const userId = document.getElementById('postBtn').getAttribute('data-id');
         const postButton = document.getElementById('postBtn');
+        let msg = document.getElementById('msg');
 
         if(postData == "") {
             postButton.innerHTML = "Write something";
@@ -128,8 +130,12 @@ class ProfilePage extends Component {
                 if(response.status == 200 && response.data == 1) {
                     postButton.innerHTML = "Add Post";
                     postButton.disabled = false;
-                    Swal.fire('Posted !')
+                    this.setState({msgRow: "alertMessage"})
+                    msg.innerText = "Post has been created successfully !"
                     document.getElementById('postArea').value='';
+                    setTimeout(function(){ 
+                        this.setState({msgRow: 'd-none'});
+                    }.bind(this), 4000);
                     this.componentDidMount();
                 } else {
                     Swal.fire('Something Went Wrong !')
@@ -211,16 +217,29 @@ class ProfilePage extends Component {
                 post_data: postData
             }).then((response) => {
                 if(response.status == 200 && response.data == 1) {
-                    Swal.fire('Update Success !')
+                    let msg = document.getElementById('msg');
+                    this.setState({msgRow: "alertMessage"})
+                    msg.innerText = "Post has been updated successfully !"
+                    setTimeout(function(){ 
+                        this.setState({msgRow: 'd-none'});
+                    }.bind(this), 4000);
                     this.updateModalHideShow();
                     this.componentDidMount();
                 } else {
-                    Swal.fire('Update Failed !')
+                    this.setState({msgRow: "alertMessage"})
+                    msg.innerText = "Post updated failed !"
+                    setTimeout(function(){ 
+                    this.setState({msgRow: 'd-none'});
+                    }.bind(this), 4000);
                     this.updateModalHideShow();
                     this.componentDidMount();
                 }
             }).catch((error) => {
-                Swal.fire('Something Went Wrong !')
+                this.setState({msgRow: "alertMessage"})
+                msg.innerText = "Something Went Wrong !"
+                setTimeout(function(){ 
+                    this.setState({msgRow: 'd-none'});
+                }.bind(this), 4000);
                 this.updateModalHideShow();
                 this.componentDidMount();
             })
@@ -244,13 +263,26 @@ class ProfilePage extends Component {
                     id: id
                 }).then((response) => {
                     if(response.status == 200 && response.data == 1) {
-                        Swal.fire('Delete Success !')
+                        let msg = document.getElementById('msg');
+                        this.setState({msgRow: "alertMessage"})
+                        msg.innerHTML = "Post has been Deleted successfully !"
+                        setTimeout(function(){ 
+                            this.setState({msgRow: 'd-none'});
+                        }.bind(this), 4000);
                         this.componentDidMount();
                     } else {
-                        Swal.fire('Delete Failed !')
+                        this.setState({msgRow: "alertMessage"})
+                        msg.innerText = "Delete Failed !"
+                        setTimeout(function(){ 
+                            this.setState({msgRow: 'd-none'});
+                        }.bind(this), 4000);
                     }
                 }).catch((error) => {
-                    Swal.fire('Delete Failed !')
+                    this.setState({msgRow: "alertMessage"})
+                    msg.innerText = "Something Went Wrong !"
+                    setTimeout(function(){ 
+                        this.setState({msgRow: 'd-none'});
+                    }.bind(this), 4000);
                 })
             }
         })
@@ -312,6 +344,7 @@ class ProfilePage extends Component {
         return (
             <Fragment>
                 <MainLayout title={this.state.full_name}>
+                    <p className={this.state.msgRow} id="msg"></p>
                     <Container>
                         <div className="profile">
                             <ProfileTop
