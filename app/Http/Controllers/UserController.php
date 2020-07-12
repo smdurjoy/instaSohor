@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,5 +36,25 @@ class UserController extends Controller
         $id = $request->input('id');
         $bio = $request->input('bio');
         User::where('id', $id)->update(['bio' => $bio]);
+    }
+
+    function updatePass(Request $request) {
+        $id = $request->input('id');
+        $crntPass =$request->input('crntPass');
+        $newPass = Hash::make($request->input('newPass'));
+
+        $user = User::where('id', $id)->first();
+        
+        if(!Hash::check($crntPass, $user->password)) {
+            return 2;
+        }
+        
+        $result = User::where('id', $id)->update(['password' => $newPass]);
+
+        if($result == true) {
+            return 1;
+        }
+
+        return 0;
     }
 }

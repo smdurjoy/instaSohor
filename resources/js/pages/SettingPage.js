@@ -3,6 +3,8 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import MainLayout from "../components/MainLayout";
 import Axios from "axios";
 import Swal from "sweetalert2";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 class SettingPage extends Component {
     constructor() {
@@ -16,7 +18,18 @@ class SettingPage extends Component {
             address: "",
             education: "",
             work: "",
+            fIcon: faEyeSlash,
+            crntPassHidden: true,
+            newPassHidden: true,
+            confPassHidden: true,
+            validationMsg: 'd-none',
+            updateMsg: 'd-none'
         }
+
+        this.updatePass = this.updatePass.bind(this);
+        this.passHideShow = this.passHideShow.bind(this);
+        this.newPass = this.newPass.bind(this);
+        this.confPass = this.confPass.bind(this);
     }
 
     componentDidMount() {
@@ -88,12 +101,72 @@ class SettingPage extends Component {
     }
 
     updatePass() {
-        let id = document.getElementById('submitBtn').getAttribute('userid');
-        let crntPass = document.getElementById('crntPass').value;
-        let newPass = document.getElementById('newPass').value;
-        let confNewPass = document.getElementById('confNewPass').value;
+        const id = document.getElementById('submitBtn').getAttribute('userid');
+        const crntPass = document.getElementById('crntPass').value;
+        const newPass = document.getElementById('newPass').value;
+        const confNewPass = document.getElementById('confNewPass').value;
+        let crntPassHelp = document.getElementById('crntPassHelp');
+        let newPassHelp = document.getElementById('newPassHelp');
+        let confPassHelp = document.getElementById('confPassHelp');
+        let uMsg = document.getElementById('updateMsg');
 
-        alert(id+'--'+crntPass+'--'+newPass+'--'+confNewPass)
+        if(crntPass == "") {
+            this.setState({validationMsg: 'validationMsgReact'});
+            crntPassHelp.innerText = "Please type your current password";
+        }
+        else if(newPass == "") {
+            this.setState({validationMsg: 'validationMsgReact'});
+            newPassHelp.innerText = "Please type new password";
+        }
+        else if(confNewPass == "") {
+            this.setState({validationMsg: 'validationMsgReact'});
+            confPassHelp.innerText = "Please confirm your password";
+        }
+        else if(newPass !== confNewPass) {
+            this.setState({validationMsg: 'validationMsgReact'});
+            confPassHelp.innerText = "Password didn't match !";
+        } 
+        else {
+            this.setState({validationMsg: 'd-none'});
+            Axios.post('/updatePass', {
+                id: id,
+                crntPass: crntPass,
+                newPass: newPass
+            }).then((response) => {
+                if(response.status == 200 && response.data == 1) {
+                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2'})
+                    uMsg.innerText = "Password has been updated !";
+                    setTimeout(function(){ 
+                        this.setState({updateMsg: 'd-none'})
+                    }.bind(this), 3000);
+
+                } else if(response.data == 2){
+                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2'})
+                    uMsg.innerText = "Your current password didn't match !";
+                    uMsg.style.background = 'red';
+                    uMsg.style.color = 'white';
+                    setTimeout(function(){ 
+                        this.setState({updateMsg: 'd-none'});
+                    }.bind(this), 3000);
+                } else {
+                    Swal.fire('Something Went Wrong !')
+                }
+            }).catch((error) => {
+                Swal.fire('Something Went Wrong !')
+            })
+        }
+    }
+
+    passHideShow() {
+        this.setState({ crntPassHidden: !this.state.crntPassHidden });
+    }
+
+    newPass() {
+        this.setState({ newPassHidden: !this.state.newPassHidden });
+    }
+
+    confPass() {
+        this.setState({ confPassHidden: !this.state.confPassHidden });
     }
 
     render() {
@@ -135,14 +208,27 @@ class SettingPage extends Component {
 
                             <Col md={6}>
                                 <h5 className="text-center infoTitle mb-3">Change Password</h5>
+                                <h5 className={this.state.updateMsg} id="updateMsg"></h5>
                                 <Form.Group>
-                                    <Form.Control type="password" id="crntPass" placeholder="Enter Current Password" className="formInput"/>
+                                    <div className="inputDiv">
+                                        <Form.Control type={this.state.crntPassHidden ? "password" : "text"} id="crntPass" placeholder="Enter Current Password" className="formInput"/>
+                                        <FontAwesomeIcon icon={this.state.fIcon} className="passIcon" onClick={this.passHideShow}/>
+                                    </div>
+                                    <Form.Text className={this.state.validationMsg} id="crntPassHelp"></Form.Text>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Control type="password" id="newPass" placeholder="Enter New Password" className="formInput"/>
+                                    <div className="inputDiv">
+                                        <Form.Control type={this.state.newPassHidden ? "password" : "text"} id="newPass" placeholder="Enter New Password" className="formInput"/>
+                                        <FontAwesomeIcon icon={this.state.fIcon} className="passIcon" onClick={this.newPass}/>                
+                                    </div>
+                                    <Form.Text className={this.state.validationMsg} id="newPassHelp"></Form.Text>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Control type="password" id="confNewPass" placeholder="Enter Confirm New Password" className="formInput"/>
+                                    <div className="inputDiv">
+                                        <Form.Control type={this.state.confPassHidden ? "password" : "text"} id="confNewPass" placeholder="Enter Confirm New Password" className="formInput"/>
+                                        <FontAwesomeIcon icon={this.state.fIcon} className="passIcon" onClick={this.confPass}/>                
+                                    </div>
+                                    <Form.Text className={this.state.validationMsg} id="confPassHelp"></Form.Text>
                                 </Form.Group>
                                 <Button variant="primary" className="formBtn" onClick={this.updatePass}>
                                     Update

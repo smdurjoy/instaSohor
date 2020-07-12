@@ -21,12 +21,15 @@
                     </div>
                     <div class="loginRegPanel">
                         <form class="loginRegForm">
-                            <p id="errorId" class="errorMsg d-none"></p>
+                        <p id="errorId" class="errorMsg d-none"></p>
                             <input type="text" class="form-control formInput mb-4" id="userName" placeholder="User Name">
-                            <input type="password" class="form-control formInput mb-4" id="password" placeholder="Password">
+                            <div class="inputDiv">
+                                <input type="password" class="form-control formInput mb-4" id="password" placeholder="Password">
+                                <i class="fas fa-eye-slash passIcon" id="passIconL" onclick="passHideShow('password', 'passIconL')"></i>
+                            </div>
 
                             <div class="row d-flex justify-content-around">
-                                <div class="d-flex">
+                                <div class="d-flex align-items-center">
                                     <input type="checkbox" class="form-check-input">
                                     <label class="labels" for="checkBox">Remember me</label>
                                 </div>
@@ -40,12 +43,28 @@
                     </div>
                     <div class="loginRegPanel">
                         <form class="loginRegForm" id="regForm">
-                            <p id="errorReg" class="errorMsg d-none"></p>
+                        <p id="errorReg" class="errorMsg d-none"></p>
                             <input type="text" id="name" class="form-control formInput mb-3" placeholder="Your Name *">
+                            <small id="nameHelp" class="form-text validationMsg d-none"></small>
+
                             <input type="text" id="username" class="form-control formInput mb-3" placeholder="Username *">
-                            <input type="email" id="email" class="form-control mb-3 formInput" placeholder="E-mail">
-                            <input type="password" id="pass" class="form-control formInput mb-3" placeholder="Password *">
-                            <input type="password" id="confirmPass" class="form-control formInput mb-3" placeholder="Confirm Password *">
+                            <small id="userNameHelp" class="form-text validationMsg d-none"></small>
+
+                            <input type="email" id="email" class="form-control mb-3 formInput" placeholder="E-mail *">
+                            <small id="emailHelp" class="form-text validationMsg d-none"></small>
+        
+                            <div class="inputDiv">
+                                <input type="password" id="pass" class="form-control formInput mb-3" placeholder="Password *">
+                                <i class="fas fa-eye-slash passIcon" id="passIcon" onclick="passHideShow('pass', 'passIcon')"></i>
+                            </div>
+                            <small id="passHelp" class="form-text validationMsg d-none"></small>
+                            
+                            <div class="inputDiv">
+                                <input type="password" id="confirmPass" class="form-control formInput mb-3" placeholder="Confirm Password *">
+                                <i class="fas fa-eye-slash passIcon" id="passIconC" onclick="passHideShow('confirmPass', 'passIconC')"></i>
+                            </div>
+
+                            <small id="cnfPassHelp" class="form-text validationMsg d-none"></small>
                             <div class="d-flex justify-content-around mt-4">
                                 <p class="labels">Choose Gender:</p>
                                 <label class="labels"><input type="radio" name="gender" value="male"> Male</label>

@@ -69018,6 +69018,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69046,6 +69048,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var SettingPage = /*#__PURE__*/function (_Component) {
   _inherits(SettingPage, _Component);
 
@@ -69065,8 +69069,18 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       bio: "",
       address: "",
       education: "",
-      work: ""
+      work: "",
+      fIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"],
+      crntPassHidden: true,
+      newPassHidden: true,
+      confPassHidden: true,
+      validationMsg: 'd-none',
+      updateMsg: 'd-none'
     };
+    _this.updatePass = _this.updatePass.bind(_assertThisInitialized(_this));
+    _this.passHideShow = _this.passHideShow.bind(_assertThisInitialized(_this));
+    _this.newPass = _this.newPass.bind(_assertThisInitialized(_this));
+    _this.confPass = _this.confPass.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -69144,16 +69158,103 @@ var SettingPage = /*#__PURE__*/function (_Component) {
   }, {
     key: "updatePass",
     value: function updatePass() {
+      var _this3 = this;
+
       var id = document.getElementById('submitBtn').getAttribute('userid');
       var crntPass = document.getElementById('crntPass').value;
       var newPass = document.getElementById('newPass').value;
       var confNewPass = document.getElementById('confNewPass').value;
-      alert(id + '--' + crntPass + '--' + newPass + '--' + confNewPass);
+      var crntPassHelp = document.getElementById('crntPassHelp');
+      var newPassHelp = document.getElementById('newPassHelp');
+      var confPassHelp = document.getElementById('confPassHelp');
+      var uMsg = document.getElementById('updateMsg');
+
+      if (crntPass == "") {
+        this.setState({
+          validationMsg: 'validationMsgReact'
+        });
+        crntPassHelp.innerText = "Please type your current password";
+      } else if (newPass == "") {
+        this.setState({
+          validationMsg: 'validationMsgReact'
+        });
+        newPassHelp.innerText = "Please type new password";
+      } else if (confNewPass == "") {
+        this.setState({
+          validationMsg: 'validationMsgReact'
+        });
+        confPassHelp.innerText = "Please confirm your password";
+      } else if (newPass !== confNewPass) {
+        this.setState({
+          validationMsg: 'validationMsgReact'
+        });
+        confPassHelp.innerText = "Password didn't match !";
+      } else {
+        this.setState({
+          validationMsg: 'd-none'
+        });
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/updatePass', {
+          id: id,
+          crntPass: crntPass,
+          newPass: newPass
+        }).then(function (response) {
+          if (response.status == 200 && response.data == 1) {
+            _this3.setState({
+              updateMsg: 'text-center infoTitle mb-3 mt-2'
+            });
+
+            uMsg.innerText = "Password has been updated !";
+            setTimeout(function () {
+              this.setState({
+                updateMsg: 'd-none'
+              });
+            }.bind(_this3), 3000);
+          } else if (response.data == 2) {
+            _this3.setState({
+              updateMsg: 'text-center infoTitle mb-3 mt-2'
+            });
+
+            uMsg.innerText = "Your current password didn't match !";
+            uMsg.style.background = 'red';
+            uMsg.style.color = 'white';
+            setTimeout(function () {
+              this.setState({
+                updateMsg: 'd-none'
+              });
+            }.bind(_this3), 3000);
+          } else {
+            sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Something Went Wrong !');
+          }
+        })["catch"](function (error) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Something Went Wrong !');
+        });
+      }
+    }
+  }, {
+    key: "passHideShow",
+    value: function passHideShow() {
+      this.setState({
+        crntPassHidden: !this.state.crntPassHidden
+      });
+    }
+  }, {
+    key: "newPass",
+    value: function newPass() {
+      this.setState({
+        newPassHidden: !this.state.newPassHidden
+      });
+    }
+  }, {
+    key: "confPass",
+    value: function confPass() {
+      this.setState({
+        confPassHidden: !this.state.confPassHidden
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
         title: "Setting"
@@ -69172,7 +69273,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "fullName",
         value: this.state.full_name,
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             full_name: e.target.value
           });
         }
@@ -69183,7 +69284,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "userName",
         value: this.state.user_name,
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             user_name: e.target.value
           });
         }
@@ -69194,7 +69295,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "email",
         value: this.state.email,
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             email: e.target.value
           });
         }
@@ -69205,7 +69306,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "address",
         value: this.state.address,
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             address: e.target.value
           });
         }
@@ -69216,7 +69317,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "education",
         value: this.state.education,
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             education: e.target.value
           });
         }
@@ -69227,7 +69328,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "work",
         value: this.state.work,
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             work: e.target.value
           });
         }
@@ -69241,21 +69342,51 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         md: 6
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "text-center infoTitle mb-3"
-      }, "Change Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
-        type: "password",
+      }, "Change Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: this.state.updateMsg,
+        id: "updateMsg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inputDiv"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        type: this.state.crntPassHidden ? "password" : "text",
         id: "crntPass",
         placeholder: "Enter Current Password",
         className: "formInput"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
-        type: "password",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"], {
+        icon: this.state.fIcon,
+        className: "passIcon",
+        onClick: this.passHideShow
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
+        className: this.state.validationMsg,
+        id: "crntPassHelp"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inputDiv"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        type: this.state.newPassHidden ? "password" : "text",
         id: "newPass",
         placeholder: "Enter New Password",
         className: "formInput"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
-        type: "password",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"], {
+        icon: this.state.fIcon,
+        className: "passIcon",
+        onClick: this.newPass
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
+        className: this.state.validationMsg,
+        id: "newPassHelp"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inputDiv"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        type: this.state.confPassHidden ? "password" : "text",
         id: "confNewPass",
         placeholder: "Enter Confirm New Password",
         className: "formInput"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"], {
+        icon: this.state.fIcon,
+        className: "passIcon",
+        onClick: this.confPass
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
+        className: this.state.validationMsg,
+        id: "confPassHelp"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: "primary",
         className: "formBtn",

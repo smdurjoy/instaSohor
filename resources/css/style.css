@@ -739,6 +739,31 @@ body {
     font-size: 16px;
 }
 
+.validationMsg {
+    color: red;
+    font-size: 14px;
+    text-align: left;
+    margin-top: -15px;
+}
+
+.validationMsgReact {
+    color: red;
+    font-size: 14px;
+}
+
+.inputDiv {
+    display: flex;
+    width: 100%;
+}
+
+.passIcon {
+    font-size: 14px;
+    color: var(--fontColor);
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: -15px;
+}
+
 /* scrollbar */
 ::-webkit-scrollbar {
     width: 10px;

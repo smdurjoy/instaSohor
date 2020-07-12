@@ -20,6 +20,7 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::get('/getUserData', 'UserController@getUserData');
     Route::post('/updateUserData', 'UserController@updateUserData');
     Route::post('/updateBio', 'UserController@updateBio');
+    Route::post('/updatePass', 'UserController@updatePass');
 
     // like count
     Route::get('/isLike', 'LikeCommentController@isLike');

@@ -40,6 +40,11 @@ loginBtn.addEventListener("click", function(event){
 // Register function
 const signUp = document.getElementById('signUp');
 let errorReg = document.getElementById('errorReg');
+let nameHelp = document.getElementById('nameHelp');
+let userNameHelp = document.getElementById('userNameHelp');
+let emailHelp = document.getElementById('emailHelp');
+let passHelp = document.getElementById('passHelp');
+let cnfPassHelp = document.getElementById('cnfPassHelp');
 
 signUp.addEventListener('click', function(e) {
     e.preventDefault();
@@ -52,28 +57,28 @@ signUp.addEventListener('click', function(e) {
     const gender = form.elements["gender"].value;
 
     if(name == "") {
-        errorReg.classList.remove('d-none');
-        errorReg.innerText = "You must enter your name !";
+        nameHelp.classList.remove('d-none');
+        nameHelp.innerText = "You must enter your name !";
     }
     else if(username == "") {
-        errorReg.classList.remove('d-none');
-        errorReg.innerText = "You must enter your username !";
+        userNameHelp.classList.remove('d-none');
+        userNameHelp.innerText = "You must enter your username !";
     }
     else if(email == "") {
-        errorReg.classList.remove('d-none');
-        errorReg.innerText = "You must enter your email !";
+        emailHelp.classList.remove('d-none');
+        emailHelp.innerText = "You must enter your email !";
     }
     else if(pass == "") {
-        errorReg.classList.remove('d-none');
-        errorReg.innerText = "You must enter your password !";
+        passHelp.classList.remove('d-none');
+        passHelp.innerText = "You must enter your password !";
     }
     else if(confirmPass == "") {
-        errorReg.classList.remove('d-none');
-        errorReg.innerText = "Please confirm your password !";
+        cnfPassHelp.classList.remove('d-none');
+        cnfPassHelp.innerText = "Please confirm your password !";
     } 
     else if(pass != confirmPass) {
-        errorReg.classList.remove('d-none');
-        errorReg.innerText = "Password didn't match !";
+        cnfPassHelp.classList.remove('d-none');
+        cnfPassHelp.innerText = "Password didn't match !";
     }
     else {
         axios.post('/register', {
@@ -95,6 +100,22 @@ signUp.addEventListener('click', function(e) {
         });
     }
 });
+
+// Password hide show
+function passHideShow(pass, passI) {
+    let password = document.getElementById(pass);
+    let passIcon = document.getElementById(passI);
+
+    if(password.type === 'password') {
+        password.type = 'text';
+        passIcon.classList.remove('fa-eye-slash');
+        passIcon.classList.add('fa-eye');
+    } else {
+        password.type = 'password';
+        passIcon.classList.remove('fa-eye');
+        passIcon.classList.add('fa-eye-slash');
+    }
+}
 
 // login register tabs
 const tabButtons=document.querySelectorAll(".tabContainer .buttonContainer button");
