@@ -13,11 +13,24 @@ class MainLayout extends Component {
         super();
         this.state = {
             logoutbtnShow: false,
-            logoutbtn: 'd-none'
+            logoutbtn: 'd-none',
+            profileName: ""
         }
 
         this.logoutBtnShow = this.logoutBtnShow.bind(this);
         this.logout = this.logout.bind(this);
+    }
+
+    componentDidMount() {
+        Axios.get('/getUserData').then((response) => {
+            if(response.status == 200) {
+                this.setState({profileName: response.data[0]['full_name']})
+            } else {
+                this.setState({profileName: "---"})
+            }
+        }).catch((error) => {
+            this.setState({profileName: "---"})
+        })
     }
 
     logoutBtnShow() {
@@ -58,7 +71,7 @@ class MainLayout extends Component {
                                         <img className="bottom-profile-image" src={profileImage}/>
                                     </Col>
                                     <Col md={6} lg={6}>
-                                        <h2 className="profileName mt-1">DurJoy RudDro</h2>
+                                        <h2 className="profileName mt-1">{this.state.profileName}</h2>
                                         <h4 className="online">Online</h4>
                                     </Col>
                                     <Col md={2} lg={2}>

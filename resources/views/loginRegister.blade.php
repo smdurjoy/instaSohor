@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ URL::asset('/images/siteLogo.svg') }}" type="image/x-icon"/>
         <title>insTaSohor</title>
+        <meta name="csrf-token" id="metaToken" content="{{ csrf_token() }}">
     </head>
     <body>
         <div class="container text-center">
@@ -34,17 +35,12 @@
                             <button class="btn btn-block my-3 signInBtn" id="loginBtn">Sign in</button>
                             <p class="labels">
                                 Not a member? <a href="javascript:void(0)" onclick="showPanel(1,'#fefefe')">Register</a>
-                            </p>
-                            <!-- Social login -->
-                            <p class="labels">or sign in with:</p>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+                            </p> 
                         </form>
                     </div>
                     <div class="loginRegPanel">
                         <form class="loginRegForm" id="regForm">
+                            <p id="errorReg" class="errorMsg d-none"></p>
                             <input type="text" id="name" class="form-control formInput mb-3" placeholder="Your Name *">
                             <input type="text" id="username" class="form-control formInput mb-3" placeholder="Username *">
                             <input type="email" id="email" class="form-control mb-3 formInput" placeholder="E-mail">
@@ -60,14 +56,6 @@
                             <p class="labels">
                                 Already a member? <a href="javascript:void(0)" onclick="showPanel(0,'#fefefe')">Login</a>
                             </p>
-                            <!-- Social register -->
-                            <p class="labels">or sign up with:</p>
-
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
-                            <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
-
                             <hr>
                             <!-- Terms of service -->
                             <p class="labels">By clicking
@@ -82,5 +70,6 @@
 
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script type="text/javascript" src="{{ asset('js/loginReg.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
     </body>
 </html>

@@ -1,35 +1,98 @@
 // login function
 const loginBtn =  document.getElementById("loginBtn")
+let err = document.getElementById('errorId');
+
 loginBtn.addEventListener("click", function(event){
     event.preventDefault()
     const userName = document.getElementById('userName').value;
     const password = document.getElementById('password').value;
-    let error = document.getElementById('errorId');
 
     if(userName == "") {
-        error.classList.remove('d-none');
-        error.innerText = "Username is required";
+        err.classList.remove('d-none');
+        err.innerText = "Username is required";
     } else if(password == "") {
-        error.classList.remove('d-none');
-        error.innerText = "Password is required";
+        err.classList.remove('d-none');
+        err.innerText = "Password is required";
     } else {
-        const xHttp = new XMLHttpRequest;
-        xHttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
-                loginBtn.disabled = true;
-                loginBtn.innerText = "Signing in..."
-                if(this.responseText == "1") {
-                    window.location.href = "/";
-                } else {
-                    error.classList.remove('d-none');
-                    error.innerText = "Incorrect Username or Password";
-                    loginBtn.disabled = false;
-                    loginBtn.innerText = "Sign In"
-                }
+        loginBtn.disabled = true;
+        loginBtn.innerText = "Signing in..."
+        axios.post('/onLogin', {
+            userName: userName,
+            password: password
+        }).then((response) => {
+            if(response.status == 200 && response.data == 1) {
+                window.location.href = "/";
+            } else {
+                err.classList.remove('d-none');
+                err.innerText = "Incorrect Username or Password";
+                loginBtn.disabled = false;
+                loginBtn.innerText = "Sign In"
             }
-        }
-        xHttp.open('GET', '/onLogin/'+userName+'/'+password, true)
-        xHttp.send()
+        }).catch((error) => {
+            err.classList.remove('d-none');
+            err.innerText = "Something went wrong !";
+            loginBtn.disabled = false;
+            loginBtn.innerText = "Sign In"
+        })
+    }
+});
+
+// Register function
+const signUp = document.getElementById('signUp');
+let errorReg = document.getElementById('errorReg');
+
+signUp.addEventListener('click', function(e) {
+    e.preventDefault();
+    const form = document.getElementById("regForm");
+    const name = document.getElementById('name').value;
+    const username = document.getElementById('username').value; 
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+    const confirmPass = document.getElementById('confirmPass').value;
+    const gender = form.elements["gender"].value;
+
+    if(name == "") {
+        errorReg.classList.remove('d-none');
+        errorReg.innerText = "You must enter your name !";
+    }
+    else if(username == "") {
+        errorReg.classList.remove('d-none');
+        errorReg.innerText = "You must enter your username !";
+    }
+    else if(email == "") {
+        errorReg.classList.remove('d-none');
+        errorReg.innerText = "You must enter your email !";
+    }
+    else if(pass == "") {
+        errorReg.classList.remove('d-none');
+        errorReg.innerText = "You must enter your password !";
+    }
+    else if(confirmPass == "") {
+        errorReg.classList.remove('d-none');
+        errorReg.innerText = "Please confirm your password !";
+    } 
+    else if(pass != confirmPass) {
+        errorReg.classList.remove('d-none');
+        errorReg.innerText = "Password didn't match !";
+    }
+    else {
+        axios.post('/register', {
+            name: name,
+            username: username,
+            password: pass,
+            email: email,
+            gender: gender 
+        }).then((response) => {
+            if(response.status == 200 && response.data == 1) {
+                window.location.href = "/";
+            } else {
+                errorReg.classList.remove('d-none');
+                errorReg.innerText = "Something went wrong !";
+            }
+        }).catch((error) => {
+            errorReg.classList.remove('d-none');
+            errorReg.innerText = "Something went wrong !";
+        });
     }
 });
 

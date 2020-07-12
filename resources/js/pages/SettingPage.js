@@ -87,6 +87,15 @@ class SettingPage extends Component {
         })
     }
 
+    updatePass() {
+        let id = document.getElementById('submitBtn').getAttribute('userid');
+        let crntPass = document.getElementById('crntPass').value;
+        let newPass = document.getElementById('newPass').value;
+        let confNewPass = document.getElementById('confNewPass').value;
+
+        alert(id+'--'+crntPass+'--'+newPass+'--'+confNewPass)
+    }
+
     render() {
         return (
             <Fragment>
@@ -127,15 +136,15 @@ class SettingPage extends Component {
                             <Col md={6}>
                                 <h5 className="text-center infoTitle mb-3">Change Password</h5>
                                 <Form.Group>
-                                    <Form.Control type="password" placeholder="Enter Current Password" className="formInput"/>
+                                    <Form.Control type="password" id="crntPass" placeholder="Enter Current Password" className="formInput"/>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Control type="password" placeholder="Enter New Password" className="formInput"/>
+                                    <Form.Control type="password" id="newPass" placeholder="Enter New Password" className="formInput"/>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Control type="password" placeholder="Enter Confirm New Password" className="formInput"/>
+                                    <Form.Control type="password" id="confNewPass" placeholder="Enter Confirm New Password" className="formInput"/>
                                 </Form.Group>
-                                <Button variant="primary" className="formBtn">
+                                <Button variant="primary" className="formBtn" onClick={this.updatePass}>
                                     Update
                                 </Button>
                             </Col>

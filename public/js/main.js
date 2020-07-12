@@ -67350,7 +67350,8 @@ var MainLayout = /*#__PURE__*/function (_Component) {
     _this = _super.call(this);
     _this.state = {
       logoutbtnShow: false,
-      logoutbtn: 'd-none'
+      logoutbtn: 'd-none',
+      profileName: ""
     };
     _this.logoutBtnShow = _this.logoutBtnShow.bind(_assertThisInitialized(_this));
     _this.logout = _this.logout.bind(_assertThisInitialized(_this));
@@ -67358,6 +67359,27 @@ var MainLayout = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(MainLayout, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/getUserData').then(function (response) {
+        if (response.status == 200) {
+          _this2.setState({
+            profileName: response.data[0]['full_name']
+          });
+        } else {
+          _this2.setState({
+            profileName: "---"
+          });
+        }
+      })["catch"](function (error) {
+        _this2.setState({
+          profileName: "---"
+        });
+      });
+    }
+  }, {
     key: "logoutBtnShow",
     value: function logoutBtnShow() {
       if (this.state.logoutbtnShow == false) {
@@ -67462,7 +67484,7 @@ var MainLayout = /*#__PURE__*/function (_Component) {
         lg: 6
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "profileName mt-1"
-      }, "DurJoy RudDro"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+      }, this.state.profileName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "online"
       }, "Online")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         md: 2,
@@ -68614,20 +68636,23 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
 
       var postData = document.getElementById('postArea').value;
       var userId = document.getElementById('postBtn').getAttribute('data-id');
+      var postButton = document.getElementById('postBtn');
 
       if (postData == "") {
-        document.getElementById('postBtn').innerHTML = "Write something";
+        postButton.innerHTML = "Write something";
         setTimeout(function () {
-          document.getElementById('postBtn').innerHTML = "Add Post";
+          postButton.innerHTML = "Add Post";
         }, 3000);
       } else {
-        document.getElementById('postBtn').innerHTML = "Posting ...";
+        postButton.innerHTML = "Posting ...";
+        postButton.disabled = true;
         axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('/createPost', {
           user_id: userId,
           post_data: postData
         }).then(function (response) {
           if (response.status == 200 && response.data == 1) {
-            document.getElementById('postBtn').innerHTML = "Add Post";
+            postButton.innerHTML = "Add Post";
+            postButton.disabled = false;
             sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Posted !');
             document.getElementById('postArea').value = '';
 
@@ -68940,7 +68965,7 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         className: this.state.isNull
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "noPostMessage"
-      }, "You haven't ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "post anything"), " yet! Post now..")), myView))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+      }, "You haven't post ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "anything yet!"), " Post now..")), myView))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
         show: this.state.modalShow,
         onHide: this.state.modalShow,
         size: "md",
@@ -68961,11 +68986,11 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           });
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-        onClick: this.editPost
-      }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
         onClick: this.updateModalHideShow,
         className: "btn btn-danger"
-      }, "Cancel")))));
+      }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+        onClick: this.editPost
+      }, "Update")))));
     }
   }]);
 
@@ -69117,6 +69142,15 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "updatePass",
+    value: function updatePass() {
+      var id = document.getElementById('submitBtn').getAttribute('userid');
+      var crntPass = document.getElementById('crntPass').value;
+      var newPass = document.getElementById('newPass').value;
+      var confNewPass = document.getElementById('confNewPass').value;
+      alert(id + '--' + crntPass + '--' + newPass + '--' + confNewPass);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -69209,19 +69243,23 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         className: "text-center infoTitle mb-3"
       }, "Change Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "password",
+        id: "crntPass",
         placeholder: "Enter Current Password",
         className: "formInput"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "password",
+        id: "newPass",
         placeholder: "Enter New Password",
         className: "formInput"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "password",
+        id: "confNewPass",
         placeholder: "Enter Confirm New Password",
         className: "formInput"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: "primary",
-        className: "formBtn"
+        className: "formBtn",
+        onClick: this.updatePass
       }, "Update"))))));
     }
   }]);

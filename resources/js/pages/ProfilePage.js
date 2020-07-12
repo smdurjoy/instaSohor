@@ -109,22 +109,25 @@ class ProfilePage extends Component {
     }
 
     postFunction() {
-        let postData = document.getElementById('postArea').value;
-        let userId = document.getElementById('postBtn').getAttribute('data-id');
+        const postData = document.getElementById('postArea').value;
+        const userId = document.getElementById('postBtn').getAttribute('data-id');
+        const postButton = document.getElementById('postBtn');
 
         if(postData == "") {
-            document.getElementById('postBtn').innerHTML = "Write something";
+            postButton.innerHTML = "Write something";
             setTimeout(function () {
-                document.getElementById('postBtn').innerHTML = "Add Post";
+                postButton.innerHTML = "Add Post";
             }, 3000);
         } else {
-            document.getElementById('postBtn').innerHTML = "Posting ...";
+            postButton.innerHTML = "Posting ...";
+            postButton.disabled = true;
             Axios.post('/createPost', {
                 user_id: userId,
                 post_data: postData
             }).then((response) => {
                 if(response.status == 200 && response.data == 1) {
-                    document.getElementById('postBtn').innerHTML = "Add Post";
+                    postButton.innerHTML = "Add Post";
+                    postButton.disabled = false;
                     Swal.fire('Posted !')
                     document.getElementById('postArea').value='';
                     this.componentDidMount();
@@ -336,7 +339,7 @@ class ProfilePage extends Component {
                                     <h3 className="wentWrongMsg"><span>Opss!</span> Something Went Wrong!</h3>
                                 </Row>
                                 <Row className={this.state.isNull}>
-                                    <h3 className="noPostMessage">You haven't <span>post anything</span> yet! Post now..</h3>
+                                    <h3 className="noPostMessage">You haven't post <span>anything yet!</span> Post now..</h3>
                                 </Row>
                                 {myView}
                             </div>
@@ -362,8 +365,8 @@ class ProfilePage extends Component {
                             </p>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={this.editPost}>Update</Button>
                             <Button onClick={this.updateModalHideShow} className="btn btn-danger">Cancel</Button>
+                            <Button onClick={this.editPost}>Update</Button>
                         </Modal.Footer>
                     </Modal>
                 </MainLayout>
