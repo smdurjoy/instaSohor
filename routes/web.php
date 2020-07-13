@@ -7,6 +7,7 @@ Route::get('/login-register', 'loginRegController@loginRegPage');
 Route::post('/onLogin', 'loginRegController@onLogin');
 Route::get('/logout', 'loginRegController@onLogout');
 Route::post('/register', 'loginRegController@onRegister');
+Route::get('/resetPassword', 'loginRegController@resetPassword');
 
 Route::group(['middleware' => 'loginCheck'], function() {
     //post routes

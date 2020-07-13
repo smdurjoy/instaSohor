@@ -56,4 +56,8 @@ class loginRegController extends Controller
             return 0;
         }
     }
+
+    function resetPassword() {
+        return view('resetPassword');
+    }
 }

@@ -18,7 +18,9 @@ class SettingPage extends Component {
             address: "",
             education: "",
             work: "",
-            fIcon: faEyeSlash,
+            newPassfIcon: faEyeSlash,
+            crntPassfIcon: faEyeSlash,
+            confPassfIcon: faEyeSlash,
             crntPassHidden: true,
             newPassHidden: true,
             confPassHidden: true,
@@ -28,15 +30,17 @@ class SettingPage extends Component {
         }
 
         this.updatePass = this.updatePass.bind(this);
+        this.updateChanges = this.updateChanges.bind(this);
         this.passHideShow = this.passHideShow.bind(this);
         this.newPass = this.newPass.bind(this);
         this.confPass = this.confPass.bind(this);
+        this.successMsg = this.successMsg.bind(this);
+        this.errorMsg = this.errorMsg.bind(this);
     }
 
     componentDidMount() {
         Axios.get('/getUserData').then(response => {
             if(response.status == 200) {
-                // this.setInputValue();
                 this.setState({
                     id: response.data[0]['id'],
                     user_name: response.data[0]['user_name'],
@@ -73,6 +77,28 @@ class SettingPage extends Component {
         })
     }
 
+    successMsg(updateMsg) {
+        let msg = document.getElementById('msg');
+        msg.innerText = updateMsg;
+        this.setState({updateBtnText: 'Update', msgRow: "alertMessage"})
+        setTimeout(function(){ 
+            this.setState({msgRow: 'd-none'}); 
+        }.bind(this), 4000);
+    }
+
+    errorMsg(updateMsg) {
+        let msg = document.getElementById('msg');
+        msg.innerText = updateMsg;
+        msg.style.background = '#FFD2D2';
+        msg.style.color = '#D8000C';
+        this.setState({updateBtnText: 'Update', msgRow: "alertMessage"})
+        setTimeout(function(){ 
+            this.setState({msgRow: 'd-none'}); 
+            msg.style.background = '#DFF2BF';
+            msg.style.color = '#4F8A10';
+        }.bind(this), 4000);
+    }
+
     updateChanges() {
         let id = document.getElementById('submitBtn').getAttribute('userid');
         let fullName = document.getElementById('fullName').value;
@@ -81,6 +107,7 @@ class SettingPage extends Component {
         let address = document.getElementById('address').value;
         let education = document.getElementById('education').value;
         let work = document.getElementById('work').value;
+        let submitBtn = document.getElementById('submitBtn')
 
         Axios.post('/updateUserData', {
             id: id,
@@ -91,13 +118,21 @@ class SettingPage extends Component {
             education: education,
             work: work,
         }).then((response) => {
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Updating ...';
             if(response.status == 200 && response.data == 1) {
-                Swal.fire('Update Success !')
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Update';
+                this.successMsg('Your changes has been updated successfully !')
             } else {
-                Swal.fire('Update Failed !')
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Update';
+                this.errorMsg('Update Failed !');
             }
         }).catch((error) => {
-            Swal.fire('Update Failed !')
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Update';
+            this.errorMsg('Update Failed !');
         })
     }
 
@@ -140,62 +175,46 @@ class SettingPage extends Component {
                     document.getElementById('crntPass').value = "";
                     document.getElementById('newPass').value = "";
                     document.getElementById('confNewPass').value = "";
-                    let msg = document.getElementById('msg');
                     passUpdateBtn.disabled = false;
-                    msg.innerText = "Password has been updated successfully !";
-                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
-                    setTimeout(function(){ 
-                        this.setState({msgRow: 'd-none'}); 
-                    }.bind(this), 4000);
+                    this.successMsg("Password has been updated successfully !");
 
                 } else if(response.data == 2){
                     passUpdateBtn.disabled = false;
-                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
-                    msg.innerText = "Your current password didn't match !";
-                    msg.style.background = '#FFD2D2';
-                    msg.style.color = '#D8000C';
-                    setTimeout(function(){ 
-                        this.setState({msgRow: 'd-none'});
-                        msg.style.background = '#DFF2BF';
-                        msg.style.color = '#4F8A10';
-                    }.bind(this), 4000);
+                    let msg = "Your current password didn't match !";
+                    this.errorMsg(msg)
                 } else {
                     passUpdateBtn.disabled = false;
-                    this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
-                    msg.innerText = "Something Went Wrong !";
-                    msg.style.background = '#FFD2D2';
-                    msg.style.color = '#D8000C';
-                    setTimeout(function(){ 
-                        this.setState({msgRow: 'd-none'});
-                        msg.style.background = '#DFF2BF';
-                        msg.style.color = '#4F8A10';
-                    }.bind(this), 4000);
+                    this.errorMsg("Something Went Wrong !")
                 }
             }).catch((error) => {
                 passUpdateBtn.disabled = false;
-                this.setState({updateMsg: 'text-center infoTitle mb-3 mt-2', updateBtnText: 'Update', msgRow: "alertMessage"})
-                msg.innerText = "Something Went Wrong !";
-                msg.style.background = '#FFD2D2';
-                msg.style.color = '#D8000C';
-                setTimeout(function(){ 
-                    this.setState({msgRow: 'd-none'});
-                    msg.style.background = '#DFF2BF';
-                    msg.style.color = '#4F8A10';
-                }.bind(this), 4000);
+                this.errorMsg("Something Went Wrong !")
             })
         }
     }
 
     passHideShow() {
-        this.setState({ crntPassHidden: !this.state.crntPassHidden });
+        if(this.state.crntPassHidden == true) {
+            this.setState({ crntPassHidden: false, crntPassfIcon: faEye });
+        } else {
+            this.setState({ crntPassHidden: true, crntPassfIcon: faEyeSlash });
+        }
     }
 
     newPass() {
-        this.setState({ newPassHidden: !this.state.newPassHidden });
+        if(this.state.newPassHidden == true) {
+            this.setState({ newPassHidden: false, newPassfIcon: faEye });
+        } else {
+            this.setState({ newPassHidden: true, newPassfIcon: faEyeSlash });
+        }
     }
 
     confPass() {
-        this.setState({ confPassHidden: !this.state.confPassHidden });
+        if(this.state.confPassHidden == true) {
+            this.setState({ confPassHidden: false, confPassfIcon: faEye });
+        } else {
+            this.setState({ confPassHidden: true, confPassfIcon: faEyeSlash });
+        }
     }
 
     render() {
@@ -241,21 +260,21 @@ class SettingPage extends Component {
                                 <Form.Group>
                                     <div className="inputDiv">
                                         <Form.Control type={this.state.crntPassHidden ? "password" : "text"} id="crntPass" placeholder="Enter Current Password" className="formInput"/>
-                                        <FontAwesomeIcon icon={this.state.fIcon} className="passIcon" onClick={this.passHideShow}/>
+                                        <FontAwesomeIcon icon={this.state.crntPassfIcon} className="passIcon" onClick={this.passHideShow}/>
                                     </div>
                                     <Form.Text className={this.state.validationMsg} id="crntPassHelp"></Form.Text>
                                 </Form.Group>
                                 <Form.Group>
                                     <div className="inputDiv">
                                         <Form.Control type={this.state.newPassHidden ? "password" : "text"} id="newPass" placeholder="Enter New Password" className="formInput"/>
-                                        <FontAwesomeIcon icon={this.state.fIcon} className="passIcon" onClick={this.newPass}/>                
+                                        <FontAwesomeIcon icon={this.state.newPassfIcon} className="passIcon" onClick={this.newPass}/>                
                                     </div>
                                     <Form.Text className={this.state.validationMsg} id="newPassHelp"></Form.Text>
                                 </Form.Group>
                                 <Form.Group>
                                     <div className="inputDiv">
                                         <Form.Control type={this.state.confPassHidden ? "password" : "text"} id="confNewPass" placeholder="Enter Confirm New Password" className="formInput"/>
-                                        <FontAwesomeIcon icon={this.state.fIcon} className="passIcon" onClick={this.confPass}/>                
+                                        <FontAwesomeIcon icon={this.state.confPassfIcon} className="passIcon" onClick={this.confPass}/>                
                                     </div>
                                     <Form.Text className={this.state.validationMsg} id="confPassHelp"></Form.Text>
                                 </Form.Group>

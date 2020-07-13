@@ -69143,7 +69143,9 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       address: "",
       education: "",
       work: "",
-      fIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"],
+      newPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"],
+      crntPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"],
+      confPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"],
       crntPassHidden: true,
       newPassHidden: true,
       confPassHidden: true,
@@ -69152,9 +69154,12 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       msgRow: 'd-none'
     };
     _this.updatePass = _this.updatePass.bind(_assertThisInitialized(_this));
+    _this.updateChanges = _this.updateChanges.bind(_assertThisInitialized(_this));
     _this.passHideShow = _this.passHideShow.bind(_assertThisInitialized(_this));
     _this.newPass = _this.newPass.bind(_assertThisInitialized(_this));
     _this.confPass = _this.confPass.bind(_assertThisInitialized(_this));
+    _this.successMsg = _this.successMsg.bind(_assertThisInitialized(_this));
+    _this.errorMsg = _this.errorMsg.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -69165,7 +69170,6 @@ var SettingPage = /*#__PURE__*/function (_Component) {
 
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/getUserData').then(function (response) {
         if (response.status == 200) {
-          // this.setInputValue();
           _this2.setState({
             id: response.data[0]['id'],
             user_name: response.data[0]['user_name'],
@@ -69202,8 +69206,44 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "successMsg",
+    value: function successMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      this.setState({
+        updateBtnText: 'Update',
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+      }.bind(this), 4000);
+    }
+  }, {
+    key: "errorMsg",
+    value: function errorMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      msg.style.background = '#FFD2D2';
+      msg.style.color = '#D8000C';
+      this.setState({
+        updateBtnText: 'Update',
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+        msg.style.background = '#DFF2BF';
+        msg.style.color = '#4F8A10';
+      }.bind(this), 4000);
+    }
+  }, {
     key: "updateChanges",
     value: function updateChanges() {
+      var _this3 = this;
+
       var id = document.getElementById('submitBtn').getAttribute('userid');
       var fullName = document.getElementById('fullName').value;
       var userName = document.getElementById('userName').value;
@@ -69211,6 +69251,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       var address = document.getElementById('address').value;
       var education = document.getElementById('education').value;
       var work = document.getElementById('work').value;
+      var submitBtn = document.getElementById('submitBtn');
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/updateUserData', {
         id: id,
         full_name: fullName,
@@ -69220,19 +69261,31 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         education: education,
         work: work
       }).then(function (response) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Updating ...';
+
         if (response.status == 200 && response.data == 1) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Update Success !');
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Update';
+
+          _this3.successMsg('Your changes has been updated successfully !');
         } else {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Update Failed !');
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Update';
+
+          _this3.errorMsg('Update Failed !');
         }
       })["catch"](function (error) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Update Failed !');
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Update';
+
+        _this3.errorMsg('Update Failed !');
       });
     }
   }, {
     key: "updatePass",
     value: function updatePass() {
-      var _this3 = this;
+      var _this4 = this;
 
       var id = document.getElementById('submitBtn').getAttribute('userid');
       var crntPass = document.getElementById('crntPass').value;
@@ -69272,7 +69325,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
           crntPass: crntPass,
           newPass: newPass
         }).then(function (response) {
-          _this3.setState({
+          _this4.setState({
             updateBtnText: "Updating ..."
           });
 
@@ -69282,109 +69335,75 @@ var SettingPage = /*#__PURE__*/function (_Component) {
             document.getElementById('crntPass').value = "";
             document.getElementById('newPass').value = "";
             document.getElementById('confNewPass').value = "";
-
-            var _msg = document.getElementById('msg');
-
             passUpdateBtn.disabled = false;
-            _msg.innerText = "Password has been updated successfully !";
 
-            _this3.setState({
-              updateMsg: 'text-center infoTitle mb-3 mt-2',
-              updateBtnText: 'Update',
-              msgRow: "alertMessage"
-            });
-
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-            }.bind(_this3), 4000);
+            _this4.successMsg("Password has been updated successfully !");
           } else if (response.data == 2) {
             passUpdateBtn.disabled = false;
+            var msg = "Your current password didn't match !";
 
-            _this3.setState({
-              updateMsg: 'text-center infoTitle mb-3 mt-2',
-              updateBtnText: 'Update',
-              msgRow: "alertMessage"
-            });
-
-            msg.innerText = "Your current password didn't match !";
-            msg.style.background = '#FFD2D2';
-            msg.style.color = '#D8000C';
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-              msg.style.background = '#DFF2BF';
-              msg.style.color = '#4F8A10';
-            }.bind(_this3), 4000);
+            _this4.errorMsg(msg);
           } else {
             passUpdateBtn.disabled = false;
 
-            _this3.setState({
-              updateMsg: 'text-center infoTitle mb-3 mt-2',
-              updateBtnText: 'Update',
-              msgRow: "alertMessage"
-            });
-
-            msg.innerText = "Something Went Wrong !";
-            msg.style.background = '#FFD2D2';
-            msg.style.color = '#D8000C';
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-              msg.style.background = '#DFF2BF';
-              msg.style.color = '#4F8A10';
-            }.bind(_this3), 4000);
+            _this4.errorMsg("Something Went Wrong !");
           }
         })["catch"](function (error) {
           passUpdateBtn.disabled = false;
 
-          _this3.setState({
-            updateMsg: 'text-center infoTitle mb-3 mt-2',
-            updateBtnText: 'Update',
-            msgRow: "alertMessage"
-          });
-
-          msg.innerText = "Something Went Wrong !";
-          msg.style.background = '#FFD2D2';
-          msg.style.color = '#D8000C';
-          setTimeout(function () {
-            this.setState({
-              msgRow: 'd-none'
-            });
-            msg.style.background = '#DFF2BF';
-            msg.style.color = '#4F8A10';
-          }.bind(_this3), 4000);
+          _this4.errorMsg("Something Went Wrong !");
         });
       }
     }
   }, {
     key: "passHideShow",
     value: function passHideShow() {
-      this.setState({
-        crntPassHidden: !this.state.crntPassHidden
-      });
+      if (this.state.crntPassHidden == true) {
+        this.setState({
+          crntPassHidden: false,
+          crntPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEye"]
+        });
+      } else {
+        this.setState({
+          crntPassHidden: true,
+          crntPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"]
+        });
+      }
     }
   }, {
     key: "newPass",
     value: function newPass() {
-      this.setState({
-        newPassHidden: !this.state.newPassHidden
-      });
+      if (this.state.newPassHidden == true) {
+        this.setState({
+          newPassHidden: false,
+          newPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEye"]
+        });
+      } else {
+        this.setState({
+          newPassHidden: true,
+          newPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"]
+        });
+      }
     }
   }, {
     key: "confPass",
     value: function confPass() {
-      this.setState({
-        confPassHidden: !this.state.confPassHidden
-      });
+      if (this.state.confPassHidden == true) {
+        this.setState({
+          confPassHidden: false,
+          confPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEye"]
+        });
+      } else {
+        this.setState({
+          confPassHidden: true,
+          confPassfIcon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faEyeSlash"]
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
         title: "Setting"
@@ -69406,7 +69425,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "fullName",
         value: this.state.full_name,
         onChange: function onChange(e) {
-          return _this4.setState({
+          return _this5.setState({
             full_name: e.target.value
           });
         }
@@ -69417,7 +69436,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "userName",
         value: this.state.user_name,
         onChange: function onChange(e) {
-          return _this4.setState({
+          return _this5.setState({
             user_name: e.target.value
           });
         }
@@ -69428,7 +69447,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "email",
         value: this.state.email,
         onChange: function onChange(e) {
-          return _this4.setState({
+          return _this5.setState({
             email: e.target.value
           });
         }
@@ -69439,7 +69458,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "address",
         value: this.state.address,
         onChange: function onChange(e) {
-          return _this4.setState({
+          return _this5.setState({
             address: e.target.value
           });
         }
@@ -69450,7 +69469,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "education",
         value: this.state.education,
         onChange: function onChange(e) {
-          return _this4.setState({
+          return _this5.setState({
             education: e.target.value
           });
         }
@@ -69461,7 +69480,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         id: "work",
         value: this.state.work,
         onChange: function onChange(e) {
-          return _this4.setState({
+          return _this5.setState({
             work: e.target.value
           });
         }
@@ -69483,7 +69502,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         placeholder: "Enter Current Password",
         className: "formInput"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"], {
-        icon: this.state.fIcon,
+        icon: this.state.crntPassfIcon,
         className: "passIcon",
         onClick: this.passHideShow
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
@@ -69497,7 +69516,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         placeholder: "Enter New Password",
         className: "formInput"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"], {
-        icon: this.state.fIcon,
+        icon: this.state.newPassfIcon,
         className: "passIcon",
         onClick: this.newPass
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
@@ -69511,7 +69530,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         placeholder: "Enter Confirm New Password",
         className: "formInput"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"], {
-        icon: this.state.fIcon,
+        icon: this.state.confPassfIcon,
         className: "passIcon",
         onClick: this.confPass
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {

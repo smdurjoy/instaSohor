@@ -802,3 +802,44 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #017cce; 
 }
+
+/* reset password page */
+.resetPass {
+    margin-top: 1rem;
+    color: var(--fontColor);
+    font-weight: 300;
+    font-size: 25px;
+}
+
+.resetPassCol {
+    background: var(--componentBackgound);
+    border-radius: 20px;
+    height: auto;
+    width: 100%;
+}
+
+.resetEmailInput {
+    background: #d4d4d4;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--fontColor);
+    border: none !important;
+}
+
+.resetEmailInput:focus {
+    background: #d4d4d4;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.resetEmailBtn {
+    background: var(--mainColor) !important;
+    text-transform: uppercase;
+    color: var(--componentBackgound) !important; 
+    box-shadow: none !important;
+}
+
+.resetEmailBtn:hover {
+    background: var(--mainColor) !important;
+    box-shadow: none !important;
+}

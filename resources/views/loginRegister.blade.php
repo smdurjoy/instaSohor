@@ -33,7 +33,7 @@
                                     <input type="checkbox" class="form-check-input">
                                     <label class="labels" for="checkBox">Remember me</label>
                                 </div>
-                                <a href="" class="labels">Forgot password?</a>
+                                <a href="{{ url('resetPassword') }}" class="labels">Forgot password?</a>
                             </div>
                             <button class="btn btn-block my-3 signInBtn" id="loginBtn">Sign in</button>
                             <p class="labels">
