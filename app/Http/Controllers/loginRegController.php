@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 
 class loginRegController extends Controller
 {
@@ -41,19 +42,30 @@ class loginRegController extends Controller
         $email = $request->input('email');
         $gender = $request->input('gender');
 
-        $result = User::insert([
-            'full_name' => $name,
-            'user_name' => $username,
-            'email' => $email,
-            'password' => $password,
-            'gender' => $gender
-        ]);
+        $userName = User::where('user_name', '=', $username);
+        $userEmail = User::where('user_name', '=', $email);
 
-        if($result == true) {
-            $request->session()->put('userNameKey', $username);
-            return 1;
-        } else {
-            return 0;
+        if ($userName->exists()) {
+            return 2;
+        } 
+        else if($userEmail == true) {
+            return 3;
+        }
+        else {
+            $result = User::insert([
+                'full_name' => $name,
+                'user_name' => $username,
+                'email' => $email,
+                'password' => $password,
+                'gender' => $gender
+            ]);
+
+            if($result == true) {
+                $request->session()->put('userNameKey', $username);
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }

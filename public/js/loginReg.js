@@ -90,7 +90,16 @@ signUp.addEventListener('click', function(e) {
         }).then((response) => {
             if(response.status == 200 && response.data == 1) {
                 window.location.href = "/";
-            } else {
+            } 
+            else if(response.status == 200 && response.data == 2) {
+                errorReg.classList.remove('d-none');
+                errorReg.innerText = "Username already exists !";
+            }
+            else if(response.status == 200 && response.data == 3) {
+                errorReg.classList.remove('d-none');
+                errorReg.innerText = "This email is already taken !";
+            }
+            else {
                 errorReg.classList.remove('d-none');
                 errorReg.innerText = "Something went wrong !";
             }
@@ -108,12 +117,12 @@ function passHideShow(pass, passI) {
 
     if(password.type === 'password') {
         password.type = 'text';
-        passIcon.classList.remove('fa-eye-slash');
-        passIcon.classList.add('fa-eye');
-    } else {
-        password.type = 'password';
         passIcon.classList.remove('fa-eye');
         passIcon.classList.add('fa-eye-slash');
+    } else {
+        password.type = 'password';
+        passIcon.classList.remove('fa-eye-slash');
+        passIcon.classList.add('fa-eye');
     }
 }
 

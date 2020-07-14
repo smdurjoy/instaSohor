@@ -25,11 +25,11 @@
                             <input type="text" class="form-control formInput mb-4" id="userName" placeholder="User Name">
                             <div class="inputDiv">
                                 <input type="password" class="form-control formInput mb-4" id="password" placeholder="Password">
-                                <i class="fas fa-eye-slash passIcon" id="passIconL" onclick="passHideShow('password', 'passIconL')"></i>
+                                <i class="fas fa-eye passIcon" id="passIconL" onclick="passHideShow('password', 'passIconL')"></i>
                             </div>
 
                             <div class="row d-flex justify-content-around">
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex">
                                     <input type="checkbox" class="form-check-input">
                                     <label class="labels" for="checkBox">Remember me</label>
                                 </div>
@@ -55,13 +55,13 @@
         
                             <div class="inputDiv">
                                 <input type="password" id="pass" class="form-control formInput mb-3" placeholder="Password *">
-                                <i class="fas fa-eye-slash passIcon" id="passIcon" onclick="passHideShow('pass', 'passIcon')"></i>
+                                <i class="fas fa-eye passIcon" id="passIcon" onclick="passHideShow('pass', 'passIcon')"></i>
                             </div>
                             <small id="passHelp" class="form-text validationMsg d-none"></small>
                             
                             <div class="inputDiv">
                                 <input type="password" id="confirmPass" class="form-control formInput mb-3" placeholder="Confirm Password *">
-                                <i class="fas fa-eye-slash passIcon" id="passIconC" onclick="passHideShow('confirmPass', 'passIconC')"></i>
+                                <i class="fas fa-eye passIcon" id="passIconC" onclick="passHideShow('confirmPass', 'passIconC')"></i>
                             </div>
 
                             <small id="cnfPassHelp" class="form-text validationMsg d-none"></small>

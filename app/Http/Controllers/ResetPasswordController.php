@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
                 $passResetCode = $user->select('pass_reset_code')->first();
                 $mailBody = [
                     'title' => 'Reset Your Password',
-                    'body' => 'Your password reset verification code',
+                    'body' => 'Your password reset verification code:',
                     'code' => $passResetCode->pass_reset_code,
                 ];
         

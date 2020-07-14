@@ -43,3 +43,18 @@ resetPass.addEventListener('click', function(e) {
         });
     }
 });
+
+function passHideShow(pass, icon) {
+    let password = document.getElementById(pass);
+    let passIcon = document.getElementById(icon);
+
+    if(password.type === "password") {
+        password.type = "text";
+        passIcon.classList.remove('fa-eye');
+        passIcon.classList.add('fa-eye-slash');
+    } else {
+        password.type = "password";
+        passIcon.classList.remove('fa-eye-slash');
+        passIcon.classList.add('fa-eye');
+    }
+}

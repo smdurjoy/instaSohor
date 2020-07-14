@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>{{ $mailBody['title'] }} </h1>
-    <p>{{ $mailBody['body'] }}</p>
+    <h3>{{ $mailBody['body'] }}</h3>
     <h2>{{ $mailBody['code'] }}</h2>
     <p>Thank You</p>
 </body>
