@@ -19,7 +19,7 @@ import loadingImage from '../../images/Loader.svg';
 import errorImage from '../../images/wentWrong.png';
 import Swal from 'sweetalert2';
 import ProfileTop from "../components/profileTop";
-import {faHeartbeat, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {faHeartbeat} from "@fortawesome/free-solid-svg-icons";
 
 class ProfilePage extends Component {
     constructor() {

@@ -285,13 +285,13 @@ body {
     justify-content: center;
     align-items: center;
     margin-left: 2px;
-    width: 25%;
+    width: auto;
     height: auto;
     border-radius: 5px;
     color: #4F8A10;
     background-color: #DFF2BF;
     text-align: center;
-    padding: 10px;
+    padding: 10px 35px;
     position: fixed;
     top: 0;
     right: 0;
@@ -842,4 +842,17 @@ body {
 .resetEmailBtn:hover {
     background: var(--mainColor) !important;
     box-shadow: none !important;
+}
+
+.cngPassInput {
+    background: var(--buttonBackground);
+    font-size: 14px;
+    color: var(--fontColor);
+    border: none !important;
+}
+
+.cngPassInput:focus {
+    background: var(--buttonBackground);
+    box-shadow: none !important;
+    border: none !important;
 }

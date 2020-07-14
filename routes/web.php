@@ -3,11 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 // login register 
-Route::get('/login-register', 'loginRegController@loginRegPage');
+Route::get('login-register', 'loginRegController@loginRegPage');
 Route::post('/onLogin', 'loginRegController@onLogin');
 Route::get('/logout', 'loginRegController@onLogout');
 Route::post('/register', 'loginRegController@onRegister');
-Route::get('/resetPassword', 'loginRegController@resetPassword');
+
+// reset password
+Route::match(['get', 'post'],'resetPassword', 'ResetPasswordController@resetPass');
+Route::post('changePassword/{pass_reset_token}', 'ResetPasswordController@changePass');
+Route::post('updatePassword/{pass_reset_token}', 'ResetPasswordController@updatePass');
+Route::get('password-reset-success', 'ResetPasswordController@success');
 
 Route::group(['middleware' => 'loginCheck'], function() {
     //post routes
