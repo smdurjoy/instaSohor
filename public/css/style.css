@@ -446,11 +446,13 @@ body {
     color: var(--mainColor);
     text-decoration: none;
     margin-left: 5px;
+    cursor: pointer;
 }
 
 .postProfileName:hover {
     color: var(--mainColor);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .postTime {

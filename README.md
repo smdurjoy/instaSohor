@@ -18,6 +18,11 @@ More usefull featers will be added soon.
 
 ## Some Pictures
 
-<img style="width: 50%; height:500px" src="https://smdurjoy.netlify.app/images/instaHomePage.png">
-<img style="width: 50%; height:500px" src="https://smdurjoy.netlify.app/images/insTaSohor.png">
-<img align="center" style="width: 50%; height:500px" src="https://smdurjoy.netlify.app/images/codeVerify.png">
+<p>Home Page</p>
+<img src="https://smdurjoy.netlify.app/images/instaHomePage.png">
+
+<p>Profile Page</p>
+<img src="https://smdurjoy.netlify.app/images/insTaSohor.png">
+
+<p>Email Verification</p>
+<img src="https://smdurjoy.netlify.app/images/codeVerify.png">

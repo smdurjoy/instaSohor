@@ -64,7 +64,12 @@ class PostController extends Controller
         $sessionUserData = User::where('user_name', $username)->first();
         $sessionUserId = $sessionUserData->id;
 
-        $result =  Post::where('user_id', '!=', $sessionUserId)->with('homePostUser')->inRandomOrder()->get();
+        $result =  Post::where('user_id', '!=', $sessionUserId)->with('user')->inRandomOrder()->get();
+        return $result;
+    }
+
+    function getRandomUserPost($id) {
+        $result = Post::where('user_id', $id)->with('user')->orderBy('id', 'desc')->get();
         return $result;
     }
 }

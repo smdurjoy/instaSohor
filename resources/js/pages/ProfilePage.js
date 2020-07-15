@@ -43,7 +43,7 @@ class ProfilePage extends Component {
             modalShow: false,
             isLike: false,
             heartIcon: faHeart,
-            msgRow: 'd-none'
+            msgRow: 'd-none',
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -91,7 +91,7 @@ class ProfilePage extends Component {
                 image: "---"
             })
         })
-        this.getPosts()
+        this.getPosts();
     }
 
     getPosts() {

@@ -22,12 +22,14 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/updatePost', 'PostController@updatePost');
     Route::post('/deletePost', 'PostController@deletePost');
     Route::get('/getHomePosts', 'PostController@getHomePosts');
+    Route::get('/getRandomUserPost/{id}', 'PostController@getRandomUserPost');
 
     // user route
     Route::get('/getUserData', 'UserController@getUserData');
     Route::post('/updateUserData', 'UserController@updateUserData');
     Route::post('/updateBio', 'UserController@updateBio');
     Route::post('/updatePass', 'UserController@updatePass');
+    Route::get('/getRandomUserData/{userName}', 'UserController@getRandomUserData');
 
     // like count
     Route::get('/isLike', 'LikeCommentController@isLike');

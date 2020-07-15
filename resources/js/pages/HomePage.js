@@ -8,6 +8,7 @@ import profileImage from "../../images/pro.jpeg";
 import Axios from "axios";
 import loadingImage from '../../images/Loader.svg';
 import errorImage from '../../images/wentWrong.png';
+import { Link } from 'react-router-dom';
 
 class HomePage extends Component {
     constructor() {
@@ -41,24 +42,26 @@ class HomePage extends Component {
         const { posts } = this.state;
         const postView = posts.map((post, index) => {
             return (
-                <Row className="contentRow" key={index}>
-                    <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
-                        <img className="chatList-images-buttons" src={profileImage}/>
-                        <a href="#" className="postProfileName">{post.home_post_user.full_name}</a>
-                        <p className="homePostTime">{post.post_time}</p>
-                    </Col>
-                    <Col md={12} sm={12} lg={12} xs={12}>
-                        <div className="post">
-                            <p>{post.post_data}</p>
-                        </div>
-                    </Col>
-                    <Col md={12} sm={12} lg={12} xs={12}>
-                        <div>
-                            <h5 className="postActionCount"> 85 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">9</span> <FontAwesomeIcon icon={faComments}/> </h5>
-                            <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
-                        </div>
-                    </Col>
-                </Row>
+                <div id="postDiv" post-id={post.id} key={index}>
+                    <Row className="contentRow">
+                        <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
+                            <img className="chatList-images-buttons" src={profileImage}/>
+                            <Link to={"/"+post.user.user_name} className="postProfileName">{post.user.full_name}</Link>
+                            <p className="homePostTime">{post.post_time}</p>
+                        </Col>
+                        <Col md={12} sm={12} lg={12} xs={12}>
+                            <div className="post">
+                                <p>{post.post_data}</p>
+                            </div>
+                        </Col>
+                        <Col md={12} sm={12} lg={12} xs={12}>
+                            <div>
+                                <h5 className="postActionCount"> 85 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">9</span> <FontAwesomeIcon icon={faComments}/> </h5>
+                                <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
             )
         })
         return (

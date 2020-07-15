@@ -57,4 +57,11 @@ class UserController extends Controller
 
         return 0;
     }
+
+    function getRandomUserData(Request $request) {
+        $userName = $request->userName;
+
+        $result = User::where('user_name', '=', $userName)->select('id', 'full_name', 'bio', 'address', 'work', 'education')->get();
+        return $result;
+    }
 }
