@@ -1,4 +1,4 @@
-<p align="center">insTaSohor</p>
+<h1 align="center">insTaSohor</h1>
 
 <p align="center">
     Social Media
@@ -18,6 +18,6 @@ More usefull featers will be added soon.
 
 ## Some Pictures
 
-<img style="width: 50%; height:auto" src="{{ asset('readmePics/homepage.png') }}">
-<img style="width: 50%; height:auto" src="{{ asset('readmePics/profilePage.png') }}">
-<img src="{{ asset('readmePics/codeVerify.png') }}">
+<img style="width: 50%; height:500px" src="https://smdurjoy.netlify.app/images/instaHomePage.png">
+<img style="width: 50%; height:500px" src="https://smdurjoy.netlify.app/images/insTaSohor.png">
+<img align="center" style="width: 50%; height:500px" src="https://smdurjoy.netlify.app/images/codeVerify.png">
