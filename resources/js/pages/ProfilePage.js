@@ -99,7 +99,7 @@ class ProfilePage extends Component {
             if(response.status == 200) {
                 this.setState({posts: response.data, isLoading:'d-none'})
             }
-            else if(response.data == null) {
+            else if(response.data == "") {
                 this.setState({isLoading:'d-none', isNull: 'contentRow text-center'})
             } else {
                 this.setState({isLoading:'d-none', isError: 'contentRow text-center errorRow'})
@@ -109,12 +109,24 @@ class ProfilePage extends Component {
         })
     }
 
+    formatDate(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        let strTime = hours + ':' + minutes + ' ' + ampm;
+        return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " at " + strTime;
+    }
+
     postFunction() {
         const postData = document.getElementById('postArea').value;
         const userId = document.getElementById('postBtn').getAttribute('data-id');
         const postButton = document.getElementById('postBtn');
-        let msg = document.getElementById('msg');
-
+        let d = new Date();
+        const postTime = this.formatDate(d); 
+        
         if(postData == "") {
             postButton.innerHTML = "Write something";
             setTimeout(function () {
@@ -125,25 +137,48 @@ class ProfilePage extends Component {
             postButton.disabled = true;
             Axios.post('/createPost', {
                 user_id: userId,
-                post_data: postData
+                post_data: postData,
+                postTime: postTime
             }).then((response) => {
                 if(response.status == 200 && response.data == 1) {
                     postButton.innerHTML = "Add Post";
                     postButton.disabled = false;
-                    this.setState({msgRow: "alertMessage"})
-                    msg.innerText = "Post has been created successfully !"
                     document.getElementById('postArea').value='';
-                    setTimeout(function(){ 
-                        this.setState({msgRow: 'd-none'});
-                    }.bind(this), 4000);
+                    this.successMsg("Post has been created successfully !");
                     this.componentDidMount();
                 } else {
-                    Swal.fire('Something Went Wrong !')
+                    postButton.innerHTML = "Add Post";
+                    postButton.disabled = false;
+                    this.errorMsg('Something Went Wrong !');
                 }
             }).catch(error => {
-                Swal.fire('Something Went Wrong !')
+                postButton.innerHTML = "Add Post";
+                postButton.disabled = false;
+                this.errorMsg('Something Went Wrong !');
             })
         }
+    }
+
+    successMsg(updateMsg) {
+        let msg = document.getElementById('msg');
+        msg.innerText = updateMsg;
+        this.setState({msgRow: "alertMessage"})
+        setTimeout(function(){ 
+            this.setState({msgRow: 'd-none'}); 
+        }.bind(this), 4000);
+    }
+
+    errorMsg(updateMsg) {
+        let msg = document.getElementById('msg');
+        msg.innerText = updateMsg;
+        msg.style.background = '#FFD2D2';
+        msg.style.color = '#D8000C';
+        this.setState({msgRow: "alertMessage"})
+        setTimeout(function(){ 
+            this.setState({msgRow: 'd-none'}); 
+            msg.style.background = '#DFF2BF';
+            msg.style.color = '#4F8A10';
+        }.bind(this), 4000);
     }
 
     // show bio update row on click
@@ -174,10 +209,10 @@ class ProfilePage extends Component {
                 this.setState({updateRow: "d-none", showUpdateRow:false});
                 this.componentDidMount();
             } else {
-                Swal.fire('Update Failed !')
+                this.errorMsg("Update Failed !");
             }
         }).catch((error) => {
-            Swal.fire('Something Went Wrong !')
+            this.errorMsg("Something Went Wrong !");
         })
     }
 
@@ -190,10 +225,10 @@ class ProfilePage extends Component {
                 if(response.status == 200) {
                     this.setState({updatePostData: response.data[0]['post_data']})
                 } else {
-                    Swal.fire('Error !')
+                    this.errorMsg("Something Went Wrong !");
                 }
             }).catch((error) => {
-                Swal.fire('Error !')
+                this.errorMsg("Something Went Wrong !");
             })
         } else {
             this.setState({modalShow: false})
@@ -214,32 +249,19 @@ class ProfilePage extends Component {
         } else {
             Axios.post('/updatePost', {
                 id: id,
-                post_data: postData
+                post_data: postData,
             }).then((response) => {
                 if(response.status == 200 && response.data == 1) {
-                    let msg = document.getElementById('msg');
-                    this.setState({msgRow: "alertMessage"})
-                    msg.innerText = "Post has been updated successfully !"
-                    setTimeout(function(){ 
-                        this.setState({msgRow: 'd-none'});
-                    }.bind(this), 4000);
+                    this.successMsg("Post has been updated successfully !");
                     this.updateModalHideShow();
                     this.componentDidMount();
                 } else {
-                    this.setState({msgRow: "alertMessage"})
-                    msg.innerText = "Post updated failed !"
-                    setTimeout(function(){ 
-                    this.setState({msgRow: 'd-none'});
-                    }.bind(this), 4000);
+                    this.errorMsg("Post updated failed !");
                     this.updateModalHideShow();
                     this.componentDidMount();
                 }
             }).catch((error) => {
-                this.setState({msgRow: "alertMessage"})
-                msg.innerText = "Something Went Wrong !"
-                setTimeout(function(){ 
-                    this.setState({msgRow: 'd-none'});
-                }.bind(this), 4000);
+                this.errorMsg("Something Went Wrong !");
                 this.updateModalHideShow();
                 this.componentDidMount();
             })
@@ -263,26 +285,13 @@ class ProfilePage extends Component {
                     id: id
                 }).then((response) => {
                     if(response.status == 200 && response.data == 1) {
-                        let msg = document.getElementById('msg');
-                        this.setState({msgRow: "alertMessage"})
-                        msg.innerHTML = "Post has been Deleted successfully !"
-                        setTimeout(function(){ 
-                            this.setState({msgRow: 'd-none'});
-                        }.bind(this), 4000);
+                        this.successMsg("Post has been Deleted successfully !");
                         this.componentDidMount();
                     } else {
-                        this.setState({msgRow: "alertMessage"})
-                        msg.innerText = "Delete Failed !"
-                        setTimeout(function(){ 
-                            this.setState({msgRow: 'd-none'});
-                        }.bind(this), 4000);
+                        this.errorMsg("Something Went Wrong !");
                     }
                 }).catch((error) => {
-                    this.setState({msgRow: "alertMessage"})
-                    msg.innerText = "Something Went Wrong !"
-                    setTimeout(function(){ 
-                        this.setState({msgRow: 'd-none'});
-                    }.bind(this), 4000);
+                    this.errorMsg("Something Went Wrong !");
                 })
             }
         })
@@ -314,7 +323,7 @@ class ProfilePage extends Component {
                     <Col md={11} sm={11} lg={11} xs={11} className="d-flex align-items-center">
                         <img className="chatList-images-buttons" src={profileImage}/>
                         <a href="#" className="postProfileName">{data.user.full_name}</a>
-                        <p className="postTime">24 June at 11.13 am</p>
+                        <p className="postTime">{data.post_time}</p>
                     </Col>
                     <Col md={1} sm={1} lg={1} xs={1} className="d-flex align-items-center">
                         <Dropdown className="ml-auto postActionBtn">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,14 +15,14 @@ class PostController extends Controller
         })->orderBy('id', 'desc')->get();
 
         $result = json_decode(json_encode($result), true);
-//        echo "<pre>"; print_r($result); die();
         return $result;
     }
 
     function createPost(Request $request) {
         $user = $request->input('user_id');
         $post = $request->input('post_data');
-        $result = Post::where('user_id', $user)->insert(['user_id' => $user, 'post_data' => $post]);
+        $postTime = $request->input('postTime');
+        $result = Post::where('user_id', $user)->insert(['user_id' => $user, 'post_data' => $post, 'post_time' => $postTime]);
 
         if($result == true) {
             return 1;
@@ -56,5 +57,14 @@ class PostController extends Controller
         } else {
             return 0;
         }
+    }
+
+    function getHomePosts() {
+        $username = session()->get('userNameKey');
+        $sessionUserData = User::where('user_name', $username)->first();
+        $sessionUserId = $sessionUserData->id;
+
+        $result =  Post::where('user_id', '!=', $sessionUserId)->with('homePostUser')->inRandomOrder()->get();
+        return $result;
     }
 }

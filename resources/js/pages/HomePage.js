@@ -5,13 +5,62 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
 import {faComments, faHeart, faImage, faLaugh} from "@fortawesome/free-regular-svg-icons";
 import profileImage from "../../images/pro.jpeg";
+import Axios from "axios";
+import loadingImage from '../../images/Loader.svg';
+import errorImage from '../../images/wentWrong.png';
 
 class HomePage extends Component {
+    constructor() {
+        super();
+        this.state = {
+            posts: [],
+            isLoading: 'contentRow text-center',
+            isError: 'd-none',
+            isNull: 'd-none',
+        }
+    }
     componentDidMount() {
         window.scroll(0,0)
+
+        Axios.get('/getHomePosts').then((response) => {
+            if(response.status == 200) {
+                this.setState({posts: response.data, isLoading: 'd-none'})
+            }
+            else if(response.status == 200 && response.data == []) {
+                this.setState({isLoading:'d-none', isNull: 'contentRow text-center'})
+            }
+            else {
+                this.setState({isLoading: 'd-none', isError: 'contentRow text-center errorRow'})
+            }
+        }).catch((error) => {
+            this.setState({isLoading: 'd-none', isError: 'contentRow text-center errorRow'})
+        })
     }
 
     render() {
+        const { posts } = this.state;
+        const postView = posts.map((post, index) => {
+            return (
+                <Row className="contentRow" key={index}>
+                    <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
+                        <img className="chatList-images-buttons" src={profileImage}/>
+                        <a href="#" className="postProfileName">{post.home_post_user.full_name}</a>
+                        <p className="homePostTime">{post.post_time}</p>
+                    </Col>
+                    <Col md={12} sm={12} lg={12} xs={12}>
+                        <div className="post">
+                            <p>{post.post_data}</p>
+                        </div>
+                    </Col>
+                    <Col md={12} sm={12} lg={12} xs={12}>
+                        <div>
+                            <h5 className="postActionCount"> 85 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">9</span> <FontAwesomeIcon icon={faComments}/> </h5>
+                            <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
+                        </div>
+                    </Col>
+                </Row>
+            )
+        })
         return (
             <Fragment>
                 <MainLayout title="Home">
@@ -29,89 +78,27 @@ class HomePage extends Component {
                                     <a href="#"><FontAwesomeIcon icon={faLaugh} className="homePostIcon"/></a>
                                 </Col>
                                 <Col xs={6} sm={6} lg={6} md={6}>
-                                    <Button className="btn btn-primary homePostBtn">Add Post</Button>
+                                    <Button className="btn btn-primary homePostBtn">Add Post</Button>   
                                 </Col>
-                            </Row>
+                            </Row>  
                         </Col>
                     </Row>
 
                     <div className="newsFeed">
                         <h5 className="newsFeedTitle">News Feed</h5>
-                        <Row className="contentRow">
-                            <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
-                                <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Hanna Bekar</a>
-                                <p className="homePostTime">12 June at 2.13 am</p>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div className="post">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!</p>
-                                </div>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div>
-                                    <h5 className="postActionCount"> 85 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">9</span> <FontAwesomeIcon icon={faComments}/> </h5>
-                                    <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        <Row className="contentRow">
-                            <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
-                                <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Clay Jenson</a>
-                                <p className="homePostTime">29 May at 10.23 pm</p>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div className="post">
-                                    <p>Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!</p>
-                                </div>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div>
-                                    <h5 className="postActionCount"> 22 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">1</span> <FontAwesomeIcon icon={faComments}/> </h5>
-                                    <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        <Row className="contentRow">
-                            <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
-                                <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Justin Foley</a>
-                                <p className="homePostTime">29 May at 10.23 pm</p>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div className="post">
-                                    <p>Dolor sit amet. aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro! Lorem ipsum </p>
-                                </div>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div>
-                                    <h5 className="postActionCount"> 21 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">0</span> <FontAwesomeIcon icon={faComments}/> </h5>
-                                    <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        <Row className="contentRow">
-                            <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
-                                <img className="chatList-images-buttons" src={profileImage}/>
-                                <a href="#" className="postProfileName">Jessica Devis</a>
-                                <p className="homePostTime">05 July at 05.18 pm</p>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div className="post">
-                                    <p>one of a series of stations for keeping horses for relays the distance between any two such consecutive stations </p>
-                                </div>
-                            </Col>
-                            <Col md={12} sm={12} lg={12} xs={12}>
-                                <div>
-                                    <h5 className="postActionCount"> 51 <FontAwesomeIcon icon={faHeart}/> <span className="ml-2">2</span> <FontAwesomeIcon icon={faComments}/> </h5>
-                                    <a href="#" className="postActions"> <FontAwesomeIcon icon={faHeart}/> </a> <a href="#" className="ml-2 postActions"> <FontAwesomeIcon icon={faComments}/> </a>
-                                </div>
-                            </Col>
-                        </Row>
+                        <div>
+                            <Row className={this.state.isLoading}>
+                                <img src={loadingImage} className="text-center loadingImage"/>
+                            </Row>
+                            <Row className={this.state.isError}>
+                                <img src={errorImage} className="wentWrongImage"/>
+                                <h3 className="wentWrongMsg"><span>Opss!</span> Something Went Wrong!</h3>
+                            </Row>
+                            <Row className={this.state.isNull}>
+                                <h3 className="noPostMessage">No Post<span> Available !</span></h3>
+                            </Row>
+                            {postView}
+                        </div>
                     </div>
                 </MainLayout>
             </Fragment>

@@ -68050,6 +68050,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 /* harmony import */ var _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../images/pro.jpeg */ "./resources/images/pro.jpeg");
 /* harmony import */ var _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _images_Loader_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../images/Loader.svg */ "./resources/images/Loader.svg");
+/* harmony import */ var _images_Loader_svg__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_images_Loader_svg__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _images_wentWrong_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../images/wentWrong.png */ "./resources/images/wentWrong.png");
+/* harmony import */ var _images_wentWrong_png__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_images_wentWrong_png__WEBPACK_IMPORTED_MODULE_9__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68080,25 +68086,113 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
+
 var HomePage = /*#__PURE__*/function (_Component) {
   _inherits(HomePage, _Component);
 
   var _super = _createSuper(HomePage);
 
   function HomePage() {
+    var _this;
+
     _classCallCheck(this, HomePage);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.state = {
+      posts: [],
+      isLoading: 'contentRow text-center',
+      isError: 'd-none',
+      isNull: 'd-none'
+    };
+    return _this;
   }
 
   _createClass(HomePage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       window.scroll(0, 0);
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('/getHomePosts').then(function (response) {
+        if (response.status == 200) {
+          _this2.setState({
+            posts: response.data,
+            isLoading: 'd-none'
+          });
+        } else if (response.status == 200 && response.data == []) {
+          _this2.setState({
+            isLoading: 'd-none',
+            isNull: 'contentRow text-center'
+          });
+        } else {
+          _this2.setState({
+            isLoading: 'd-none',
+            isError: 'contentRow text-center errorRow'
+          });
+        }
+      })["catch"](function (error) {
+        _this2.setState({
+          isLoading: 'd-none',
+          isError: 'contentRow text-center errorRow'
+        });
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      var posts = this.state.posts;
+      var postView = posts.map(function (post, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+          className: "contentRow",
+          key: index
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+          md: 12,
+          sm: 12,
+          lg: 12,
+          xs: 12,
+          className: "d-flex align-items-center"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "chatList-images-buttons",
+          src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6___default.a
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          className: "postProfileName"
+        }, post.home_post_user.full_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "homePostTime"
+        }, post.post_time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+          md: 12,
+          sm: 12,
+          lg: 12,
+          xs: 12
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "post"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, post.post_data))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+          md: 12,
+          sm: 12,
+          lg: 12,
+          xs: 12
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+          className: "postActionCount"
+        }, " 85 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
+        }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "ml-2"
+        }, "9"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
+        }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          className: "postActions"
+        }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
+        }), " "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          className: "ml-2 postActions"
+        }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
+        }), " "))));
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
         title: "Home"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
@@ -68149,191 +68243,23 @@ var HomePage = /*#__PURE__*/function (_Component) {
         className: "newsFeed"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "newsFeedTitle"
-      }, "News Feed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-        className: "contentRow"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12,
-        className: "d-flex align-items-center"
+      }, "News Feed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+        className: this.state.isLoading
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "chatList-images-buttons",
-        src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6___default.a
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postProfileName"
-      }, "Hanna Bekar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "homePostTime"
-      }, "12 June at 2.13 am")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "post"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "postActionCount"
-      }, " 85 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "ml-2"
-      }, "9"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "ml-2 postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " ")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-        className: "contentRow"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12,
-        className: "d-flex align-items-center"
+        src: _images_Loader_svg__WEBPACK_IMPORTED_MODULE_8___default.a,
+        className: "text-center loadingImage"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+        className: this.state.isError
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "chatList-images-buttons",
-        src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6___default.a
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postProfileName"
-      }, "Clay Jenson"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "homePostTime"
-      }, "29 May at 10.23 pm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "post"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Accusamus aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "postActionCount"
-      }, " 22 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "ml-2"
-      }, "1"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "ml-2 postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " ")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-        className: "contentRow"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12,
-        className: "d-flex align-items-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "chatList-images-buttons",
-        src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6___default.a
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postProfileName"
-      }, "Justin Foley"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "homePostTime"
-      }, "29 May at 10.23 pm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "post"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Dolor sit amet. aperiam debitis earum, enim eum ipsam quibusdam quidem rerum totam voluptatibus? Amet beatae consectetur dolor earum, eum facere fuga officia porro! Lorem ipsum "))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "postActionCount"
-      }, " 21 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "ml-2"
-      }, "0"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "ml-2 postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " ")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-        className: "contentRow"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12,
-        className: "d-flex align-items-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "chatList-images-buttons",
-        src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_6___default.a
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postProfileName"
-      }, "Jessica Devis"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "homePostTime"
-      }, "05 July at 05.18 pm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "post"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "one of a series of stations for keeping horses for relays the distance between any two such consecutive stations "))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        md: 12,
-        sm: 12,
-        lg: 12,
-        xs: 12
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "postActionCount"
-      }, " 51 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "ml-2"
-      }, "2"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faHeart"]
-      }), " "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "ml-2 postActions"
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faComments"]
-      }), " ")))))));
+        src: _images_wentWrong_png__WEBPACK_IMPORTED_MODULE_9___default.a,
+        className: "wentWrongImage"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "wentWrongMsg"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Opss!"), " Something Went Wrong!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+        className: this.state.isNull
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "noPostMessage"
+      }, "No Post", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Available !"))), postView))));
     }
   }]);
 
@@ -68612,7 +68538,7 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
             posts: response.data,
             isLoading: 'd-none'
           });
-        } else if (response.data == null) {
+        } else if (response.data == "") {
           _this3.setState({
             isLoading: 'd-none',
             isNull: 'contentRow text-center'
@@ -68631,6 +68557,19 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "formatDate",
+    value: function formatDate(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " at " + strTime;
+    }
+  }, {
     key: "postFunction",
     value: function postFunction() {
       var _this4 = this;
@@ -68638,7 +68577,8 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       var postData = document.getElementById('postArea').value;
       var userId = document.getElementById('postBtn').getAttribute('data-id');
       var postButton = document.getElementById('postBtn');
-      var msg = document.getElementById('msg');
+      var d = new Date();
+      var postTime = this.formatDate(d);
 
       if (postData == "") {
         postButton.innerHTML = "Write something";
@@ -68650,32 +68590,62 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         postButton.disabled = true;
         axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('/createPost', {
           user_id: userId,
-          post_data: postData
+          post_data: postData,
+          postTime: postTime
         }).then(function (response) {
           if (response.status == 200 && response.data == 1) {
             postButton.innerHTML = "Add Post";
             postButton.disabled = false;
-
-            _this4.setState({
-              msgRow: "alertMessage"
-            });
-
-            msg.innerText = "Post has been created successfully !";
             document.getElementById('postArea').value = '';
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-            }.bind(_this4), 4000);
+
+            _this4.successMsg("Post has been created successfully !");
 
             _this4.componentDidMount();
           } else {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Something Went Wrong !');
+            postButton.innerHTML = "Add Post";
+            postButton.disabled = false;
+
+            _this4.errorMsg('Something Went Wrong !');
           }
         })["catch"](function (error) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Something Went Wrong !');
+          postButton.innerHTML = "Add Post";
+          postButton.disabled = false;
+
+          _this4.errorMsg('Something Went Wrong !');
         });
       }
+    }
+  }, {
+    key: "successMsg",
+    value: function successMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      this.setState({
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+      }.bind(this), 4000);
+    }
+  }, {
+    key: "errorMsg",
+    value: function errorMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      msg.style.background = '#FFD2D2';
+      msg.style.color = '#D8000C';
+      this.setState({
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+        msg.style.background = '#DFF2BF';
+        msg.style.color = '#4F8A10';
+      }.bind(this), 4000);
     } // show bio update row on click
 
   }, {
@@ -68723,10 +68693,10 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
 
           _this5.componentDidMount();
         } else {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Update Failed !');
+          _this5.errorMsg("Update Failed !");
         }
       })["catch"](function (error) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Something Went Wrong !');
+        _this5.errorMsg("Something Went Wrong !");
       });
     } // show post update modal on click && get update post data
 
@@ -68748,10 +68718,10 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
               updatePostData: response.data[0]['post_data']
             });
           } else {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Error !');
+            _this6.errorMsg("Something Went Wrong !");
           }
         })["catch"](function (error) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire('Error !');
+          _this6.errorMsg("Something Went Wrong !");
         });
       } else {
         this.setState({
@@ -68782,49 +68752,20 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           post_data: postData
         }).then(function (response) {
           if (response.status == 200 && response.data == 1) {
-            var _msg = document.getElementById('msg');
-
-            _this7.setState({
-              msgRow: "alertMessage"
-            });
-
-            _msg.innerText = "Post has been updated successfully !";
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-            }.bind(_this7), 4000);
+            _this7.successMsg("Post has been updated successfully !");
 
             _this7.updateModalHideShow();
 
             _this7.componentDidMount();
           } else {
-            _this7.setState({
-              msgRow: "alertMessage"
-            });
-
-            msg.innerText = "Post updated failed !";
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-            }.bind(_this7), 4000);
+            _this7.errorMsg("Post updated failed !");
 
             _this7.updateModalHideShow();
 
             _this7.componentDidMount();
           }
         })["catch"](function (error) {
-          _this7.setState({
-            msgRow: "alertMessage"
-          });
-
-          msg.innerText = "Something Went Wrong !";
-          setTimeout(function () {
-            this.setState({
-              msgRow: 'd-none'
-            });
-          }.bind(_this7), 4000);
+          _this7.errorMsg("Something Went Wrong !");
 
           _this7.updateModalHideShow();
 
@@ -68853,43 +68794,14 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
             id: id
           }).then(function (response) {
             if (response.status == 200 && response.data == 1) {
-              var _msg2 = document.getElementById('msg');
-
-              _this8.setState({
-                msgRow: "alertMessage"
-              });
-
-              _msg2.innerHTML = "Post has been Deleted successfully !";
-              setTimeout(function () {
-                this.setState({
-                  msgRow: 'd-none'
-                });
-              }.bind(_this8), 4000);
+              _this8.successMsg("Post has been Deleted successfully !");
 
               _this8.componentDidMount();
             } else {
-              _this8.setState({
-                msgRow: "alertMessage"
-              });
-
-              msg.innerText = "Delete Failed !";
-              setTimeout(function () {
-                this.setState({
-                  msgRow: 'd-none'
-                });
-              }.bind(_this8), 4000);
+              _this8.errorMsg("Something Went Wrong !");
             }
           })["catch"](function (error) {
-            _this8.setState({
-              msgRow: "alertMessage"
-            });
-
-            msg.innerText = "Something Went Wrong !";
-            setTimeout(function () {
-              this.setState({
-                msgRow: 'd-none'
-              });
-            }.bind(_this8), 4000);
+            _this8.errorMsg("Something Went Wrong !");
           });
         }
       });
@@ -68948,7 +68860,7 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           className: "postProfileName"
         }, data.user.full_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "postTime"
-        }, "24 June at 11.13 am")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+        }, data.post_time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
           md: 1,
           sm: 1,
           lg: 1,

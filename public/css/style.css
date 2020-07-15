@@ -532,6 +532,7 @@ body {
     background: var(--mainColor) !important;
     width: 100px !important;
     color: var(--componentBackgound);
+    border: none !important;
 }
 
 .homePostBtn:focus {

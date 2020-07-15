@@ -9,4 +9,8 @@ class Post extends Model
     function user() {
         return $this->belongsTo('App\User', 'user_id')->select('id', 'full_name');
     }
+
+    function homePostUser() {
+        return $this->belongsTo('App\User', 'user_id')->select('id', 'full_name', 'user_name');
+    }
 }

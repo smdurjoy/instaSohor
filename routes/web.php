@@ -21,6 +21,7 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/getUpdatePostData', 'PostController@getUpdatePostData');
     Route::post('/updatePost', 'PostController@updatePost');
     Route::post('/deletePost', 'PostController@deletePost');
+    Route::get('/getHomePosts', 'PostController@getHomePosts');
 
     // user route
     Route::get('/getUserData', 'UserController@getUserData');
