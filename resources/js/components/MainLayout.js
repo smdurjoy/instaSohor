@@ -14,7 +14,8 @@ class MainLayout extends Component {
         this.state = {
             logoutbtnShow: false,
             logoutbtn: 'd-none',
-            profileName: ""
+            profileName: "",
+            userName: ""
         }
 
         this.logoutBtnShow = this.logoutBtnShow.bind(this);
@@ -24,7 +25,10 @@ class MainLayout extends Component {
     componentDidMount() {
         Axios.get('/getUserData').then((response) => {
             if(response.status == 200) {
-                this.setState({profileName: response.data[0]['full_name']})
+                this.setState({
+                    profileName: response.data[0]['full_name'],
+                    userName: response.data[0]['user_name'],
+            })
             } else {
                 this.setState({profileName: "---"})
             }

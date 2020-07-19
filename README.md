@@ -10,11 +10,11 @@ insTaSohor is a social media platform with some excellent features. I'm trying t
 media's. Its build with Laravel React scaffolding. Features added till now:
 
 - Login register and forget password reset with code verification. 
-- Create, update, delete post without page load.
-- Show all posts in home page.
+- Create, update, delete post.
+- Show all users posts in home page.
 - Add update delete profile informations.
 
-More usefull featers will be added soon.
+More usefull features will be added soon.
 
 ## Some Pictures
 

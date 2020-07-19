@@ -48,7 +48,7 @@ class loginRegController extends Controller
         if ($userName->exists()) {
             return 2;
         } 
-        else if($userEmail == true) {
+        else if($userEmail->exists()) {
             return 3;
         }
         else {
@@ -59,7 +59,7 @@ class loginRegController extends Controller
                 'password' => $password,
                 'gender' => $gender
             ]);
-
+                
             if($result == true) {
                 $request->session()->put('userNameKey', $username);
                 return 1;

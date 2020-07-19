@@ -22,9 +22,10 @@ import ProfileTop from "../components/profileTop";
 import {faHeartbeat} from "@fortawesome/free-solid-svg-icons";
 
 class ProfilePage extends Component {
-    constructor() {
+    constructor({match}) {
         super();
         this.state = {
+            userName: match.params.userName,
             posts: [],
             isLoading: 'contentRow text-center',
             isError: 'd-none',
@@ -122,7 +123,6 @@ class ProfilePage extends Component {
 
     postFunction() {
         const postData = document.getElementById('postArea').value;
-        const userId = document.getElementById('postBtn').getAttribute('data-id');
         const postButton = document.getElementById('postBtn');
         let d = new Date();
         const postTime = this.formatDate(d); 
@@ -136,7 +136,6 @@ class ProfilePage extends Component {
             postButton.innerHTML = "Posting ...";
             postButton.disabled = true;
             Axios.post('/createPost', {
-                user_id: userId,
                 post_data: postData,
                 postTime: postTime
             }).then((response) => {

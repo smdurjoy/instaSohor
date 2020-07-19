@@ -13,16 +13,18 @@ class PostController extends Controller
             $username = session()->get('userNameKey');
             $query->where('user_name', $username);
         })->orderBy('id', 'desc')->get();
-
-        $result = json_decode(json_encode($result), true);
         return $result;
     }
 
     function createPost(Request $request) {
-        $user = $request->input('user_id');
         $post = $request->input('post_data');
         $postTime = $request->input('postTime');
-        $result = Post::where('user_id', $user)->insert(['user_id' => $user, 'post_data' => $post, 'post_time' => $postTime]);
+
+        $username = session()->get('userNameKey');
+        $sessionUserData = User::where('user_name', $username)->first();
+        $sessionUserId = $sessionUserData->id;
+        
+        $result = Post::insert(['user_id' => $sessionUserId, 'post_data' => $post, 'post_time' => $postTime]);
 
         if($result == true) {
             return 1;
@@ -68,8 +70,10 @@ class PostController extends Controller
         return $result;
     }
 
-    function getRandomUserPost($id) {
-        $result = Post::where('user_id', $id)->with('user')->orderBy('id', 'desc')->get();
+    function getRandomUserPost($randomUser) {
+        $userData = User::where('user_name', '=', $randomUser)->first();
+        $userId = $userData->id;
+        $result = Post::where('user_id', $userId)->get();
         return $result;
     }
 }

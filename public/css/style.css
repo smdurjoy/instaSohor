@@ -863,3 +863,14 @@ body {
 .rPassI {
     margin-left: -25px !important;
 }
+
+.followBtn {
+    padding: 2px 6px;
+    background-color: var(--mainColor);
+    color: var(--componentBackgound);
+    font-size: 12px;
+    border-radius: 5px;
+    width: fit-content;
+    font-weight: 500;
+    cursor: pointer;
+}

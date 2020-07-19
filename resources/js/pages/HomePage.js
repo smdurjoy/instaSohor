@@ -11,15 +11,19 @@ import errorImage from '../../images/wentWrong.png';
 import { Link } from 'react-router-dom';
 
 class HomePage extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             posts: [],
             isLoading: 'contentRow text-center',
             isError: 'd-none',
             isNull: 'd-none',
+            msgRow: 'd-none',
         }
+
+        this.addPost = this.addPost.bind(this)
     }
+
     componentDidMount() {
         window.scroll(0,0)
 
@@ -36,6 +40,76 @@ class HomePage extends Component {
         }).catch((error) => {
             this.setState({isLoading: 'd-none', isError: 'contentRow text-center errorRow'})
         })
+    }
+
+    addPost() {
+        const postData = document.getElementById('postArea').value;
+        const postButton = document.getElementById('postBtn');
+        let d = new Date();
+        const postTime = this.formatDate(d); 
+        
+        if(postData == "") {
+            postButton.innerHTML = "Write something";
+            setTimeout(function () {
+                postButton.innerHTML = "Add Post";
+            }, 3000);
+        } else {
+            postButton.innerHTML = "Posting ...";
+            postButton.disabled = true;
+            Axios.post('/createPost', {
+                post_data: postData,
+                postTime: postTime
+            }).then((response) => {
+                if(response.status == 200 && response.data == 1) {
+                    postButton.innerHTML = "Add Post";
+                    postButton.disabled = false;
+                    document.getElementById('postArea').value='';
+                    this.successMsg("Post has been created successfully !");
+                    this.componentDidMount();
+                } else {
+                    postButton.innerHTML = "Add Post";
+                    postButton.disabled = false;
+                    this.errorMsg('Something Went Wrong !');
+                }
+            }).catch(error => {
+                postButton.innerHTML = "Add Post";
+                postButton.disabled = false;
+                this.errorMsg('Something Went Wrong !');
+            })
+        }
+    }
+
+    formatDate(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        let strTime = hours + ':' + minutes + ' ' + ampm;
+        return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " at " + strTime;
+    }
+
+    successMsg(updateMsg) {
+        let msg = document.getElementById('msg');
+        msg.innerText = updateMsg;
+        this.setState({msgRow: "alertMessage"})
+        setTimeout(function(){ 
+            this.setState({msgRow: 'd-none'}); 
+        }.bind(this), 4000);
+    }
+
+    errorMsg(updateMsg) {
+        let msg = document.getElementById('msg');
+        msg.innerText = updateMsg;
+        msg.style.background = '#FFD2D2';
+        msg.style.color = '#D8000C';
+        this.setState({msgRow: "alertMessage"})
+        setTimeout(function(){ 
+            this.setState({msgRow: 'd-none'}); 
+            msg.style.background = '#DFF2BF';
+            msg.style.color = '#4F8A10';
+        }.bind(this), 4000);
     }
 
     render() {
@@ -67,11 +141,12 @@ class HomePage extends Component {
         return (
             <Fragment>
                 <MainLayout title="Home">
+                    <p className={this.state.msgRow} id="msg"></p>
                     <Row className="homePostRow">
                         <Col md={12} sm={12} lg={12} xs={12}>
                             <Row className="homePost">
                                 <Col>
-                                    <FormControl as="textarea" rows="1" placeholder="Write a post ..." className="homePostBox" />
+                                    <FormControl as="textarea" id="postArea" rows="1" placeholder="Write a post ..." className="homePostBox" />
                                 </Col>
                             </Row>
                             <Row className="HomePostBottom">
@@ -81,7 +156,7 @@ class HomePage extends Component {
                                     <a href="#"><FontAwesomeIcon icon={faLaugh} className="homePostIcon"/></a>
                                 </Col>
                                 <Col xs={6} sm={6} lg={6} md={6}>
-                                    <Button className="btn btn-primary homePostBtn">Add Post</Button>   
+                                    <Button className="btn btn-primary homePostBtn" id="postBtn" onClick={this.addPost}>Add Post</Button>
                                 </Col>
                             </Row>  
                         </Col>

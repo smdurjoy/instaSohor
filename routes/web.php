@@ -22,7 +22,7 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/updatePost', 'PostController@updatePost');
     Route::post('/deletePost', 'PostController@deletePost');
     Route::get('/getHomePosts', 'PostController@getHomePosts');
-    Route::get('/getRandomUserPost/{id}', 'PostController@getRandomUserPost');
+    Route::get('/getRandomUserPost/{randomUser}', 'PostController@getRandomUserPost');
 
     // user route
     Route::get('/getUserData', 'UserController@getUserData');
@@ -30,6 +30,12 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/updateBio', 'UserController@updateBio');
     Route::post('/updatePass', 'UserController@updatePass');
     Route::get('/getRandomUserData/{userName}', 'UserController@getRandomUserData');
+    Route::get('/followers/{randomUserName}', 'UserController@followers');
+    Route::post('/countFollowers', 'UserController@countFollowers');
+
+    // Friend
+    Route::get('/userWithFriends', 'FriendsController@index');
+    Route::get('/getData', 'FriendsController@getData');
 
     // like count
     Route::get('/isLike', 'LikeCommentController@isLike');

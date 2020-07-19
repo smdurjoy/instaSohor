@@ -25,6 +25,8 @@ class UsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('education')->nullable();
             $table->string('work')->nullable();
+            $table->string('pass_reset_token')->nullable();
+            $table->string('pass_reset_code')->nullable();
             $table->timestamps();
         });
     }

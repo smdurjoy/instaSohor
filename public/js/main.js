@@ -67351,7 +67351,8 @@ var MainLayout = /*#__PURE__*/function (_Component) {
     _this.state = {
       logoutbtnShow: false,
       logoutbtn: 'd-none',
-      profileName: ""
+      profileName: "",
+      userName: ""
     };
     _this.logoutBtnShow = _this.logoutBtnShow.bind(_assertThisInitialized(_this));
     _this.logout = _this.logout.bind(_assertThisInitialized(_this));
@@ -67366,7 +67367,8 @@ var MainLayout = /*#__PURE__*/function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/getUserData').then(function (response) {
         if (response.status == 200) {
           _this2.setState({
-            profileName: response.data[0]['full_name']
+            profileName: response.data[0]['full_name'],
+            userName: response.data[0]['user_name']
           });
         } else {
           _this2.setState({
@@ -68096,18 +68098,20 @@ var HomePage = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(HomePage);
 
-  function HomePage() {
+  function HomePage(props) {
     var _this;
 
     _classCallCheck(this, HomePage);
 
-    _this = _super.call(this);
+    _this = _super.call(this, props);
     _this.state = {
       posts: [],
       isLoading: 'contentRow text-center',
       isError: 'd-none',
-      isNull: 'd-none'
+      isNull: 'd-none',
+      msgRow: 'd-none'
     };
+    _this.addPost = _this.addPost.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -68140,6 +68144,95 @@ var HomePage = /*#__PURE__*/function (_Component) {
           isError: 'contentRow text-center errorRow'
         });
       });
+    }
+  }, {
+    key: "addPost",
+    value: function addPost() {
+      var _this3 = this;
+
+      var postData = document.getElementById('postArea').value;
+      var postButton = document.getElementById('postBtn');
+      var d = new Date();
+      var postTime = this.formatDate(d);
+
+      if (postData == "") {
+        postButton.innerHTML = "Write something";
+        setTimeout(function () {
+          postButton.innerHTML = "Add Post";
+        }, 3000);
+      } else {
+        postButton.innerHTML = "Posting ...";
+        postButton.disabled = true;
+        axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('/createPost', {
+          post_data: postData,
+          postTime: postTime
+        }).then(function (response) {
+          if (response.status == 200 && response.data == 1) {
+            postButton.innerHTML = "Add Post";
+            postButton.disabled = false;
+            document.getElementById('postArea').value = '';
+
+            _this3.successMsg("Post has been created successfully !");
+
+            _this3.componentDidMount();
+          } else {
+            postButton.innerHTML = "Add Post";
+            postButton.disabled = false;
+
+            _this3.errorMsg('Something Went Wrong !');
+          }
+        })["catch"](function (error) {
+          postButton.innerHTML = "Add Post";
+          postButton.disabled = false;
+
+          _this3.errorMsg('Something Went Wrong !');
+        });
+      }
+    }
+  }, {
+    key: "formatDate",
+    value: function formatDate(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " at " + strTime;
+    }
+  }, {
+    key: "successMsg",
+    value: function successMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      this.setState({
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+      }.bind(this), 4000);
+    }
+  }, {
+    key: "errorMsg",
+    value: function errorMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      msg.style.background = '#FFD2D2';
+      msg.style.color = '#D8000C';
+      this.setState({
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+        msg.style.background = '#DFF2BF';
+        msg.style.color = '#4F8A10';
+      }.bind(this), 4000);
     }
   }, {
     key: "render",
@@ -68200,7 +68293,10 @@ var HomePage = /*#__PURE__*/function (_Component) {
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
         title: "Home"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: this.state.msgRow,
+        id: "msg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
         className: "homePostRow"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         md: 12,
@@ -68211,6 +68307,7 @@ var HomePage = /*#__PURE__*/function (_Component) {
         className: "homePost"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
         as: "textarea",
+        id: "postArea",
         rows: "1",
         placeholder: "Write a post ...",
         className: "homePostBox"
@@ -68243,7 +68340,9 @@ var HomePage = /*#__PURE__*/function (_Component) {
         lg: 6,
         md: 6
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-        className: "btn btn-primary homePostBtn"
+        className: "btn btn-primary homePostBtn",
+        id: "postBtn",
+        onClick: this.addPost
       }, "Add Post"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "newsFeed"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
@@ -68453,13 +68552,16 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(ProfilePage);
 
-  function ProfilePage() {
+  function ProfilePage(_ref) {
     var _this;
+
+    var match = _ref.match;
 
     _classCallCheck(this, ProfilePage);
 
     _this = _super.call(this);
     _this.state = {
+      userName: match.params.userName,
       posts: [],
       isLoading: 'contentRow text-center',
       isError: 'd-none',
@@ -68580,7 +68682,6 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       var _this4 = this;
 
       var postData = document.getElementById('postArea').value;
-      var userId = document.getElementById('postBtn').getAttribute('data-id');
       var postButton = document.getElementById('postBtn');
       var d = new Date();
       var postTime = this.formatDate(d);
@@ -68594,7 +68695,6 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         postButton.innerHTML = "Posting ...";
         postButton.disabled = true;
         axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('/createPost', {
-          user_id: userId,
           post_data: postData,
           postTime: postTime
         }).then(function (response) {
@@ -69469,10 +69569,10 @@ var SettingPage = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/pages/UserProfile.js":
-/*!*******************************************!*\
-  !*** ./resources/js/pages/UserProfile.js ***!
-  \*******************************************/
+/***/ "./resources/js/pages/UserProfilePage.js":
+/*!***********************************************!*\
+  !*** ./resources/js/pages/UserProfilePage.js ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -69522,128 +69622,154 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var UserProfile = /*#__PURE__*/function (_Component) {
-  _inherits(UserProfile, _Component);
+var UserProfilePage = /*#__PURE__*/function (_Component) {
+  _inherits(UserProfilePage, _Component);
 
-  var _super = _createSuper(UserProfile);
+  var _super = _createSuper(UserProfilePage);
 
-  function UserProfile(_ref) {
+  function UserProfilePage(_ref) {
     var _this;
 
     var match = _ref.match;
 
-    _classCallCheck(this, UserProfile);
+    _classCallCheck(this, UserProfilePage);
 
     _this = _super.call(this);
     _this.state = {
-      userName: match.params.userName,
-      id: '',
-      full_name: '',
-      bio: '',
-      address: '',
-      education: '',
-      work: '',
-      posts: ''
+      randomUser: match.params.randomUserName,
+      id: "",
+      full_name: "",
+      bio: "",
+      address: "",
+      work: "",
+      education: "",
+      posts: "",
+      followUserId: "",
+      followBtnText: "",
+      is_follow: '',
+      followers: "",
+      follow_btn_text: "",
+      msgRow: 'd-none'
     };
+    _this.isFollow = _this.isFollow.bind(_assertThisInitialized(_this));
+    _this.errorMsg = _this.errorMsg.bind(_assertThisInitialized(_this));
+    _this.successMsg = _this.successMsg.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  _createClass(UserProfile, [{
+  _createClass(UserProfilePage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      var userName = this.state.userName; // get user information 
+      var randomUser = this.state.randomUser; // get user information 
 
-      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/getRandomUserData/' + userName).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/getRandomUserData/' + randomUser).then(function (response) {
         if (response.status == 200) {
           _this2.setState({
-            id: response.data[0]['id'],
-            full_name: response.data[0]['full_name'],
-            bio: response.data[0]['bio'],
-            address: response.data[0]['address'],
-            work: response.data[0]['work'],
-            education: response.data[0]['education']
+            id: response.data.user.id,
+            full_name: response.data.user.full_name,
+            bio: response.data.user.bio,
+            address: response.data.user.address,
+            work: response.data.user.work,
+            education: response.data.user.education,
+            followers: response.data.user.followers,
+            is_follow: response.data.friend.pivot.is_follow,
+            follow_btn_text: response.data.friend.pivot.follow_btn_text
           });
         } else {
-          alert('error');
+          _this2.errorMsg('Something Went Wrong user!');
         }
       })["catch"](function (error) {
-        alert('server error');
-      }); // get posts
+        _this2.errorMsg('Something Went Wrong user!');
+      }); // get user posts 
+      // Axios.get('/getRandomUserPost/'+randomUser).then((response) => {
+      //     if(response.status == 200) {
+      //         this.setState({posts: response.data})
+      //     } else {
+      //         alert('error')
+      //     }
+      // }).catch((error) => {
+      //     alert('server error!!')
+      // });
+    }
+  }, {
+    key: "isFollow",
+    value: function isFollow() {
+      var _this3 = this;
 
-      var id = this.state.id;
-      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/getRandomUserPost/' + id).then(function (response) {
+      var _this$state = this.state,
+          is_follow = _this$state.is_follow,
+          id = _this$state.id,
+          randomUser = _this$state.randomUser;
+
+      if (is_follow == 0) {
+        this.setState({
+          is_follow: 1
+        });
+        this.successMsg('Now you can this persons activity in your timeline !');
+      } else {
+        this.setState({
+          is_follow: 0
+        });
+        this.successMsg("You can't see this persons post anymore !");
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.post('/countFollowers', {
+        id: id,
+        isFollow: is_follow,
+        randomUser: randomUser
+      }).then(function (response) {
         if (response.status == 200) {
-          _this2.setState({
-            posts: response.data
-          });
+          _this3.componentDidMount();
         } else {
-          alert('error');
+          _this3.errorMsg('Something Went Wrong !');
         }
       })["catch"](function (error) {
-        alert('error');
+        _this3.errorMsg('Something Went Wrong !');
       });
+    }
+  }, {
+    key: "successMsg",
+    value: function successMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      this.setState({
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+      }.bind(this), 4000);
+    }
+  }, {
+    key: "errorMsg",
+    value: function errorMsg(updateMsg) {
+      var msg = document.getElementById('msg');
+      msg.innerText = updateMsg;
+      msg.style.background = '#FFD2D2';
+      msg.style.color = '#D8000C';
+      this.setState({
+        msgRow: "alertMessage"
+      });
+      setTimeout(function () {
+        this.setState({
+          msgRow: 'd-none'
+        });
+        msg.style.background = '#DFF2BF';
+        msg.style.color = '#4F8A10';
+      }.bind(this), 4000);
     }
   }, {
     key: "render",
     value: function render() {
-      var posts = this.state.posts;
-      console.log(posts);
-      var postView = posts.map(function (post, index) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
-          className: "contentRow",
-          key: index
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
-          md: 11,
-          sm: 11,
-          lg: 11,
-          xs: 11,
-          className: "d-flex align-items-center"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          className: "chatList-images-buttons",
-          src: profileImage
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
-          className: "postProfileName"
-        }, post.user.full_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "postTime"
-        }, post.post_time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
-          md: 12,
-          sm: 12,
-          lg: 12,
-          xs: 12
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "post"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, post.post_data))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
-          md: 12,
-          sm: 12,
-          lg: 12,
-          xs: 12
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-          className: "postActionCount"
-        }, " 19 ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
-          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faHeart"]
-        }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "ml-2"
-        }, "5"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
-          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faComments"]
-        }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
-          className: "postActions",
-          id: index
-        }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
-          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faHeart"]
-        }), " "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
-          className: "ml-2 postActions"
-        }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
-          icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faComments"]
-        }), " "))));
-      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MainLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        title: this.state.userName
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
+        title: this.state.full_name
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: this.state.msgRow,
+        id: "msg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
         className: "contentRow"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
         md: 7,
@@ -69659,19 +69785,22 @@ var UserProfile = /*#__PURE__*/function (_Component) {
         className: "profileTopName mt-1"
       }, this.state.full_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "bio"
-      }, this.state.bio))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+      }, this.state.bio), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "followBtn",
+        onClick: this.isFollow
+      }, this.state.follow_btn_text))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
         md: 5,
         lg: 5,
         sm: 5
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ownerOtherInfo"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "d-flex"
+        className: "d-flex align-items-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "followDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "followInfo"
-      }, "0 Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "0 Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.followers, " Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "0 Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "followSocialDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
         icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faFacebook"],
@@ -69708,14 +69837,14 @@ var UserProfile = /*#__PURE__*/function (_Component) {
       }), " Studies at ", this.state.education), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
         icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faClock"],
         className: "fIcon"
-      }), " Joined June 2020 ")))), postView)));
+      }), " Joined June 2020 ")))))));
     }
   }]);
 
-  return UserProfile;
+  return UserProfilePage;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (UserProfile);
+/* harmony default export */ __webpack_exports__["default"] = (UserProfilePage);
 
 /***/ }),
 
@@ -69736,7 +69865,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_NotificationPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/NotificationPage */ "./resources/js/pages/NotificationPage.js");
 /* harmony import */ var _pages_SettingPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/SettingPage */ "./resources/js/pages/SettingPage.js");
 /* harmony import */ var _pages_FriendsPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/FriendsPage */ "./resources/js/pages/FriendsPage.js");
-/* harmony import */ var _pages_UserProfile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/UserProfile */ "./resources/js/pages/UserProfile.js");
+/* harmony import */ var _pages_UserProfilePage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/UserProfilePage */ "./resources/js/pages/UserProfilePage.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69804,8 +69933,8 @@ var AppRoute = /*#__PURE__*/function (_Component) {
         component: _pages_FriendsPage__WEBPACK_IMPORTED_MODULE_6__["default"]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
-        path: "/:userName",
-        component: _pages_UserProfile__WEBPACK_IMPORTED_MODULE_7__["default"]
+        path: "/:randomUserName",
+        component: _pages_UserProfilePage__WEBPACK_IMPORTED_MODULE_7__["default"]
       })));
     }
   }]);

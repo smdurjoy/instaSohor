@@ -5,7 +5,7 @@ import ProfilePage from "../pages/ProfilePage";
 import NotificationPage from "../pages/NotificationPage";
 import SettingPage from "../pages/SettingPage";
 import FriendsPage from "../pages/FriendsPage";
-import UserProfile from '../pages/UserProfile';
+import UserProfilePage from "../pages/UserProfilePage";
 
 class AppRoute extends Component {
     render() {
@@ -17,7 +17,7 @@ class AppRoute extends Component {
                     <Route exact path="/setting" component={SettingPage}/>
                     <Route exact path="/notification" component={NotificationPage}/>
                     <Route exact path="/friends" component={FriendsPage}/>
-                    <Route exact path="/:userName" component={UserProfile}/>
+                    <Route exact path="/:randomUserName" component={UserProfilePage}/>
                 </Switch>
             </Fragment>
         );
