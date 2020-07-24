@@ -45,6 +45,8 @@ class ProfilePage extends Component {
             isLike: false,
             heartIcon: faHeart,
             msgRow: 'd-none',
+            following: '',
+            followers: '',
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -70,7 +72,9 @@ class ProfilePage extends Component {
                     work: response.data[0]['work'],
                     bio: response.data[0]['bio'],
                     image: response.data[0]['image'],
-                    id: response.data[0]['id']
+                    id: response.data[0]['id'],
+                    followers: response.data[0]['followers'],
+                    following: response.data[0]['following'],
                 })
             } else {
                 this.setState({
@@ -367,6 +371,8 @@ class ProfilePage extends Component {
                                 work = { this.state.work }
                                 education = { this.state.education }
                                 id = { this.state.id }
+                                following = {this.state.following}
+                                followers = {this.state.followers}
                                 postFunction = { this.postFunction }
                             />
 

@@ -11,6 +11,6 @@ class User extends Model
     }
 
     function friends() {
-        return $this->belongsToMany('App\Friend')->withPivot('is_follow', 'follow_btn_text');
+        return $this->belongsToMany('App\Friend')->withPivot('is_follow', 'follow_btn_text')->withTimestamps();
     }
 }

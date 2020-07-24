@@ -33,7 +33,7 @@ class ProfileTop extends Component {
                         <div className="ownerOtherInfo">
                             <div className="d-flex">
                                 <div className="followDiv">
-                                    <h5 className="followInfo">0 Followers <br/>0 Following</h5>
+                                    <h5 className="followInfo">{this.props.followers} Followers <br/>{this.props.following} Following</h5>
                                 </div>
                             </div>
                             <div className="followSocialDiv">

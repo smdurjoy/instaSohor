@@ -10,7 +10,6 @@
     </head>
     <body>
         <div id="root"></div>
-
     <script rel="text/javascript" src="{{asset('js/main.js')}}"></script>
     </body>
 </html>

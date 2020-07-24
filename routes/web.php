@@ -15,7 +15,7 @@ Route::post('updatePassword/{pass_reset_token}', 'ResetPasswordController@update
 Route::get('password-reset-success', 'ResetPasswordController@success');
 
 Route::group(['middleware' => 'loginCheck'], function() {
-    //post routes
+    // post routes
     Route::get('/getPosts', 'PostController@getPosts');
     Route::post('/createPost', 'PostController@createPost');
     Route::post('/getUpdatePostData', 'PostController@getUpdatePostData');
@@ -30,17 +30,16 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/updateBio', 'UserController@updateBio');
     Route::post('/updatePass', 'UserController@updatePass');
     Route::get('/getRandomUserData/{userName}', 'UserController@getRandomUserData');
-    Route::get('/followers/{randomUserName}', 'UserController@followers');
-    Route::post('/countFollowers', 'UserController@countFollowers');
 
-    // Friend
-    Route::get('/userWithFriends', 'FriendsController@index');
-    Route::get('/getData', 'FriendsController@getData');
+    // friend routes
+    Route::get('/isFollow/{userName}', 'FriendsController@isFollow');
+    Route::post('/countFollowers', 'FriendsController@countFollowers');
 
     // like count
     Route::get('/isLike', 'LikeCommentController@isLike');
     Route::get('/likeCount', 'LikeCommentController@likeCount');
 
+    // main view
     Route::get('/', function () {
         return view('index');
     });

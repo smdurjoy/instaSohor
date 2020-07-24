@@ -107,7 +107,9 @@ class SettingPage extends Component {
         let address = document.getElementById('address').value;
         let education = document.getElementById('education').value;
         let work = document.getElementById('work').value;
-        let submitBtn = document.getElementById('submitBtn')
+        let submitBtn = document.getElementById('submitBtn');
+        let userNameHelp = document.getElementById('userNameHelp');
+        let emailHelp = document.getElementById('emailHelp');
 
         Axios.post('/updateUserData', {
             id: id,
@@ -124,7 +126,20 @@ class SettingPage extends Component {
                 submitBtn.disabled = false;
                 submitBtn.innerText = 'Update';
                 this.successMsg('Your changes has been updated successfully !')
-            } else {
+            } 
+            else if(response.data == 2) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Update';
+                this.setState({validationMsg: 'validationMsgReact'});
+                userNameHelp.innerText = "This username is already taken !";
+            }
+            else if(response.data == 3) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Update';
+                this.setState({validationMsg: 'validationMsgReact'});
+                emailHelp.innerText = "This email is already taken !";
+            }
+            else {
                 submitBtn.disabled = false;
                 submitBtn.innerText = 'Update';
                 this.errorMsg('Update Failed !');
@@ -232,23 +247,25 @@ class SettingPage extends Component {
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Your UserName</Form.Label>
-                                    <Form.Control type="text" placeholder="Password" className="formInput" id="userName" value={this.state.user_name} onChange={e => this.setState({ user_name: e.target.value })}/>
+                                    <Form.Control type="text" placeholder="Username" className="formInput" id="userName" value={this.state.user_name} onChange={e => this.setState({ user_name: e.target.value })}/>
+                                    <Form.Text className={this.state.validationMsg} id="userNameHelp"></Form.Text>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Your Email</Form.Label>
-                                    <Form.Control type="text" placeholder="Password" className="formInput" id="email" value={this.state.email} onChange={e => this.setState({ email: e.target.value })}/>
+                                    <Form.Control type="text" placeholder="Email" className="formInput" id="email" value={this.state.email} onChange={e => this.setState({ email: e.target.value })}/>
+                                    <Form.Text className={this.state.validationMsg} id="emailHelp"></Form.Text>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Your Address</Form.Label>
-                                    <Form.Control type="text" placeholder="Password" className="formInput" id="address" value={this.state.address} onChange={e => this.setState({ address: e.target.value })}/>
+                                    <Form.Control type="text" placeholder="Address" className="formInput" id="address" value={this.state.address} onChange={e => this.setState({ address: e.target.value })}/>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Your Education</Form.Label>
-                                    <Form.Control type="text" placeholder="Password" className="formInput" id="education" value={this.state.education} onChange={e => this.setState({ education: e.target.value })}/>
+                                    <Form.Control type="text" placeholder="Education" className="formInput" id="education" value={this.state.education} onChange={e => this.setState({ education: e.target.value })}/>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Your Work</Form.Label>
-                                    <Form.Control type="text" placeholder="Password" className="formInput" id="work" value={this.state.work} onChange={e => this.setState({ work: e.target.value })}/>
+                                    <Form.Control type="text" placeholder="Work" className="formInput" id="work" value={this.state.work} onChange={e => this.setState({ work: e.target.value })}/>
                                 </Form.Group>
                                 <Button variant="primary" id="submitBtn" className="formBtn" onClick={this.updateChanges} userid={this.state.id}>
                                     Update

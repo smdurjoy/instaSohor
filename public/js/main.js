@@ -67728,7 +67728,7 @@ var ProfileTop = /*#__PURE__*/function (_Component) {
         className: "followDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "followInfo"
-      }, "0 Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "0 Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.followers, " Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.following, " Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "followSocialDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
         icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faFacebook"],
@@ -68580,7 +68580,9 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       modalShow: false,
       isLike: false,
       heartIcon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faHeart"],
-      msgRow: 'd-none'
+      msgRow: 'd-none',
+      following: '',
+      followers: ''
     };
     _this.getPosts = _this.getPosts.bind(_assertThisInitialized(_this));
     _this.postFunction = _this.postFunction.bind(_assertThisInitialized(_this));
@@ -68610,7 +68612,9 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
             work: response.data[0]['work'],
             bio: response.data[0]['bio'],
             image: response.data[0]['image'],
-            id: response.data[0]['id']
+            id: response.data[0]['id'],
+            followers: response.data[0]['followers'],
+            following: response.data[0]['following']
           });
         } else {
           _this2.setState({
@@ -69036,6 +69040,8 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         work: this.state.work,
         education: this.state.education,
         id: this.state.id,
+        following: this.state.following,
+        followers: this.state.followers,
         postFunction: this.postFunction
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "newsFeedTitle mt-4"
@@ -69269,6 +69275,8 @@ var SettingPage = /*#__PURE__*/function (_Component) {
       var education = document.getElementById('education').value;
       var work = document.getElementById('work').value;
       var submitBtn = document.getElementById('submitBtn');
+      var userNameHelp = document.getElementById('userNameHelp');
+      var emailHelp = document.getElementById('emailHelp');
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/updateUserData', {
         id: id,
         full_name: fullName,
@@ -69286,6 +69294,24 @@ var SettingPage = /*#__PURE__*/function (_Component) {
           submitBtn.innerText = 'Update';
 
           _this3.successMsg('Your changes has been updated successfully !');
+        } else if (response.data == 2) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Update';
+
+          _this3.setState({
+            validationMsg: 'validationMsgReact'
+          });
+
+          userNameHelp.innerText = "This username is already taken !";
+        } else if (response.data == 3) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Update';
+
+          _this3.setState({
+            validationMsg: 'validationMsgReact'
+          });
+
+          emailHelp.innerText = "This email is already taken !";
         } else {
           submitBtn.disabled = false;
           submitBtn.innerText = 'Update';
@@ -69448,7 +69474,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your UserName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
-        placeholder: "Password",
+        placeholder: "Username",
         className: "formInput",
         id: "userName",
         value: this.state.user_name,
@@ -69457,9 +69483,12 @@ var SettingPage = /*#__PURE__*/function (_Component) {
             user_name: e.target.value
           });
         }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
+        className: this.state.validationMsg,
+        id: "userNameHelp"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
-        placeholder: "Password",
+        placeholder: "Email",
         className: "formInput",
         id: "email",
         value: this.state.email,
@@ -69468,9 +69497,12 @@ var SettingPage = /*#__PURE__*/function (_Component) {
             email: e.target.value
           });
         }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Text, {
+        className: this.state.validationMsg,
+        id: "emailHelp"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Address"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
-        placeholder: "Password",
+        placeholder: "Address",
         className: "formInput",
         id: "address",
         value: this.state.address,
@@ -69481,7 +69513,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Education"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
-        placeholder: "Password",
+        placeholder: "Education",
         className: "formInput",
         id: "education",
         value: this.state.education,
@@ -69492,7 +69524,7 @@ var SettingPage = /*#__PURE__*/function (_Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Label, null, "Your Work"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
         type: "text",
-        placeholder: "Password",
+        placeholder: "Work",
         className: "formInput",
         id: "work",
         value: this.state.work,
@@ -69644,16 +69676,14 @@ var UserProfilePage = /*#__PURE__*/function (_Component) {
       work: "",
       education: "",
       posts: "",
-      followUserId: "",
-      followBtnText: "",
       is_follow: '',
       followers: "",
-      follow_btn_text: "",
+      following: "",
       msgRow: 'd-none'
     };
-    _this.isFollow = _this.isFollow.bind(_assertThisInitialized(_this));
-    _this.errorMsg = _this.errorMsg.bind(_assertThisInitialized(_this));
+    _this.countFollowers = _this.countFollowers.bind(_assertThisInitialized(_this));
     _this.successMsg = _this.successMsg.bind(_assertThisInitialized(_this));
+    _this.errorMsg = _this.errorMsg.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -69667,58 +69697,45 @@ var UserProfilePage = /*#__PURE__*/function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/getRandomUserData/' + randomUser).then(function (response) {
         if (response.status == 200) {
           _this2.setState({
-            id: response.data.user.id,
-            full_name: response.data.user.full_name,
-            bio: response.data.user.bio,
-            address: response.data.user.address,
-            work: response.data.user.work,
-            education: response.data.user.education,
-            followers: response.data.user.followers,
-            is_follow: response.data.friend.pivot.is_follow,
-            follow_btn_text: response.data.friend.pivot.follow_btn_text
+            id: response.data.id,
+            full_name: response.data.full_name,
+            bio: response.data.bio,
+            address: response.data.address,
+            work: response.data.work,
+            education: response.data.education,
+            following: response.data.following,
+            followers: response.data.followers
           });
         } else {
-          _this2.errorMsg('Something Went Wrong user!');
+          _this2.errorMsg('Something Went Wrong!');
         }
       })["catch"](function (error) {
-        _this2.errorMsg('Something Went Wrong user!');
-      }); // get user posts 
-      // Axios.get('/getRandomUserPost/'+randomUser).then((response) => {
-      //     if(response.status == 200) {
-      //         this.setState({posts: response.data})
-      //     } else {
-      //         alert('error')
-      //     }
-      // }).catch((error) => {
-      //     alert('server error!!')
-      // });
+        _this2.errorMsg('Something Went Wrong!');
+      }); // get follow info
+
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get('/isFollow/' + randomUser).then(function (response) {
+        if (response.status == 200) {
+          _this2.setState({
+            is_follow: response.data
+          });
+        } else {
+          alert('error');
+        }
+      })["catch"](function (error) {
+        alert(error);
+      });
     }
   }, {
-    key: "isFollow",
-    value: function isFollow() {
+    key: "countFollowers",
+    value: function countFollowers() {
       var _this3 = this;
 
       var _this$state = this.state,
-          is_follow = _this$state.is_follow,
           id = _this$state.id,
-          randomUser = _this$state.randomUser;
-
-      if (is_follow == 0) {
-        this.setState({
-          is_follow: 1
-        });
-        this.successMsg('Now you can this persons activity in your timeline !');
-      } else {
-        this.setState({
-          is_follow: 0
-        });
-        this.successMsg("You can't see this persons post anymore !");
-      }
-
-      axios__WEBPACK_IMPORTED_MODULE_8___default.a.post('/countFollowers', {
+          is_follow = _this$state.is_follow;
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.post('/countFollowers/', {
         id: id,
-        isFollow: is_follow,
-        randomUser: randomUser
+        is_follow: is_follow
       }).then(function (response) {
         if (response.status == 200) {
           _this3.componentDidMount();
@@ -69787,8 +69804,8 @@ var UserProfilePage = /*#__PURE__*/function (_Component) {
         className: "bio"
       }, this.state.bio), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "followBtn",
-        onClick: this.isFollow
-      }, this.state.follow_btn_text))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+        onClick: this.countFollowers
+      }, this.state.is_follow))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
         md: 5,
         lg: 5,
         sm: 5
@@ -69800,7 +69817,7 @@ var UserProfilePage = /*#__PURE__*/function (_Component) {
         className: "followDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "followInfo"
-      }, this.state.followers, " Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "0 Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.followers, " Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.state.following, " Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "followSocialDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
         icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faFacebook"],

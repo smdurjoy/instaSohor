@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use Laravel\Socialite\Facades\Socialite;
+use App\Friend;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 
 class loginRegController extends Controller
 {
@@ -57,7 +56,8 @@ class loginRegController extends Controller
                 'user_name' => $username,
                 'email' => $email,
                 'password' => $password,
-                'gender' => $gender
+                'gender' => $gender,
+                'created_at' => date('Y-m-d H:i:s'),
             ]);
                 
             if($result == true) {

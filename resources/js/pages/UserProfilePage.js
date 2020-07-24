@@ -20,17 +20,15 @@ class UserProfilePage extends Component {
             work: "",
             education: "",
             posts: "",
-            followUserId: "",
-            followBtnText: "",
             is_follow: '',
             followers: "",
-            follow_btn_text: "",
+            following: "",
             msgRow: 'd-none',
         }
 
-        this.isFollow = this.isFollow.bind(this);
-        this.errorMsg = this.errorMsg.bind(this);
+        this.countFollowers = this.countFollowers.bind(this);
         this.successMsg = this.successMsg.bind(this);
+        this.errorMsg = this.errorMsg.bind(this);
     }
 
     componentDidMount() {
@@ -40,49 +38,40 @@ class UserProfilePage extends Component {
         Axios.get('/getRandomUserData/'+randomUser).then((response) => {
             if(response.status == 200) {
                 this.setState({
-                    id: response.data.user.id,
-                    full_name: response.data.user.full_name,
-                    bio: response.data.user.bio,
-                    address: response.data.user.address,
-                    work: response.data.user.work,
-                    education: response.data.user.education,
-                    followers: response.data.user.followers,
-                    is_follow: response.data.friend.pivot.is_follow,
-                    follow_btn_text: response.data.friend.pivot.follow_btn_text,
+                    id: response.data.id,
+                    full_name: response.data.full_name,
+                    bio: response.data.bio,
+                    address: response.data.address,
+                    work: response.data.work,
+                    education: response.data.education,
+                    following: response.data.following,
+                    followers: response.data.followers,
                 })
             } else {
-                this.errorMsg('Something Went Wrong user!')
+                this.errorMsg('Something Went Wrong!')
             }
         }).catch((error) => {
-            this.errorMsg('Something Went Wrong user!')
+            this.errorMsg('Something Went Wrong!')
         });
 
-        // get user posts 
-        // Axios.get('/getRandomUserPost/'+randomUser).then((response) => {
-        //     if(response.status == 200) {
-        //         this.setState({posts: response.data})
-        //     } else {
-        //         alert('error')
-        //     }
-        // }).catch((error) => {
-        //     alert('server error!!')
-        // });
+        // get follow info
+        Axios.get('/isFollow/'+randomUser).then(response => {
+            if(response.status == 200) {
+                this.setState({is_follow: response.data})
+            } else {
+                alert('error')
+            }
+        }).catch(error => {
+            alert(error)
+        })
     }
 
-    isFollow() {
-        const { is_follow, id, randomUser } = this.state;
-        if(is_follow == 0) {
-            this.setState({is_follow: 1})
-            this.successMsg('Now you can this persons activity in your timeline !')
-        } else {
-            this.setState({is_follow: 0})
-            this.successMsg("You can't see this persons post anymore !")
-        }
+    countFollowers() {
+        const { id, is_follow } = this.state;
 
-        Axios.post('/countFollowers', {
+        Axios.post('/countFollowers/', {
             id: id,
-            isFollow: is_follow,
-            randomUser: randomUser,
+            is_follow: is_follow
         }).then((response) => {
             if(response.status == 200) {
                 this.componentDidMount();
@@ -129,14 +118,14 @@ class UserProfilePage extends Component {
                                 <div className="ownerInfo">
                                     <h1 className="profileTopName mt-1">{this.state.full_name}</h1>
                                     <h5 className="bio">{this.state.bio}</h5>
-                                    <h5 className="followBtn" onClick={this.isFollow}>{this.state.follow_btn_text}</h5>
+                                    <h5 className="followBtn" onClick={this.countFollowers}>{this.state.is_follow}</h5>
                                 </div>
                             </Col>
                             <Col md={5} lg={5} sm={5}>
                                 <div className="ownerOtherInfo">
                                     <div className="d-flex align-items-center">
                                         <div className="followDiv">
-                                            <h5 className="followInfo">{this.state.followers} Followers <br/>0 Following</h5>
+                                            <h5 className="followInfo">{this.state.followers} Followers <br/>{this.state.following} Following</h5>
                                         </div>
                                     </div>
                                     <div className="followSocialDiv">
