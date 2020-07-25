@@ -306,9 +306,111 @@ body {
     border-radius: 50% !important;
 }
 
+.proTopDiv {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+}
+
+.proTopDiv:hover .prOverlay {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.proTopDiv:hover .changePic {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: transform .5s ease, opacity 1.3s ease;
+    transition: transform .5s ease, opacity 1.3s ease;
+}
+
+.prOverlay{
+    background: rgba(0,0,0,0.4);
+    position: absolute;
+    margin: auto;
+    width: 0px;
+    height: 0px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    opacity: 0;
+    -webkit-transition: .4s ease;
+    transition: .4s ease;
+    
+}
+
+.changePic{
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    margin: auto;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    left: 0;
+    top: 40%;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: transform .5s ease, opacity .7s ease;
+    transition: transform .5s ease, opacity .7s ease;
+}
+
+.changePic:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.myfile {
+    width: 100px;
+    opacity: 0;
+}
+
 .profileTopName {
     font-size: 25px;
     font-weight: 500;
+}
+
+.proPicSelectBox {
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    color: #ccc;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.proPicSelect {
+    opacity: 0.0;
+    width: 100%;
+    height: 100%;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    bottom: 0; 
+    right: 0;
+    cursor: pointer;
+}
+
+.proImagePreview {
+    height: 100px;
+    width: 100px;
+    border-radius: 50% !important;
 }
 
 .bio {

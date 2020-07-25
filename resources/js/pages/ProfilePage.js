@@ -47,6 +47,11 @@ class ProfilePage extends Component {
             msgRow: 'd-none',
             following: '',
             followers: '',
+            proPicUpdateModal: false,
+            proPicUpdateRow: 'd-none',
+            proPicSelectBox: 'proPicSelectBox',
+            inputFile: '',
+            profileImage: '',
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -60,6 +65,9 @@ class ProfilePage extends Component {
         this.deleteAlertHideShow = this.deleteAlertHideShow.bind(this);
         this.changeBio = this.changeBio.bind(this);
         this.likeCount = this.likeCount.bind(this);
+        this.updateProPicModalHideShow = this.updateProPicModalHideShow.bind(this);
+        this.updateProPicPreview = this.updateProPicPreview.bind(this);
+        this.updateProPic = this.updateProPic.bind(this);
     }
 
     componentDidMount() {
@@ -75,6 +83,7 @@ class ProfilePage extends Component {
                     id: response.data[0]['id'],
                     followers: response.data[0]['followers'],
                     following: response.data[0]['following'],
+                    profileImage: response.data[0]['image'],
                 })
             } else {
                 this.setState({
@@ -238,6 +247,18 @@ class ProfilePage extends Component {
         }
     }
 
+    // update profile picture modal hide show
+    updateProPicModalHideShow() {
+        if(this.state.proPicUpdateModal == false) {
+            this.setState({proPicUpdateModal: true});
+        } else {
+            this.setState({proPicUpdateModal: false})
+            setTimeout( function() {
+                this.setState({proPicUpdateRow: 'd-none', proPicSelectBox: 'proPicSelectBox'})
+            }.bind(this), 500)
+        }
+    }
+
     editPost() {
         const id = document.getElementById('post').getAttribute('post-id');
         const postData = this.state.updatePostData;
@@ -318,8 +339,39 @@ class ProfilePage extends Component {
         }
     }
 
-    render() {
-        const posts = this.state.posts;
+    updateProPicPreview(e) {
+        const imagePreview = document.getElementById('proUploadImage');
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function(e) {
+            this.setState({proPicUpdateRow: 'text-center', proPicSelectBox: 'd-none', inputFile: file})
+            imagePreview.setAttribute("src", e.target.result);
+        }.bind(this);
+    }
+
+    updateProPic(e) {
+        const { inputFile, id } = this.state;
+
+        const formData = new FormData();
+        formData.append('photo', inputFile);
+        formData.append('id', id);
+        this.disabled = true;
+
+        Axios.post('/updateProPic', formData).then(response => {
+            alert(response.data)
+        }).catch(error => {
+            alert(error)
+        })
+    }
+
+    render() {  
+        const { profileImage } = this.state;
+        if(profileImage == null) {
+            this.setState({ profileImage: "/storage/dummyProfileImage.webp" })
+        }
+        const { posts } = this.state;
         const myView = posts.map((data, index) => {
             return(
                 <Row className="contentRow" key={index}>
@@ -373,7 +425,9 @@ class ProfilePage extends Component {
                                 id = { this.state.id }
                                 following = {this.state.following}
                                 followers = {this.state.followers}
+                                profileImage = {this.state.profileImage}
                                 postFunction = { this.postFunction }
+                                updateProPicModalHideShow = { this.updateProPicModalHideShow }
                             />
 
                             <h5 className="newsFeedTitle mt-4">Posts</h5>
@@ -392,6 +446,37 @@ class ProfilePage extends Component {
                             </div>
                         </div>
                     </Container>
+
+                    <Modal
+                        show={this.state.proPicUpdateModal}
+                        onHide={this.state.proPicUpdateModal}
+                        size="md"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        id="editModal"
+                        centered
+                    >
+                        <Modal.Header>
+                            <h5>Update Profile Picture</h5>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Row className={this.state.proPicUpdateRow}>
+                                <Col md={12}>
+                                    <p>Your profile picture will be look like this</p>     
+                                    <div className="fillImage" id="fill">
+                                        <img src="" className="rounded mx-auto d-block proImagePreview" alt="image !" id="proUploadImage" />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div className={this.state.proPicSelectBox}>
+                                <p id="dropText">Click here to select photo</p>
+                                <input type="file" className="proPicSelect" onChange={this.updateProPicPreview}/>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button className="btn btn-danger" onClick={this.updateProPicModalHideShow}>Cancel</Button>
+                            <Button onClick={this.updateProPic}>Update</Button>
+                        </Modal.Footer>
+                    </Modal>
 
                     <Modal
                         show={this.state.modalShow}

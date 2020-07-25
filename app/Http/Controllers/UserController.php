@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     function getUserData(Request $request) {
         $username = $request->session()->get('userNameKey');
-        $result = User::where('user_name', $username)->select(['id', 'full_name', 'bio', 'address', 'work', 'education', 'user_name', 'email', 'followers', 'following'])->get();
+        $result = User::where('user_name', $username)->select(['id', 'full_name', 'bio', 'address', 'work', 'education', 'user_name', 'email', 'followers', 'following', 'image'])->get();
         return $result;
     }
 
@@ -78,4 +78,19 @@ class UserController extends Controller
         return $user;
     }
 
+    function updateProPic(Request $request) {
+        $photoPath = $request->file('photo')->store('public');
+        $id = $request->input('id');
+        $photoName = (explode('/', $photoPath))[1];
+
+        $location = "/storage/".$photoName;
+
+        $result = User::where('id', $id)->update(['image' => $location]);
+
+        if($result == true) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

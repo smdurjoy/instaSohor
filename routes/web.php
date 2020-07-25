@@ -30,6 +30,7 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/updateBio', 'UserController@updateBio');
     Route::post('/updatePass', 'UserController@updatePass');
     Route::get('/getRandomUserData/{userName}', 'UserController@getRandomUserData');
+    Route::post('/updateProPic', 'UserController@updateProPic');
 
     // friend routes
     Route::get('/isFollow/{userName}', 'FriendsController@isFollow');

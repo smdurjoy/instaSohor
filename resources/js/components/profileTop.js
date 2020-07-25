@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react';
 import {Button, Col, Dropdown, Form, FormControl, Row} from "react-bootstrap";
-import profileImg from "../../images/pro.jpeg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {faBriefcase, faGraduationCap, faMapMarkerAlt, faPaperclip} from "@fortawesome/free-solid-svg-icons";
@@ -10,12 +9,17 @@ class ProfileTop extends Component {
     constructor(props) {
         super();
     }
+
     render() {
         return (
             <Fragment>
                 <Row className="contentRow">
                     <Col md={7} lg={7} sm={7} className="d-flex">
-                        <img className="profileImage" src={profileImg}/>
+                        <div className="proTopDiv">
+                            <img className="profileImage" src={this.props.profileImage}/>
+                            <div className="prOverlay"></div>
+                            <a href="#" onClick={this.props.updateProPicModalHideShow} className="changePic">Update</a>
+                        </div>
                         <div className="ownerInfo">
                             <h1 className="profileTopName mt-1">{this.props.fullName}</h1>
                             <h5 className="bio">{this.props.bio}</h5>

@@ -67644,12 +67644,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
-/* harmony import */ var _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../images/pro.jpeg */ "./resources/images/pro.jpeg");
-/* harmony import */ var _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_pro_jpeg__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67679,7 +67677,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var ProfileTop = /*#__PURE__*/function (_Component) {
   _inherits(ProfileTop, _Component);
 
@@ -67701,10 +67698,18 @@ var ProfileTop = /*#__PURE__*/function (_Component) {
         lg: 7,
         sm: 7,
         className: "d-flex"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "proTopDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "profileImage",
-        src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_2___default.a
+        src: this.props.profileImage
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "prOverlay"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        onClick: this.props.updateProPicModalHideShow,
+        className: "changePic"
+      }, "Update")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ownerInfo"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "profileTopName mt-1"
@@ -67730,14 +67735,14 @@ var ProfileTop = /*#__PURE__*/function (_Component) {
         className: "followInfo"
       }, this.props.followers, " Followers ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.following, " Following"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "followSocialDiv"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faFacebook"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faFacebook"],
         className: "fIcon"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faInstagram"],
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faInstagram"],
         className: "fIcon"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faTwitter"],
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTwitter"],
         className: "fIcon"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
         className: this.props.rowClass
@@ -67767,11 +67772,11 @@ var ProfileTop = /*#__PURE__*/function (_Component) {
         lg: 6,
         sm: 6,
         xs: 6
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faMapMarkerAlt"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faMapMarkerAlt"],
         className: "fIcon mt-3"
-      }), " From ", this.props.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBriefcase"],
+      }), " From ", this.props.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faBriefcase"],
         className: "fIcon"
       }), " Works at ", this.props.work)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         md: 6,
@@ -67780,11 +67785,11 @@ var ProfileTop = /*#__PURE__*/function (_Component) {
         xs: 6
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "float-right"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faGraduationCap"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faGraduationCap"],
         className: "fIcon mt-3"
-      }), " Studies at ", this.props.education), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faClock"],
+      }), " Studies at ", this.props.education), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faClock"],
         className: "fIcon"
       }), " Joined June 2020 ")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
         className: "contentRow"
@@ -67809,18 +67814,18 @@ var ProfileTop = /*#__PURE__*/function (_Component) {
         className: "postIcons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faPaperclip"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faPaperclip"],
         className: "postIcon"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faImage"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faImage"],
         className: "postIcon"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faLaugh"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faLaugh"],
         className: "postIcon"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         xs: 6,
@@ -68582,7 +68587,12 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       heartIcon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faHeart"],
       msgRow: 'd-none',
       following: '',
-      followers: ''
+      followers: '',
+      proPicUpdateModal: false,
+      proPicUpdateRow: 'd-none',
+      proPicSelectBox: 'proPicSelectBox',
+      inputFile: '',
+      profileImage: ''
     };
     _this.getPosts = _this.getPosts.bind(_assertThisInitialized(_this));
     _this.postFunction = _this.postFunction.bind(_assertThisInitialized(_this));
@@ -68595,6 +68605,9 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
     _this.deleteAlertHideShow = _this.deleteAlertHideShow.bind(_assertThisInitialized(_this));
     _this.changeBio = _this.changeBio.bind(_assertThisInitialized(_this));
     _this.likeCount = _this.likeCount.bind(_assertThisInitialized(_this));
+    _this.updateProPicModalHideShow = _this.updateProPicModalHideShow.bind(_assertThisInitialized(_this));
+    _this.updateProPicPreview = _this.updateProPicPreview.bind(_assertThisInitialized(_this));
+    _this.updateProPic = _this.updateProPic.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -68614,7 +68627,8 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
             image: response.data[0]['image'],
             id: response.data[0]['id'],
             followers: response.data[0]['followers'],
-            following: response.data[0]['following']
+            following: response.data[0]['following'],
+            profileImage: response.data[0]['image']
           });
         } else {
           _this2.setState({
@@ -68837,6 +68851,26 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           modalShow: false
         });
       }
+    } // update profile picture modal hide show
+
+  }, {
+    key: "updateProPicModalHideShow",
+    value: function updateProPicModalHideShow() {
+      if (this.state.proPicUpdateModal == false) {
+        this.setState({
+          proPicUpdateModal: true
+        });
+      } else {
+        this.setState({
+          proPicUpdateModal: false
+        });
+        setTimeout(function () {
+          this.setState({
+            proPicUpdateRow: 'd-none',
+            proPicSelectBox: 'proPicSelectBox'
+          });
+        }.bind(this), 500);
+      }
     }
   }, {
     key: "editPost",
@@ -68946,9 +68980,50 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "updateProPicPreview",
+    value: function updateProPicPreview(e) {
+      var imagePreview = document.getElementById('proUploadImage');
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function (e) {
+        this.setState({
+          proPicUpdateRow: 'text-center',
+          proPicSelectBox: 'd-none',
+          inputFile: file
+        });
+        imagePreview.setAttribute("src", e.target.result);
+      }.bind(this);
+    }
+  }, {
+    key: "updateProPic",
+    value: function updateProPic(e) {
+      var _this$state = this.state,
+          inputFile = _this$state.inputFile,
+          id = _this$state.id;
+      var formData = new FormData();
+      formData.append('photo', inputFile);
+      formData.append('id', id);
+      this.disabled = true;
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('/updateProPic', formData).then(function (response) {
+        alert(response.data);
+      })["catch"](function (error) {
+        alert(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this9 = this;
+
+      var profileImage = this.state.profileImage;
+
+      if (profileImage == null) {
+        this.setState({
+          profileImage: "/storage/dummyProfileImage.webp"
+        });
+      }
 
       var posts = this.state.posts;
       var myView = posts.map(function (data, index) {
@@ -68963,7 +69038,7 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
           className: "d-flex align-items-center"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "chatList-images-buttons",
-          src: _images_pro_jpeg__WEBPACK_IMPORTED_MODULE_5___default.a
+          src: profileImage
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#",
           className: "postProfileName"
@@ -69042,7 +69117,9 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
         id: this.state.id,
         following: this.state.following,
         followers: this.state.followers,
-        postFunction: this.postFunction
+        profileImage: this.state.profileImage,
+        postFunction: this.postFunction,
+        updateProPicModalHideShow: this.updateProPicModalHideShow
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "newsFeedTitle mt-4"
       }, "Posts"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
@@ -69062,6 +69139,38 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "noPostMessage"
       }, "You haven't post ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "anything yet!"), " Post now..")), myView))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+        show: this.state.proPicUpdateModal,
+        onHide: this.state.proPicUpdateModal,
+        size: "md",
+        "aria-labelledby": "contained-modal-title-vcenter",
+        id: "editModal",
+        centered: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Update Profile Picture")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"].Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], {
+        className: this.state.proPicUpdateRow
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+        md: 12
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Your profile picture will be look like this"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fillImage",
+        id: "fill"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "",
+        className: "rounded mx-auto d-block proImagePreview",
+        alt: "image !",
+        id: "proUploadImage"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.state.proPicSelectBox
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "dropText"
+      }, "Click here to select photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        className: "proPicSelect",
+        onChange: this.updateProPicPreview
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+        className: "btn btn-danger",
+        onClick: this.updateProPicModalHideShow
+      }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+        onClick: this.updateProPic
+      }, "Update"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
         show: this.state.modalShow,
         onHide: this.state.modalShow,
         size: "md",
