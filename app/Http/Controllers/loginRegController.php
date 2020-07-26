@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Friend;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 class loginRegController extends Controller
 {
@@ -25,12 +27,15 @@ class loginRegController extends Controller
         if(!Hash::check($password, $user->password)) {
             return 0;
         }
+
         $request->session()->put('userNameKey', $userName);
+        Cookie::queue('user', json_encode(Session::get("userNameKey")), 45000);
         return 1;
     }
 
     function onLogout(Request $request) {
         $request->session()->flush('userNameKey');
+        Cookie::queue(Cookie::forget('user'));
         return redirect('/login-register');
     }
 
@@ -57,6 +62,7 @@ class loginRegController extends Controller
                 'email' => $email,
                 'password' => $password,
                 'gender' => $gender,
+                'image' => "/storage/dummyProfileImage.webp",
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
                 

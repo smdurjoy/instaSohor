@@ -31,6 +31,7 @@ Route::group(['middleware' => 'loginCheck'], function() {
     Route::post('/updatePass', 'UserController@updatePass');
     Route::get('/getRandomUserData/{userName}', 'UserController@getRandomUserData');
     Route::post('/updateProPic', 'UserController@updateProPic');
+    Route::get('/getAllUsers', 'UserController@getAllUsers');
 
     // friend routes
     Route::get('/isFollow/{userName}', 'FriendsController@isFollow');

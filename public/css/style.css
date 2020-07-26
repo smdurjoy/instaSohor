@@ -395,6 +395,28 @@ body {
     position: relative;
 }
 
+.selectPostImg {
+    margin-top: 1.4rem;
+}
+
+.selectImageBtn {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    margin-top: -1rem !important;
+}
+
+.selectImageBtn input {
+    display: none;
+}
+
+#postImagePreview {
+    height: 100px !important;
+    width: 100px !important;
+    border: 1px solid var(--buttonBackground);
+    border-radius: 15px !important;
+}
+
 .proPicSelect {
     opacity: 0.0;
     width: 100%;
@@ -510,7 +532,7 @@ body {
 }
 
 .postIcon {
-    margin: 0 10px;
+    margin: 0px 10px;
     font-size: 20px;
     color: var(--fontColorOther);
 }

@@ -83,11 +83,25 @@ class ProfileTop extends Component {
                                 <FormControl as="textarea" id="postArea" rows="3" placeholder="Write a post ..." className="postBox" />
                             </Col>
                         </Row>
+                        <Row className={this.props.postImagePreview}>
+                            <Col md={6}>
+                                <img src="" alt="image !" id="postImagePreview" className="my-1"/>
+                            </Col>
+                        </Row>
                         <Row className="postBottom">
-                            <Col xs={6} sm={6} lg={6} md={6} className="postIcons">
-                                <a href="#"><FontAwesomeIcon icon={faPaperclip} className="postIcon"/></a>
-                                <a href="#"><FontAwesomeIcon icon={faImage} className="postIcon"/></a>
-                                <a href="#"><FontAwesomeIcon icon={faLaugh} className="postIcon"/></a>
+                            <Col xs={6} sm={6} lg={6} md={6} className="d-flex">
+                                <div className="mt-2">
+                                    <a href="#"><FontAwesomeIcon icon={faPaperclip} className="postIcon"/></a>
+                                </div>
+                                <div className="selectPostImg">
+                                    <label className="selectImageBtn mt-5">
+                                        <FontAwesomeIcon icon={faImage} className="postIcon"/>
+                                        <input type="file" id="myfile" name="myfile" onChange={this.props.showPostPicture}/>
+                                    </label>
+                                </div>
+                                <div className="mt-2">
+                                    <a href="#"><FontAwesomeIcon icon={faLaugh} className="postIcon"/></a>
+                                </div>
                             </Col>
                             <Col xs={6} sm={6} lg={6} md={6}>
                                 <Button className="btn btn-primary postButton" id="postBtn" data-id={this.props.id} onClick={this.props.postFunction}>Add Post</Button>

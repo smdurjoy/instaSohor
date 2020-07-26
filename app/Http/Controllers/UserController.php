@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -73,7 +74,7 @@ class UserController extends Controller
     }
 
     function getRandomUserData($userName) {
-        $user = User::where('user_name', '=', $userName)->select('id', 'full_name', 'bio', 'address', 'work', 'education', 'following', 'followers')->first();
+        $user = User::where('user_name', '=', $userName)->select('id', 'full_name', 'bio', 'address', 'work', 'education', 'following', 'followers', 'image')->first();
 
         return $user;
     }
@@ -81,9 +82,16 @@ class UserController extends Controller
     function updateProPic(Request $request) {
         $photoPath = $request->file('photo')->store('public');
         $id = $request->input('id');
-        $photoName = (explode('/', $photoPath))[1];
 
+        $photoName = explode('/', $photoPath)[1];
         $location = "/storage/".$photoName;
+
+        $oldImage = User::where('id', $id)->get(['image']);
+        $oldImageName = explode('/', $oldImage[0]['image'])[2];
+
+        if($oldImageName != "dummyProfileImage.webp") {
+            Storage::delete('public/'.$oldImageName);
+        }
 
         $result = User::where('id', $id)->update(['image' => $location]);
 
@@ -92,5 +100,9 @@ class UserController extends Controller
         } else {
             return 0;
         }
+    }   
+
+    function getAllUsers() {
+        return User::select('id', 'full_name', 'image')->get();
     }
 }

@@ -15,11 +15,13 @@ class MainLayout extends Component {
             logoutbtnShow: false,
             logoutbtn: 'd-none',
             profileName: "",
-            userName: ""
+            userName: "",
+            profileImage: "",
         }
 
         this.logoutBtnShow = this.logoutBtnShow.bind(this);
         this.logout = this.logout.bind(this);
+        // this.searchData = this.searchData.bind(this);
     }
 
     componentDidMount() {
@@ -28,6 +30,7 @@ class MainLayout extends Component {
                 this.setState({
                     profileName: response.data[0]['full_name'],
                     userName: response.data[0]['user_name'],
+                    profileImage: response.data[0]['image'],
             })
             } else {
                 this.setState({profileName: "---"})
@@ -50,7 +53,11 @@ class MainLayout extends Component {
         window.location.href = "/login-register"
     }
 
-    render() {
+    searchData() {
+        
+    }
+
+    render() {  
         return (
             <Fragment>
                 <title>{this.props.title}</title>
@@ -58,7 +65,7 @@ class MainLayout extends Component {
                     <div className="left-component-wrapper">
                         <h2 className="brandName"><img className="siteLogo mb-1" src={siteLogo}/>nsTaSohor</h2>
                         <hr className="hLine ml-auto mr-auto"/>
-                        <FormControl type="text" placeholder="&#61442;" className="searchBox" />
+                        <FormControl type="text" placeholder="&#61442;" className="searchBox" onKeyUp={this.searchData}/>
 
                         <div className="navItemDiv">
                             <ul className="navItemList">
@@ -72,7 +79,7 @@ class MainLayout extends Component {
                                 <hr className="hLine ml-auto mr-auto"/>
                                 <Row className="ml-auto mr-auto">
                                     <Col md={3} lg={3}>
-                                        <img className="bottom-profile-image" src={profileImage}/>
+                                        <img className="bottom-profile-image" src={this.state.profileImage}/>
                                     </Col>
                                     <Col md={6} lg={6}>
                                         <h2 className="profileName mt-1">{this.state.profileName}</h2>

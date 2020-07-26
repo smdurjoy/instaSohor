@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import MainLayout from '../components/MainLayout';
 import { Container, Row, Col } from 'react-bootstrap';
-import profileImg from "../../images/pro.jpeg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {faBriefcase, faGraduationCap, faMapMarkerAlt, faPaperclip} from "@fortawesome/free-solid-svg-icons";
@@ -24,6 +23,7 @@ class UserProfilePage extends Component {
             followers: "",
             following: "",
             msgRow: 'd-none',
+            profileImage: '',
         }
 
         this.countFollowers = this.countFollowers.bind(this);
@@ -46,6 +46,7 @@ class UserProfilePage extends Component {
                     education: response.data.education,
                     following: response.data.following,
                     followers: response.data.followers,
+                    profileImage: response.data.image,
                 })
             } else {
                 this.errorMsg('Something Went Wrong!')
@@ -114,7 +115,7 @@ class UserProfilePage extends Component {
                     <Container>
                         <Row className="contentRow">
                             <Col md={7} lg={7} sm={7} className="d-flex">
-                                <img className="profileImage" src={profileImg}/>
+                                <img className="profileImage" src={this.state.profileImage}/>
                                 <div className="ownerInfo">
                                     <h1 className="profileTopName mt-1">{this.state.full_name}</h1>
                                     <h5 className="bio">{this.state.bio}</h5>

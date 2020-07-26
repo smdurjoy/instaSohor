@@ -119,7 +119,7 @@ class HomePage extends Component {
                 <div id="postDiv" post-id={post.id} key={index}>
                     <Row className="contentRow">
                         <Col md={12} sm={12} lg={12} xs={12} className="d-flex align-items-center">
-                            <img className="chatList-images-buttons" src={profileImage}/>
+                            <img className="chatList-images-buttons" src={post.user.image}/>
                             <Link to={"/"+post.user.user_name} className="postProfileName">{post.user.full_name}</Link>
                             <p className="homePostTime">{post.post_time}</p>
                         </Col>

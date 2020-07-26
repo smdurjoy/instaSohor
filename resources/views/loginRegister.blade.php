@@ -31,7 +31,7 @@
                             <div class="row d-flex justify-content-around">
                                 <div class="d-flex">
                                     <input type="checkbox" class="form-check-input">
-                                    <label class="labels" for="checkBox">Remember me</label>
+                                    <label class="labels" for="checkBox" id="rememberMe">Remember me</label>
                                 </div>
                                 <a href="{{ url('resetPassword') }}" class="labels">Forgot password?</a>
                             </div>

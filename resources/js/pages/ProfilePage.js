@@ -52,6 +52,8 @@ class ProfilePage extends Component {
             proPicSelectBox: 'proPicSelectBox',
             inputFile: '',
             profileImage: '',
+            postImagePreview: 'd-none',
+            postImage: '',
         }
 
         this.getPosts = this.getPosts.bind(this);
@@ -68,6 +70,7 @@ class ProfilePage extends Component {
         this.updateProPicModalHideShow = this.updateProPicModalHideShow.bind(this);
         this.updateProPicPreview = this.updateProPicPreview.bind(this);
         this.updateProPic = this.updateProPic.bind(this);
+        this.showPostPicture = this.showPostPicture.bind(this);
     }
 
     componentDidMount() {
@@ -360,23 +363,41 @@ class ProfilePage extends Component {
         this.disabled = true;
 
         Axios.post('/updateProPic', formData).then(response => {
-            alert(response.data)
+            if(response.status == 200 && response.data == 1) {
+                this.successMsg('Your profile picture has been updated .')
+                this.componentDidMount();
+                this.updateProPicModalHideShow();
+            } else {showPostPicture
+                this.errorMsg('Something Went Wrong !')
+                this.componentDidMount();
+                this.updateProPicModalHideShow();
+            }
         }).catch(error => {
-            alert(error)
+            this.errorMsg('Something Went Wrong !')
+            this.componentDidMount();
+            this.updateProPicModalHideShow();
         })
     }
 
+    showPostPicture(e) {
+        const imagePreview = document.getElementById('postImagePreview');
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function(e) {
+            this.setState({postImagePreview: '', postImage: file})
+            imagePreview.setAttribute("src", e.target.result);
+        }.bind(this);
+    }
+
     render() {  
-        const { profileImage } = this.state;
-        if(profileImage == null) {
-            this.setState({ profileImage: "/storage/dummyProfileImage.webp" })
-        }
         const { posts } = this.state;
         const myView = posts.map((data, index) => {
             return(
                 <Row className="contentRow" key={index}>
                     <Col md={11} sm={11} lg={11} xs={11} className="d-flex align-items-center">
-                        <img className="chatList-images-buttons" src={profileImage}/>
+                        <img className="chatList-images-buttons" src={this.state.profileImage}/>
                         <a href="#" className="postProfileName">{data.user.full_name}</a>
                         <p className="postTime">{data.post_time}</p>
                     </Col>
@@ -428,9 +449,12 @@ class ProfilePage extends Component {
                                 profileImage = {this.state.profileImage}
                                 postFunction = { this.postFunction }
                                 updateProPicModalHideShow = { this.updateProPicModalHideShow }
+                                showPostPicture = { this.showPostPicture }
+                                postImagePreview = { this.state.postImagePreview }
                             />
 
                             <h5 className="newsFeedTitle mt-4">Posts</h5>
+                            
                             <div>
                                 <Row className={this.state.isLoading}>
                                     <img src={loadingImage} className="text-center loadingImage"/>
